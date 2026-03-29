@@ -1,0 +1,63 @@
+{
+  "name": "frontend-view-of-vehicle-parking-lot-system",
+  "version": "1.0.0",
+  "description": "Vehicle-Parking_lot-System-Frontend",
+  "scripts": {
+    "test": "jest",
+    "dev": "parcel ./public/index.html",
+    "watch": "tsx watch src/Main.tsx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chukwutem-emi/Frontend-View-Of-Vehicle-Parking-Lot-System.git"
+  },
+  "author": "Chukwutem Stephen Emi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chukwutem-emi/Frontend-View-Of-Vehicle-Parking-Lot-System/issues"
+  },
+  "homepage": "https://github.com/chukwutem-emi/Frontend-View-Of-Vehicle-Parking-Lot-System#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.29.2",
+    "@babel/preset-react": "^7.28.5",
+    "@parcel/babel-preset-env": "^2.16.4",
+    "@parcel/packager-raw-url": "^2.16.4",
+    "@parcel/transformer-react-refresh-wrap": "^2.16.4",
+    "@parcel/transformer-webmanifest": "^2.16.4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.27",
+    "babel-jest": "^30.3.0",
+    "buffer": "^6.0.3",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "msw": "^2.12.14",
+    "parcel": "^2.16.4",
+    "postcss": "^8.5.8",
+    "react-refresh": "^0.18.0",
+    "tailwindcss": "^3.4.4",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.11.2",
+    "framer-motion": "^12.38.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-icons": "^5.6.0",
+    "react-redux": "^9.2.0",
+    "react-router": "^6.30.3",
+    "react-router-dom": "^6.30.3",
+    "redux-persist": "^6.0.0",
+    "workbox-core": "^7.4.0",
+    "workbox-precaching": "^7.4.0",
+    "workbox-routing": "^7.4.0",
+    "workbox-strategies": "^7.4.0"
+  },
+  "browserslist": [
+    "last 2 versions"
+  ]
+}
