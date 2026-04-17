@@ -1,4 +1,4 @@
-import type {InputFieldAttributes} from "../../../types/authAttributes"
+import type {InputFieldAttributes} from "../../../types/authAttributes/inputFieldsAttributes";
 
 
 export const LoginInputField = ({id, name, inputType, inputRef, placeholder, autoComplete, label}: InputFieldAttributes) => {

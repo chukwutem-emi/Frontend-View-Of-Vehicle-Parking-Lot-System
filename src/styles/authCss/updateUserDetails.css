@@ -1,0 +1,15 @@
+.form {
+    @apply xl:w-[50%] w-[80%] bg-white shadow-2xl mx-auto flex flex-col p-6 mt-[2rem] space-y-6 z-50;
+}
+.update {
+    @apply p-3 text-white font-sans xl:font-extrabold font-bold bg-yellow-600 hover:bg-yellow-400 text-center
+}
+.loading {
+    @apply text-white font-sans animate-pulse xs:text-lg sm:text-lg md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl
+}
+.submit {
+    @apply text-black font-sans xs:text-lg sm:text-lg md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl
+}
+.btn {
+    @apply flex flex-row text-gray-700 font-bold
+}

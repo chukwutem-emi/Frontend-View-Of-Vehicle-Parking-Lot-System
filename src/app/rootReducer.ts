@@ -1,7 +1,7 @@
 import {combineReducers} from "@reduxjs/toolkit";
-import tokenReducer from "../utils/tokenSlice";
-import userDetailsReducer from "../utils/userSlice";
-import allUsersDetailsReducer from "../utils/allUsersSlice";
+import tokenReducer from "../features/auth/authSlices/tokenSlice";
+import userDetailsReducer from "../features/auth/authSlices/userSlice";
+import allUsersDetailsReducer from "../features/auth/authSlices/allUsersSlice";
 
 
 

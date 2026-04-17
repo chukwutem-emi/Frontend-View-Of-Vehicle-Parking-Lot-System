@@ -1,8 +1,8 @@
-import {useState} from 'react';
+import {useState, type JSX} from 'react';
 import {LoginPage} from "./LoginPage";
 import {SignUpPage} from "./SignUpPage";
 
-const CombinedAuth = () => {
+const CombinedAuth = (): JSX.Element => {
     const [isSignUp, setIsSignUp] = useState(false);
 
 

@@ -1,15 +1,16 @@
-import type {SignUpFormAttributes} from "../../../types/authAttributes";
+import "../../../styles/authCss/signup.css"
+import type {SignUpFormAttributes} from "../../../types/authAttributes/signupAttributes";
 import {SignUpInputField} from "../../../components/Input/Auth/SignUpInputField";
-import { useState } from "react";
+import { useState, type JSX } from "react";
 import {MdToggleOn, MdToggleOff} from "react-icons/md";
 import {Dialog} from "../../../components/Modal/Dialog";
 import {ResponseDialog} from "../../../components/Modal/ResponseDialog";
-import "../../../styles/authCss/signup.css"
+import {Loader} from "../../../components/Loader";
 
 
 
 
-export const SignUpForm = ({username, password, userAddress, phone, email, confirmPassword, handleSignUpForm, loading, open, handleCancel, handleConfirm, handleDivCancel, divOnClick, errMessage, message, onClick, openMessage}: SignUpFormAttributes) => {
+export const SignUpForm = ({username, password, userAddress, phone, email, confirmPassword, handleSignUpForm, loading, open, handleCancel, handleConfirm, handleDivCancel, divOnClick, errMessage, message, onClick, openMessage, isOpen, progress}: SignUpFormAttributes): JSX.Element => {
     const[showPassword, setShowPassword] = useState(false);
     return (
         <>
@@ -76,7 +77,7 @@ export const SignUpForm = ({username, password, userAddress, phone, email, confi
                 placeholder="Enter your email address"
                 label="E-mail address" 
             />
-            <button type="submit" className="signup">
+            <button type="submit" className="signup" disabled={loading}>
                 {
                     loading ? (
                         <span className="loading">LOADING...</span>
@@ -100,6 +101,10 @@ export const SignUpForm = ({username, password, userAddress, phone, email, confi
             isOpen={openMessage} 
             message={message}
             onClick={onClick}
+        />
+        <Loader
+            isOpen={isOpen}
+            progress={progress} 
         />
         </>
     );

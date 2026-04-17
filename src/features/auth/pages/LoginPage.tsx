@@ -1,27 +1,23 @@
-import { useEffect, useRef, useState, type SyntheticEvent } from "react";
+import { useEffect, useRef, useState, type JSX, type SyntheticEvent } from "react";
 import {useLogin} from "../../auth/hooks/useLogin";
 import { LoginForm } from "../components/LoginForm";
 
+ 
 
-type FormData = {
-    email    : string;
-    password : string;
-};  
-
-export const LoginPage = () => {
+export const LoginPage = (): JSX.Element => {
     const emailRef    = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null); 
 
-    const[open, setOpen]               = useState(false);
     const[openMessage, setOpenMessage] = useState(false);
-    const[formData, setFormData]       = useState<FormData | null>(null);
 
     const {
         errMessage, 
         handleLoginUser: handleLoginUserPayload, 
         message, 
         loading, 
-        clearMessage
+        clearMessage,
+        isOpen,
+        progress
     } = useLogin();
 
     useEffect(() => {
@@ -41,21 +37,7 @@ export const LoginPage = () => {
             email    : emailRef.current!.value,
             password : passwordRef.current!.value
         };
-        setFormData(payload);
-        setOpen(true);
-    };
-
-    const handleCancel = () => {
-        setOpen(false);
-    };
-    const handleConfirm = () => {
-        if (formData) {
-            handleLoginUserPayload(formData);
-        }
-        setOpen(false);
-    };
-    const handleDivCancel = () => {
-        setOpen(false);
+        handleLoginUserPayload(payload);
     };
     const handleDivClick = () => {
         clearMessage();
@@ -72,17 +54,14 @@ export const LoginPage = () => {
                 password={passwordRef}
                 divOnClick={handleDivClick}
                 errMessage={errMessage}
-                handleCancel={handleCancel}
-                handleConfirm={handleConfirm}
-                open={open}
                 openMessage={openMessage}
-                handleDivCancel={handleDivCancel}
                 message={message}
                 onClick={handleOnClick}
                 loading={loading}
-                handleLoginForm={handleLoginForm} 
+                handleLoginForm={handleLoginForm}
+                isOpen={isOpen}
+                progress={progress} 
             />
         </div> 
     );
-
 };

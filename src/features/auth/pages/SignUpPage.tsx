@@ -1,17 +1,17 @@
-import {useEffect, useRef, useState, type SyntheticEvent} from "react";
+import {useEffect, useRef, useState, type JSX, type SyntheticEvent} from "react";
 import {SignUpForm} from "../components/SignUpForm";
 import {useSignup} from "../hooks/useSignup";
 
 
-type FormData = {
+export type FormData = {
     username        : string;
     password        : string;
     confirmPassword : string;
     email           : string;
     userAddress     : string;
     phone           : string;
-};
-export const SignUpPage = () => {
+} | null;
+export const SignUpPage = (): JSX.Element => {
     const usernameRef        = useRef<HTMLInputElement>(null);
     const passwordRef        = useRef<HTMLInputElement>(null);
     const confirmPasswordRef = useRef<HTMLInputElement>(null);
@@ -21,14 +21,16 @@ export const SignUpPage = () => {
 
     const[open, setOpen]               = useState(false);
     const[openMessage, setOpenMessage] = useState(false);
-    const[formData, setFormData]       = useState<FormData | null>(null);
+    const[formData, setFormData]       = useState<FormData>(null);
 
     const {
         errMessage,
         handleCreateUser: handleCreateUserPayload,
         loading,
         message,
-        clearMessage
+        clearMessage,
+        isOpen,
+        progress
     } = useSignup();
     
     const handleSignUpForm = (e: SyntheticEvent<HTMLFormElement>) => {
@@ -93,6 +95,8 @@ export const SignUpPage = () => {
             message={message}
             onClick={handleOnclick}
             openMessage={openMessage}
+            isOpen={isOpen}
+            progress={progress}
             />
         </div>
     );

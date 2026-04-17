@@ -1,5 +1,5 @@
 
-const BASE_URL = process.env.BASE_URL || "";
+const BASE_URL = process.env.PARCEL_BASE_URL || "";
 
 export const apiClient = async (url: string, options: RequestInit = {}) => {
     if (!BASE_URL) {

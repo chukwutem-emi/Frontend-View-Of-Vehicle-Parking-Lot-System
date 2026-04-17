@@ -1,15 +1,15 @@
-import type {LoginFormAttributes} from "../../../types/authAttributes";
+import type {LoginFormAttributes} from "../../../types/authAttributes/loginAttributes";
 import {LoginInputField} from "../../../components/Input/Auth/LoginInputField";
-import {Dialog} from "../../../components/Modal/Dialog";
 import {ResponseDialog} from "../../../components/Modal/ResponseDialog";
 import "../../../styles/authCss/login.css";
 import {MdToggleOff, MdToggleOn} from "react-icons/md";
-import { useState } from "react";
+import { useState, type JSX } from "react";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
+import {Loader} from "../../../components/Loader";
 
 
 
-export const LoginForm = ({email, password, divOnClick, errMessage, handleCancel, handleConfirm, open, openMessage, handleDivCancel, message, onClick, loading, handleLoginForm}: LoginFormAttributes) => {
+export const LoginForm = ({email, password, divOnClick, errMessage, openMessage, message, onClick, loading, handleLoginForm, isOpen, progress}: LoginFormAttributes): JSX.Element => {
     const [showPassword, setShowPassword] = useState(false);
     return (
         <>
@@ -40,7 +40,7 @@ export const LoginForm = ({email, password, divOnClick, errMessage, handleCancel
                 </div>
                 <div className="mt-[0.5rem] text-sm xl:text-lg">Show Password</div>    
             </div>
-            <button type="submit" className="login">
+            <button type="submit" className={`login ${loading ? "cursor-not-allowed" : "cursor-pointer"}`} disabled={loading}>
                 {
                     loading ? (
                         <div className="flex flex-row items-center justify-center gap-4">
@@ -53,20 +53,16 @@ export const LoginForm = ({email, password, divOnClick, errMessage, handleCancel
                 }
             </button>
         </form>
-        <Dialog 
-            isOpen={open}
-            message="Are you sure you want to login?" 
-            title="Login"
-            onCancel={handleCancel}
-            onConfirm={handleConfirm}
-            divOnCancel={handleDivCancel}
-        />
         <ResponseDialog
             divOnClick={divOnClick}
             errMessage={errMessage}
             isOpen={openMessage} 
             message={message}
             onClick={onClick} 
+        />
+        <Loader
+            isOpen={isOpen}
+            progress={progress} 
         />
         </>
     );
