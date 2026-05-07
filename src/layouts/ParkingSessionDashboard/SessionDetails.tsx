@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import type { GetParkingSessionAttributes } from "../../types/parkingSessionAttributes/getParkingSessionAttributes";
 import { convertUTCToLocalDateTime } from "../../utils/formatDate";
 import { formattedAmount } from "../../utils/formatAmount";
@@ -6,64 +6,47 @@ import { formattedAmount } from "../../utils/formatAmount";
 
 
 type SessionDetailsProps = {
-    selectedSession : GetParkingSessionAttributes | null;
-    isDivOpen       : boolean;
+    session          : GetParkingSessionAttributes | null;
 };
 
-export const SessionDetails = ({isDivOpen, selectedSession}: SessionDetailsProps): JSX.Element => {
+export const SessionDetails = ({session}: SessionDetailsProps): ReactNode => {
+    if (!session) return null;
+
+    const details = [
+        { label: "ID", value: session?.id },
+        { label: "Vehicle owner next of kin address", value: session?.vehicleOwnerNextOfKinAddress },
+        { label: "Vehicle owner next of kin phone", value: session?.vehicleOwnerNextOfKinPhone },
+        { label: "Vehicle owner next of kin", value: session?.vehicleOwnerNextOfKin },
+        { label: "Vehicle owner address", value: session?.vehicleOwnerAddress },
+        { label: "Vehicle owner phone", value: session?.vehicleOwnerPhone },
+        { label: "Vehicle number", value: session?.vehicleNumber },
+        { label: "Parking status", value: session?.parkingStatus },
+        { label: "Cleared", value: session?.isCleared ? "YES" : "NO" },
+        { label: "Entry time", value: convertUTCToLocalDateTime(session?.entryTime) },
+        { label: "Exit time", value: convertUTCToLocalDateTime(session?.exitTime) },
+        { label: "Total amount", value: formattedAmount(session?.totalAmount ?? 0) },
+        { label: "Slot ID", value: session?.slotId },
+        { label: "Vehicle type ID", value: session?.vehicleTypeId },
+        { label: "Created on", value: convertUTCToLocalDateTime(session?.createdAt) },
+        { label: "Last updated", value: convertUTCToLocalDateTime(session?.updatedAt) }
+    ];
+
     return (
-        <>
-        {
-            selectedSession && isDivOpen && (
-                <div className="absolute mt-4 p-6 bg-white shadow-lg rounded w-[70%] mx-auto z-50">
-                    <div className="overflow-x-auto">
-                        <table className="min-w-max border mt-4 text-left">
-                            <thead className="text-green-600 font-sans">
-                                <tr className="border-b border-gray-700">
-                                    <th className="py-2 px-4 md:text-sm text-xs">ID</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Vehicle owner next of kin address</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Vehicle owner next of kin phone</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Vehicle owner next of kin</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Vehicle owner address</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Vehicle owner phone</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Vehicle number</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Parking status</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Cleared</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Entry time</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Exit time</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Total amount</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Slot ID</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Vehicle type ID</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Created on</th>
-                                    <th className="py-2 px-4 md:text-sm text-xs">Last updated</th>
-                                </tr>
-                            </thead>
-                            <tbody className="text-green font-sans">
-                                <tr className="border-b border-gray-700">
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words text-yellow-700">{selectedSession?.id}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{selectedSession?.vehicleOwnerNextOfKinAddress}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{selectedSession?.vehicleOwnerNextOfKinPhone}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{selectedSession?.vehicleOwnerNextOfKin}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{selectedSession?.vehicleOwnerAddress}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{selectedSession?.vehicleOwnerPhone}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{selectedSession?.vehicleNumber}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{selectedSession?.parkingStatus}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{selectedSession?.isCleared ? "YES" : "NO"}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{convertUTCToLocalDateTime(selectedSession?.entryTime)}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{convertUTCToLocalDateTime(selectedSession?.exitTime)}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{formattedAmount(selectedSession?.totalAmount)}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{selectedSession?.slotId}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{selectedSession?.vehicleTypeId}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{convertUTCToLocalDateTime(selectedSession?.createdAt)}</td>
-                                    <td className="py-4 px-4 md:text-sm text-xs break-words">{convertUTCToLocalDateTime(selectedSession?.updatedAt)}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p className="font-sans font-semibold text-center text-gray-500">Scroll horizontally to view all information</p>
-                </div>
-            )
-        }
-        </>
+        <div className="w-full">
+            <div className="p-6 bg-white shadow-lg rounded w-[90%] md:w-[70%] mx-auto overflow-y-auto h-[30rem]">
+                {
+                    details.map((item, index) => (
+                        <div key={index} className="grid grid-cols-2 border-b pb-2 text-sm gap-10">
+                            <span className="font-sans font-semibold text-green-600">
+                                {item.label}:
+                            </span>
+                            <span className={`font-sans break-words text-gray-600 ${item.label === "Parking status" ? (item.value === "COMPLETED" ? "text-yellow-600 font-semibold" : "text-green-600 font-semibold") : ""}${item.label === "Total amount" ? "text-green-600 font-semibold" : ""}${item.label === "Cleared" ? (item.value === "YES" ? "text-green-600 font-semibold" : "text-red-600 font-semibold") : ""}`}>
+                                {item.value ?? ""}
+                            </span>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
     );
 };

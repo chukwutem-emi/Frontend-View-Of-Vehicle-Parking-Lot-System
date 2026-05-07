@@ -1,11 +1,11 @@
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import type { LogoutAttributes } from "../../../types/authAttributes/logoutAttributes";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
 import { Loader } from "../../../components/Loader";
 
 
-export const Logout = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, isOpen, message, open, openMessage, progress}: LogoutAttributes): JSX.Element => {
+export const Logout = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, isOpen, message, open, openMessage, progress}: LogoutAttributes): ReactNode => {
     return (
         <div>
             <Dialog 

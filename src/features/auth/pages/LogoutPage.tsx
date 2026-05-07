@@ -1,9 +1,9 @@
-import type { JSX } from "react";
 import { useLogout } from "../hooks/useLogout";
 import { Logout } from "../components/Logout";
+import type { ReactNode } from "react";
 
 
-const LogoutPage = (): JSX.Element => {
+const LogoutPage = (): ReactNode => {
     const {
         clearMessage,
         errMessage,

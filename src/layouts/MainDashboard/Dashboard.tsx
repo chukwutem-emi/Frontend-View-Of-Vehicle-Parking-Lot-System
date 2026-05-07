@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import {MdMenu} from "react-icons/md";
 import { fetchStatistics } from "../../features/parkingSession/APIs/parkingStatsAPI";
-import {getParkingSlotAPI} from "../../features/parkingSlot/APIs/dashboardParkingSlotAPI";
-import {useSelector} from "react-redux";
+import {getDashboardParkingSlotAPI} from "../../features/parkingSlot/APIs/dashboardParkingSlotAPI";
 import {SideBar} from "./SideBar";
 import {NavBar} from "./NavBar";
 import {Statistics} from "./Statistics";
@@ -13,6 +12,8 @@ import type {GetAllParkingSessionsAttributes} from "../../types/parkingSessionAt
 import {ParkingSessionsActivityTable} from "./ParkingSessionsActivityTable";
 import {ShimmerUI} from "../../utils/ShimmerUI";
 import {ResponseDialog} from "../../components/Modal/ResponseDialog";
+import { useAppSelector } from "../../utils/useAppSelector";
+import { SunIcon, MoonIcon } from "lucide-react";
 
 
 
@@ -32,8 +33,8 @@ const ParkingDashboard = () => {
 
 
 
-  const userToken = useSelector((store: any) => store.token?.getToken);
-  const userDetails = useSelector((store: any) => store.userDetails?.getUserDetails);
+  const userToken = useAppSelector((state) => state.auth.token);
+  const userDetails = useAppSelector((state) => state.user.details);
 
   const role = userDetails?.userRole;
   const username = userDetails?.username ?? "";
@@ -46,53 +47,65 @@ const ParkingDashboard = () => {
     };
   const getStatistics = async () => {
     try {
-      const {data, status} = await fetchStatistics(userToken);
-      if (status === 200) {
-        setChartData(data?.data ?? []);
-        setMessage("Parking session statistics fetched successfully.");
-        setErrMessage(false);
-      } else {
-        const [key] = Object.keys(data);
-        setMessage(data[key ?? "An error occurred."]);
+      const res = await fetchStatistics(userToken);
+      if (!res.data.success) {
+        setMessage(res.data.message);
         setErrMessage(true);
-      }
-    } catch (err: any) {
-      console.log("ERROR:", err.message);
+        return;
+      };
+      setChartData(res.data.data ?? []);
+      setMessage(res.data.message);
+      setErrMessage(false);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.log({
+          Error : err.message,
+          Cause : err.cause
+        });
+      };
       setChartData([]);
     }
   };
   
   const getSlots = async () => {
     try {
-      const {data, status} = await getParkingSlotAPI(userToken);
-      if (status === 200) {
-        setSlots(data?.data ?? []);
-        setMessage("Parking Slots fetched successfully.");
-        setErrMessage(false);
-      } else {
-        const [key] = Object.keys(data);
-        setMessage(data[key ?? "An error occurred."]);
-        setErrMessage(true)
+      const res = await getDashboardParkingSlotAPI(userToken);
+      if (!res.data.success) {
+        setMessage(res.data.message);
+        setErrMessage(true);
+        return;
       };
-    } catch (err: any) {
-      console.log("ERROR:", err.message);
+      setSlots(res.data.data ?? []);
+      setMessage("Parking Slots fetched successfully.");
+      setErrMessage(false);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.log({
+          ERROR : err.message,
+          CAUSE : err.cause
+        });
+      };
       setSlots([]);
     }
   };
   const getSessions = async () => {
     try {
-      const {data, status} = await dashboardParkingSessionsAPI(userToken);
-      if (status === 200) {
-        setParkingSessions(data?.data ?? []);
-        setMessage(data?.message);
-        setErrMessage(false);
-      } else {
-        const [key] = Object.keys(data);
-        setMessage(data[key ?? "An error occurred."])
+      const res = await dashboardParkingSessionsAPI(userToken);
+      if (!res.data.success) {
+        setMessage(res.data.message)
         setErrMessage(true);
+        return;
       };
-    } catch (err: any) {
-      console.log("ERROR:", err.message);
+      setParkingSessions(res.data.data ?? []);
+      setMessage(res.data.message);
+      setErrMessage(false);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.log({
+          err : err.message,
+          cause : err.cause
+        });
+      };
       setParkingSessions([]);
     }
   };
@@ -111,7 +124,7 @@ const ParkingDashboard = () => {
     };
     const timer = setTimeout(() => {
       setShimmerUILoading(false);
-    }, 4000);
+    }, 1000);
     return () => {
       clearInterval(interval);
       clearTimeout(timer);
@@ -134,14 +147,9 @@ const ParkingDashboard = () => {
         shimmerUILoading ? (
           <ShimmerUI />
         ): (
-        <div className={`flex flex-col md:flex-row h-screen w-full mt-[3rem] md:mt-[4rem] ${isDarkMode ? "bg-[#0B0F2A] text-white": "bg-gray-100 text-black overflow-x-hidden"}`}>
-          {/* Sidebar */}
-          {/* Desktop */}
-          <div className="hidden md:block w-64">
-            <SideBar active={active} setActive={setActive} isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}/>
-          </div>
+        <div className={`flex flex-col md:flex-row h-screen w-full md:mt-[4rem] ${isDarkMode ? "bg-[#0B0F2A] text-white": "bg-gray-200 text-black overflow-x-hidden"}`}>
           {/* Mobile */}
-          <button className="md:hidden p-2 text-white" onClick={() => setIsSideBarOpen(true)}>
+          <button className="md:hidden p-2 w-fit text-white" onClick={() => setIsSideBarOpen(true)}>
             <MdMenu size={40}/>
           </button>
           {
@@ -149,16 +157,20 @@ const ParkingDashboard = () => {
             <div className="fixed inset-0 z-50 md:hidden">
               <div className="absolute inset-0 bg-black opacity-50" onClick={() => setIsSideBarOpen(false)}/>
               <div className="absolute top-0 left-0 w-64 bg-[#0B0F2A] h-full" onClick={(e) => e.stopPropagation()}>
-                <SideBar active={active} setActive={setActive} isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}/>
+                <SideBar active={active} setActive={setActive} isDarkMode={isDarkMode} />
               </div>
             </div>
             )
           }
           {/* Main */}
-          <main className="flex-1 p-4 md:p-6 overflow-y-auto overflow-x-hidden">
+          <main className="flex-1 px-4 md:px-6 overflow-x-hidden">
+            <button className="rounded-lg my-6 text-white" onClick={() => setIsDarkMode(!isDarkMode)}>
+              {
+                isDarkMode ?  <MoonIcon size={40} className="text-white"/> : <SunIcon size={40} className="text-yellow-600"/>
+              }
+            </button>
             {/* Navbar */}
             <NavBar role={role} isDarkMode={isDarkMode}firstTwoLetters={firstTwoLetters} />
-
             {/* Stats */}
             <Statistics isDarkMode={isDarkMode} parkingSessions={parkingSessions} />
 

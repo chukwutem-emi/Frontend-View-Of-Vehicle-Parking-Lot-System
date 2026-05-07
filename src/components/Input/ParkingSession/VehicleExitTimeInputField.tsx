@@ -1,9 +1,9 @@
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import type { VehicleExitTimeInputFieldAttributes } from "../../../types/parkingSessionAttributes/inputFieldAttributes";
 
 
 
-export const VehicleExitTimeInputField = ({label, autoComplete, id, inputRef, inputType, name, placeholder}: VehicleExitTimeInputFieldAttributes): JSX.Element => {
+export const VehicleExitTimeInputField = ({label, autoComplete, id, inputRef, inputType, name, placeholder}: VehicleExitTimeInputFieldAttributes): ReactNode => {
     return (
         <>
         <label htmlFor={id} className="text-black font-sans font-semibold xs:text-sm sm:text-lg md:text-lg lg:text-lg xl:text-lg 2xl:text-lg">{label}</label>

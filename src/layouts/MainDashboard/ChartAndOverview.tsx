@@ -11,8 +11,13 @@ type ChartAndOverviewPropsAttributes = {
 };
 
 export const ChartAndOverview = ({chartData, slots, isDarkMode, parkingSessions}: ChartAndOverviewPropsAttributes) => {
-    const available = slots?.filter((s) => s.isAvailable)?.length || 0;
-    const occupied  = (slots?.length || 0) - available;
+    const available = slots?.reduce((sum, slot) => sum + (slot.isAvailable ? 1 : 0), 0) ?? 0;
+    const occupied  = slots?.reduce((sum, slot) => {
+        const maxCapacity = slot?.maximumCapacity ?? 0;
+        const availableCapacity = slot?.availableCapacity ?? 0;
+        const occupiedCapacity = maxCapacity - availableCapacity;
+        return sum + occupiedCapacity;
+    }, 0) ?? 0
 
     const active  = parkingSessions?.filter((session) => session?.parkingStatus === "ACTIVE").length || 0;
 
@@ -20,11 +25,11 @@ export const ChartAndOverview = ({chartData, slots, isDarkMode, parkingSessions}
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-            <div className={`lg:col-span-2 p-4 rounded-xl shadow-lg ${isDarkMode ? "bg-[#111744]" : "bg-gray-200"}`}>
+            <div className={`lg:col-span-2 p-4 rounded-xl shadow-lg ${isDarkMode ? "bg-[#111744]" : "bg-gray-300"}`}>
             <h2 className="mb-4">General View</h2>
             <ResponsiveContainer width="100%" height={250}>
                 <LineChart data={chartData}>
-                <XAxis dataKey="date" stroke="#ccc" />
+                <XAxis dataKey="date" />
                 <Tooltip />
                 <Line type="monotone" dataKey="entries" stroke="#4F46E5" />
                 <Line type="monotone" dataKey="exits" stroke="#4F46E5" />
@@ -32,23 +37,23 @@ export const ChartAndOverview = ({chartData, slots, isDarkMode, parkingSessions}
             </ResponsiveContainer>
             </div>
             {/* Parking Slots Grid */}
-            <div className={`lg:col-span-2 p-4 rounded-xl shadow-lg ${isDarkMode ? "bg-[#111744]" : "bg-gray-200"}`}>
+            <div className={`lg:col-span-2 p-4 rounded-xl shadow-lg ${isDarkMode ? "bg-[#111744]" : "bg-gray-300"}`}>
                 <h2 className="mb-4">Parking Slots</h2>
 
                 {slots?.length > 0 ? (
-                    <div className="grid grid-cols-4 gap-3 w-[30rem]">
+                    <div className="grid grid-cols-4 gap-3 w-[40rem]">
                     {slots?.map((slot: ParkingSlotAttributes) => (
                         <div
                         key={slot.id}
-                        className={`p-4 rounded-xl text-center font-bold transition ${
+                        className={`p-4 rounded-xl font-bold transition ${
                             slot.isAvailable
                             ? "bg-green-400 hover:bg-green-500"
                             : "bg-red-400 hover:bg-red-500"
                         }`}
                         >
-                        <p>Slot {slot.id}</p>
-                        <p className="text-sm mt-1">
-                            Capacity: {slot.availableCapacity}
+                        <p className="font-sans text-xs md:text-sm">Slot {slot.id}</p>
+                        <p className="text-xs md:text-sm mt-1 font-sans">
+                            Available Capacity: {slot.availableCapacity}
                         </p>
                         </div>
                     ))}
@@ -58,16 +63,16 @@ export const ChartAndOverview = ({chartData, slots, isDarkMode, parkingSessions}
                 )}
             </div>
 
-            <div className={`p-4 rounded-xl shadow-lg ${isDarkMode ? "bg-[#111744]" : "bg-gray-200"}`}>
+            <div className={`p-4 rounded-xl shadow-lg ${isDarkMode ? "bg-[#111744]" : "bg-gray-300"}`}>
                 <h2 className="mb-4">Overview</h2>
 
                 <div className="flex justify-between mb-4">
                     <div>
-                    <p className="text-2xl font-bold">680</p>
+                    <p className="text-2xl font-bold">{parkingSessions.length}</p>
                     <p className={`${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>Vehicles</p>
                     </div>
                     <div>
-                    <p className="text-2xl font-bold">900</p>
+                    <p className="text-2xl font-bold">{slots.length}</p>
                     <p className={`${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>Slots</p>
                     </div>
                 </div>

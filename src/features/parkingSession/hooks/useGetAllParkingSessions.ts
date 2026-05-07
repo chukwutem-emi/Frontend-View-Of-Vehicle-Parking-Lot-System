@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
-import { useSelector } from "react-redux";
 import type { GetAllParkingSessionsAttributes } from "../../../types/parkingSessionAttributes/getAllParkingSessionsAttributes";
 import type { PaginationAttributes } from "../../../types/paginationAttributes";
 import { getAllParkingSessionsAPI } from "../APIs/getAllParkingSessionAPI";
+import { useAppSelector } from "../../../utils/useAppSelector";
 
 
-type FunctionReturnValues = {
+type UseGetAllParkingSessionsReturns = {
     message        : string; 
     errMessage     : boolean; 
     sessions       : GetAllParkingSessionsAttributes; 
@@ -18,8 +18,7 @@ type FunctionReturnValues = {
     pagination     : PaginationAttributes;
 };
 
-export const useGetAllParkingSessions = (): FunctionReturnValues => {
-
+export const useGetAllParkingSessions = (): UseGetAllParkingSessionsReturns => {
     const[message, setMessage]          = useState("");
     const[progress, setProgress]        = useState(0);
     const[errMessage, setErrMessage]    = useState(false);
@@ -32,16 +31,16 @@ export const useGetAllParkingSessions = (): FunctionReturnValues => {
         sort: "-createdAt" ,
         total: 0,
         totalPages: 1,
-        vehicleTypeId: 1
+        vehicleTypeId: undefined
     });
 
-    const userToken = useSelector((store: any) => store.token?.getToken);
+    const userToken = useAppSelector((state) => state.auth.token);
 
     useEffect(() => {
         if (userToken) {
             handleGetAllParkingSessions(pagination?.currentPage);
         };
-    }, [userToken, pagination?.currentPage]);
+    }, [userToken, pagination?.currentPage, pagination?.vehicleTypeId]);
 
     useEffect(() => {
         if (message) {
@@ -69,33 +68,31 @@ export const useGetAllParkingSessions = (): FunctionReturnValues => {
         }, 400);
         
         try {
-            const {data, status} = await getAllParkingSessionsAPI(userToken, pagination?.vehicleTypeId, page, pagination?.limit, pagination?.sort);
-
-            if (status === 200) {
-                setMessage(data?.message);
-                setSessions(data?.data);
-                setErrMessage(false);
-                setProgress(100);
-                clearInterval(interval);
-                if (data?.pagination) {
-                    setPagination((prev) => {
-                        if(prev?.currentPage === data?.pagination.currentPage && prev?.total === data?.pagination?.total && prev?.totalPages === data?.pagination?.totalPages) {
-                            return prev
-                        };
-                        return {...prev, ...data?.pagination}
-                    });
-
-                };
-            } else {
-                const [key] = Object.keys(data);
-                setMessage(data[key ?? "Something went wrong!"]);
+            const res = await getAllParkingSessionsAPI(userToken, pagination?.vehicleTypeId, page, pagination?.limit, pagination?.sort);
+            if (!res.data.success) {
+                setMessage(res.data.message);
                 setErrMessage(true);
                 setOpen(false);
                 setProgress(0);
+                return;
             };
-        } catch (err: any) {
-            console.log("ERROR:", err.message);
-            setMessage(err.message);
+            setProgress(100);
+            setMessage(res.data.message);
+            setSessions(res.data.data);
+            setErrMessage(false);
+            clearInterval(interval);
+            if (res.data.pagination) {
+                setPagination((prev) => {
+                    if(prev?.currentPage === res.data.pagination?.currentPage && prev?.total === res.data.pagination?.total && prev?.totalPages === res.data.pagination?.totalPages) {
+                        return prev
+                    };
+                    return {...prev, ...res.data.pagination}
+                });
+            };
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setMessage(err.message);
+            };
             setErrMessage(true);
             setOpen(false);
             setProgress(0);

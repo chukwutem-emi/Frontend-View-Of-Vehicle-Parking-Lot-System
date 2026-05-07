@@ -1,12 +1,15 @@
 import {usePromoteUser} from "../hooks/usePromoteUser";
 import {PromoteUser} from "../components/PromoteUser";
-import { useEffect, useState, type JSX } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useParams } from "react-router";
 
 
 
-const PromoteUserPage = (): JSX.Element => {
+const PromoteUserPage = (): ReactNode => {
     const {userId} = useParams();
+
+    const id = Number(userId);
+    const validId = userId && !isNaN(id);
 
     const[openMessage, setOpenMessage] = useState(false);
     const[isOpen, setIsOpen]           = useState(false);
@@ -21,10 +24,10 @@ const PromoteUserPage = (): JSX.Element => {
     } = usePromoteUser();
 
     useEffect(() => {
-        if (userId) {
+        if (validId) {
             setIsOpen(true);
         };
-    }, [userId]);
+    }, [validId]);
 
     useEffect(() => {
         if (message) {
@@ -33,8 +36,8 @@ const PromoteUserPage = (): JSX.Element => {
     }, [message]);
 
     const handleConfirm = () => {
-        if (userId) {
-            handlePromoteUserWithId(userId);
+        if (validId) {
+            handlePromoteUserWithId(id);
         };
         setIsOpen(false);
     };

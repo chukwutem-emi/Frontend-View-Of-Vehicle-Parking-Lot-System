@@ -25,21 +25,21 @@ export const Statistics = ({isDarkMode, parkingSessions}: StatsAttributes) => {
     const getCompleted = parkingSessions.filter((completed) => completed.parkingStatus === "COMPLETED").length
     return (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 font-sans">
-          <div className={`p-4 rounded-xl shadow-lg font-bold ${isDarkMode ? "bg-gradient-to-r from-purple-500 to-indigo-500" : "bg-gray-200"}`}>
+          <div className={`p-4 rounded-xl shadow-lg font-bold ${isDarkMode ? "bg-gradient-to-r from-purple-500 to-indigo-500" : "bg-gray-300"}`}>
             <p>Vehicles Today</p>
             <h2 className="text-2xl font-bold">{vehicleToday}</h2>
           </div>
-          <div className={`p-4 rounded-xl shadow-lg font-bold ${isDarkMode ? "bg-gradient-to-r from-cyan-800 to-blue-500": "bg-gray-200"}`}>
+          <div className={`p-4 rounded-xl shadow-lg font-bold ${isDarkMode ? "bg-gradient-to-r from-cyan-800 to-blue-500": "bg-gray-300"}`}>
             <p>Revenue</p>
             <h2 className="text-2xl font-bold text-green-400">{formattedAmount(totalAmount)}</h2>
           </div>
 
-          <div className={`p-4 rounded-xl shadow-lg font-bold ${isDarkMode ? "bg-gradient-to-r from-yellow-600 to-yellow-200" : "bg-gray-200"}`}>
+          <div className={`p-4 rounded-xl shadow-lg font-bold ${isDarkMode ? "bg-gradient-to-r from-yellow-600 to-yellow-200" : "bg-gray-300"}`}>
             <p>Completed</p>
             <h2 className="text-2xl font-bold">{getCompleted}</h2>
           </div>
 
-          <div className={`p-4 rounded-xl shadow-lg font-bold ${isDarkMode ? "bg-gradient-to-r from-green-600 to-green-200" : "bg-gray-200"}`}>
+          <div className={`p-4 rounded-xl shadow-lg font-bold ${isDarkMode ? "bg-gradient-to-r from-green-600 to-green-200" : "bg-gray-300"}`}>
             <p>Active</p>
             <h2 className="text-2xl font-bold">{getActive}</h2>
           </div>

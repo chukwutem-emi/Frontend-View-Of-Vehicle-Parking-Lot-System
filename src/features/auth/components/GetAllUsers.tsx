@@ -6,7 +6,7 @@ import {BigBackgroundSpinner} from "../../../components/BigBackgroundSpinner";
 import {ResponseDialog} from "../../../components/Modal/ResponseDialog";
 import type React from "react";
 import { Link } from "react-router-dom";
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 
 
 type GetAllUsersProps = {
@@ -22,7 +22,7 @@ type GetAllUsersProps = {
 };
 
 
-export const GetAllUsers = ({pagination, setPagination, users, loading, errorMessage, message, divOnclick, isOpen, onClick}: GetAllUsersProps): JSX.Element => {
+export const GetAllUsers = ({pagination, setPagination, users, loading, errorMessage, message, divOnclick, isOpen, onClick}: GetAllUsersProps): ReactNode => {
     return (
         <div className="bg-white w-full mx-auto p-10">
             {

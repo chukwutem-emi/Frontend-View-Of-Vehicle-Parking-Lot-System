@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import type {DemoteUserAttributes} from "../../../types/authAttributes/demoteUserAttributes";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
@@ -6,7 +6,7 @@ import { Loader } from "../../../components/Loader";
 
 
 
-export const DemoteUser = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, isOpen, message, open, openMessage, progress}: DemoteUserAttributes): JSX.Element => {
+export const DemoteUser = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, isOpen, message, open, openMessage, progress}: DemoteUserAttributes): ReactNode => {
     return (
         <div className="mx-auto">
             <Dialog 
@@ -15,7 +15,7 @@ export const DemoteUser = ({errMessage, handleCancel, handleConfirm, handleDivCa
                 message="Are you sure you want to demote this user?"
                 onCancel={handleCancel}
                 onConfirm={handleConfirm}
-                title="Demote"
+                title="Demote user"
             />
             <ResponseDialog 
                 divOnClick={handleDivClick}

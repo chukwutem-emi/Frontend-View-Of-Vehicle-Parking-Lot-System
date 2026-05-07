@@ -15,7 +15,7 @@ export const DeleteUser = ({errMessage, handleCancel, handleConfirm, handleDivCa
                 message="Are you sure you want to delete this user?"
                 onCancel={handleCancel}
                 onConfirm={handleConfirm}
-                title="Delete"
+                title="Delete user"
             />
             <ResponseDialog 
                 divOnClick={handleDivClick}

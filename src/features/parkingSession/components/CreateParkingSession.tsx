@@ -1,14 +1,15 @@
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import type {CreateParkingSessionFormAttributes} from "../../../types/parkingSessionAttributes/createParkingSessionAttributes";
 import { CreateParkingSessionInputField } from "../../../components/Input/ParkingSession/CreateParkingSessionInputField";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
 import { Loader } from "../../../components/Loader";
 import "../../../styles/parkingSessionCss/createParkingSession.css";
+import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
-export const CreateParkingSession = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivOnClick, handleOnClick, handleParkingSessionForm, isOpen, loading, message, open, openMessage, progress, slotId, vehicleNumber, vehicleOwnerAddress, vehicleOwnerNextOfKin, vehicleOwnerNextOfKinAddress, vehicleOwnerNextOfKinPhone, vehicleOwnerPhone, vehicleTypeId}: CreateParkingSessionFormAttributes):JSX.Element => {
+export const CreateParkingSession = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivOnClick, handleOnClick, handleParkingSessionForm, isOpen, loading, message, open, openMessage, progress, slotId, vehicleNumber, vehicleOwnerAddress, vehicleOwnerNextOfKin, vehicleOwnerNextOfKinAddress, vehicleOwnerNextOfKinPhone, vehicleOwnerPhone, vehicleId}: CreateParkingSessionFormAttributes): ReactNode => {
     return (
         <>
         <form onSubmit={handleParkingSessionForm} className="form">
@@ -82,7 +83,7 @@ export const CreateParkingSession = ({errMessage, handleCancel, handleConfirm, h
                 label="Vehicle type Id"
                 autoComplete="on"
                 id="vehicleTypeId"
-                inputRef={vehicleTypeId} 
+                inputRef={vehicleId} 
                 inputType="number"
                 step={1}
                 min={0}
@@ -93,7 +94,10 @@ export const CreateParkingSession = ({errMessage, handleCancel, handleConfirm, h
             <button type="submit" className="session" disabled={loading}>
                 {
                     loading ? (
-                        <span className="loading">LOADING...</span>
+                        <div className="flex flex-row items-center justify-center gap-4">
+                            <ButtonSpinner />
+                            <span className="loading">LOADING...</span>
+                        </div>
                     ) : (
                         <div className="submit">SUBMIT</div>
                     )
@@ -103,7 +107,7 @@ export const CreateParkingSession = ({errMessage, handleCancel, handleConfirm, h
         <Dialog
             divOnCancel={handleDivCancel} 
             isOpen={isOpen}
-            message="Are you sure all the information are correct?"
+            message="Proceed to submit?"
             onCancel={handleCancel}
             onConfirm={handleConfirm}
             title="Create Parking Session"

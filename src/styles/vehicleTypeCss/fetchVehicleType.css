@@ -1,0 +1,12 @@
+.form {
+    @apply rounded w-[80%] mx-auto flex flex-col p-6 mt-[2rem] space-y-6;
+}
+.fetch-vehicle-type {
+    @apply px-2 py-1 rounded-md text-white font-sans md:font-bold font-semibold bg-yellow-600 hover:bg-yellow-400 text-center w-1/2
+}
+.loading {
+    @apply text-white font-sans animate-pulse text-sm md:text-lg
+}
+.submit {
+    @apply text-gray-700 font-sans text-sm md:text-lg
+}

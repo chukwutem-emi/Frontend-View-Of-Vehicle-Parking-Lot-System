@@ -1,9 +1,9 @@
 import {useGetAllUser} from "../hooks/useGetAllUsers";
 import { GetAllUsers } from "../components/GetAllUsers";
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 
 
-const GetAllUserPage = (): JSX.Element => {
+const GetAllUserPage = (): ReactNode => {
 
     const {
         errMessage,

@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import type { GetParkingSessionProps } from "../../../types/parkingSessionAttributes/getParkingSessionAttributes";
 import { convertUTCToLocalDateTime } from "../../../utils/formatDate";
 import { formattedAmount } from "../../../utils/formatAmount";
@@ -8,7 +8,7 @@ import { Loader } from "../../../components/Loader";
 
 
 
-export const GetParkingSession = ({errMessage, handleDivOnclick, handleOnclick, message, open, openMessage, progress, session}: GetParkingSessionProps): JSX.Element => {
+export const GetParkingSession = ({errMessage, handleDivOnclick, handleOnclick, message, open, openMessage, progress, session}: GetParkingSessionProps): ReactNode => {
     return (
         <div className="bg-white w-full mx-auto p-10">
             <div className="overflow-x-auto">

@@ -1,11 +1,16 @@
-import type { JSX } from "react";
+import { useEffect, type ReactNode } from "react";
 import { BigBackgroundSpinner } from "../../../components/BigBackgroundSpinner";
 import { GetUser } from "../components/GetUser";
 import { useGetUser } from "../hooks/useGetUser";
+import { useSearchParams } from "react-router-dom";
 
 
 
-const GetUserPage = (): JSX.Element => {
+const GetUserPage = (): ReactNode => {
+    const [searchParams] = useSearchParams();
+    const userId = searchParams.get("userId");
+    const id = userId ? Number(userId) : null;
+
     const {
         errMessage,
         loading,
@@ -13,8 +18,15 @@ const GetUserPage = (): JSX.Element => {
         openMessage,
         setOpenMessage,
         user,
-        clearMessage
+        clearMessage,
+        handleGetUser : handleGetUserWithId
     } = useGetUser();
+
+     useEffect(() => {
+        if (id) {
+            handleGetUserWithId(id);
+        }
+    }, [id]);
 
     const handleDivClick = () => {
         setOpenMessage(false);

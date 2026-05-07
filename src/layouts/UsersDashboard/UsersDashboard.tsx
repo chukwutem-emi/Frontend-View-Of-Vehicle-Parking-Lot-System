@@ -1,77 +1,68 @@
 import type {GetAllUsersAttributes} from "../../types/authAttributes/getAllUsersAttributes";
 import {apiClient} from "../../services/apiClient";
-import { useEffect, useRef, useState, type JSX } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {BigBackgroundSpinner} from "../../components/BigBackgroundSpinner";
-import { useSelector } from "react-redux";
 import { SearchBar } from "./SearchBar";
-import { UserDetails } from "./UserDetails";
-import type { GetUserAttributesWithUnderScore } from "../../types/authAttributes/getUserAttributes";
 import { SideBar } from "./SideBar";
 import {ResponseDialog} from "../../components/Modal/ResponseDialog";
 import { AllUsers } from "./AllUsers";
 import { MdMenu } from "react-icons/md";
+import type { APIResponse } from "../../features/auth/APIs/getAllUsersAPI";
+import { useAppSelector } from "../../utils/useAppSelector";
+import { Description } from "./Description";
 
 
 
-
-const UsersDashboard = (): JSX.Element => {
+const UsersDashboard = (): ReactNode => {
     const[users, setUsers]                         = useState<GetAllUsersAttributes>([]);
     const[message, setMessage]                     = useState("");
     const[errMessage, setErrMessage]               = useState(false);
     const[backgroundLoading, setBackgroundLoading] = useState(true);
-    const[selectedUser, setSelectedUser]           = useState<GetUserAttributesWithUnderScore | null>(null);
-    const[isDivOpen, setIsDivOpen]                 = useState(false);
     const[open, setOpen]                           = useState(false);
     const[isSideBarOpen, setIsSideBarOpen]         = useState(false);
+    const[filteredUsers, setFilteredUsers]         = useState<GetAllUsersAttributes>([]);
 
-    const divRef = useRef<HTMLDivElement>(null);
 
-    const userToken = useSelector((store: any) => store.token?.getToken);
-
+    const userToken = useAppSelector((state) => state.auth.token);
 
 
     const getAllUsers = async () => {
         try {
-            const response = await apiClient("/auth/users", {
+            const response = await apiClient<APIResponse>("/auth/users", {
                 headers: {
                     "Authorization": `Bearer ${userToken}`
                 },
                 method: "GET"
             });
-            if (response.status === 200) {
-                setMessage("Users retrieved successfully.");
-                setUsers(response.data?.data || response.data?.usersDetails || []);
-                setErrMessage(false);
-            } else {
-                const [key] = Object.keys(response.data);
-                setMessage(response.data[key ?? "An error has occurred!"]);
+            if (!response.data.success) {
+                setMessage(response.data.message);
                 setErrMessage(true);
+                return;
             };
-        } catch (err: any) {
+            setMessage(response.data.message);
+            setUsers(response.data.data);
+            setFilteredUsers(response.data.data);
+            setErrMessage(false);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setMessage(err.message);
+            };
             setErrMessage(true);
-            setMessage(err.message);
         }
-    };
-    const handleClickOutside = (e: MouseEvent) => {
-        if (divRef.current && !divRef.current.contains(e.target as Node)) {
-            setIsDivOpen(false);
-        };
     };
     useEffect(() => {
         if (userToken) {
             getAllUsers();
         };
-        window.addEventListener("mousedown", handleClickOutside);
         const interval = setInterval(() => {
             getAllUsers();
         }, 1800000);
         const timer = setTimeout(() => {
             setBackgroundLoading(false);
-        }, 3000);
+        }, 1000);
         return () => {
             clearInterval(interval);
             clearTimeout(timer);
-            window.removeEventListener("mousedown", handleClickOutside);
         };
     }, [userToken]);
 
@@ -99,13 +90,9 @@ const UsersDashboard = (): JSX.Element => {
             backgroundLoading ? (
                 <BigBackgroundSpinner />
             ) : (
-                <div className="flex flex-col md:flex-row h-screen w-full overflow-x-hidden mt-[3rem] md:mt-[5rem]">
-                    {/* Bigger screen */}
-                    <div className="hidden md:block w-[16rem] max-h-screen">
-                           <SideBar />
-                    </div>
+                <div className="flex flex-col md:flex-row h-screen w-full overflow-x-hidden md:mt-[5rem] bg-[#0B4F4F]">
                     {/* Mobile */}
-                    <button type="button" className="md:hidden p-2 text-white" onClick={() => setIsSideBarOpen(true)}>
+                    <button type="button" className="md:hidden w-fit p-2 text-white" onClick={() => setIsSideBarOpen(true)}>
                         <MdMenu size={40}/>
                     </button>
                     {
@@ -118,12 +105,10 @@ const UsersDashboard = (): JSX.Element => {
                             </div>
                         )
                     }
-                    <main className="flex-1 max-h-screen p-4 md:p-8 overflow-y-auto overflow-x-hidden bg-[#0B4F4F]">
-                        <SearchBar users={users} setSelectedUser={setSelectedUser} onSelectUser={(user) => {setSelectedUser(user); setIsDivOpen(true)}}/>
-                        <div ref={divRef}>
-                            <UserDetails selectedUser={selectedUser} isDivOpen={isDivOpen} />
-                        </div>
-                        <AllUsers users={users} />
+                    <main className="flex-1 max-h-screen p-4 md:p-8 overflow-y-auto overflow-x-hidden">
+                        <SearchBar users={users} setFilteredUsers={setFilteredUsers}/>
+                        <Description />
+                        <AllUsers filteredUsers={filteredUsers} />
                     </main>
                     <ResponseDialog divOnClick={handleDivClick} errMessage={errMessage} isOpen={open} message={message} onClick={handleOnClick} />
                 </div>

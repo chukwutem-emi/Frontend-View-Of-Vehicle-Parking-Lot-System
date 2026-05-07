@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, type JSX } from "react";
+import React, { useEffect, useRef, useState, type ReactNode } from "react";
 import { useVehicleExitTime } from "../hooks/useVehicleExitTime";
 import { VehicleExitTime } from "../components/VehicleExitTime";
 
@@ -9,7 +9,7 @@ type FormData = {
     vehicleNumber : string;
 } | null;
 
-const VehicleExitTimePage = (): JSX.Element => {
+const VehicleExitTimePage = (): ReactNode => {
     const vehicleNumberRef = useRef<HTMLInputElement>(null);
     const vehicleNameRef   = useRef<HTMLInputElement>(null);
 
@@ -30,8 +30,8 @@ const VehicleExitTimePage = (): JSX.Element => {
     const handleVehicleExitTimeForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         const payload = {
-            vehicleNumber : vehicleNumberRef.current!.value,
-            vehicleName   : vehicleNameRef.current!.value
+            vehicleNumber : vehicleNumberRef.current?.value ?? "",
+            vehicleName   : vehicleNameRef.current?.value ?? ""
         };
         setFormData(payload);
         setIsOpen(true);
@@ -52,6 +52,7 @@ const VehicleExitTimePage = (): JSX.Element => {
         if (formData) {
             handleVehicleExitTimePayload(formData);
         };
+        setIsOpen(false);
     };
 
     const handleCancel = () => setIsOpen(false);
@@ -62,7 +63,7 @@ const VehicleExitTimePage = (): JSX.Element => {
     };
 
     return (
-        <div className="overflow-x-hidden overflow-y-auto w-full">
+        <div className="overflow-x-hidden overflow-y-auto w-full my-[6rem]">
             <VehicleExitTime
                 errMessage={errMessage}
                 handleCancel={handleCancel} 
@@ -77,6 +78,8 @@ const VehicleExitTimePage = (): JSX.Element => {
                 open={open}
                 openMessage={openMessage}
                 progress={progress}
+                vehicleName={vehicleNameRef}
+                vehicleNumber={vehicleNumberRef}
             />
         </div>
     );

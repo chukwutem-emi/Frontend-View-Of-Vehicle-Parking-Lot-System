@@ -1,7 +1,8 @@
+import type { ReactNode } from "react";
 import type {InputFieldAttributes} from "../../../types/authAttributes/inputFieldsAttributes";
 
 
-export const SignUpInputField = ({id, name, inputType, inputRef, placeholder, autoComplete, label}: InputFieldAttributes) => {
+export const SignUpInputField = ({id, name, inputType, inputRef, placeholder, autoComplete, label}: InputFieldAttributes): ReactNode => {
     return (
         <>
         <label htmlFor={id} className="text-black font-sans font-semibold xs:text-sm sm:text-lg md:text-lg lg:text-lg xl:text-lg 2xl:text-lg">{label}</label>

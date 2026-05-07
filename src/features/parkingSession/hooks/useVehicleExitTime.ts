@@ -1,11 +1,11 @@
 import { useState } from "react";
 import type { VehicleExitTimeAttributes } from "../../../types/parkingSessionAttributes/vehicleExitTimeAttributes";
-import { useSelector } from "react-redux";
 import { vehicleExitTimeAPI } from "../APIs/vehicleExitTimeAPI";
 import { useNavigate } from "react-router";
+import { useAppSelector } from "../../../utils/useAppSelector";
 
 
-type FunctionReturnValues = {
+type UseVehicleExitTimeReturns = {
     handleVehicleExitTime : (payload: VehicleExitTimeAttributes) => Promise<void>;
     clearMessage          : () => void;
     message               : string;
@@ -15,14 +15,14 @@ type FunctionReturnValues = {
     open                  : boolean;
 };
 
-export const useVehicleExitTime = (): FunctionReturnValues => {
+export const useVehicleExitTime = (): UseVehicleExitTimeReturns => {
     const[message, setMessage]       = useState("");
     const[errMessage, setErrMessage] = useState(false);
     const[loading, setLoading]       = useState(false);
     const[progress, setProgress]     = useState(0);
     const[open, setOpen]             = useState(false);
 
-    const userToken = useSelector((store: any) => store.token?.getToken);
+    const userToken = useAppSelector((state) => state.auth.token);
 
     const navigate = useNavigate();
 
@@ -47,25 +47,25 @@ export const useVehicleExitTime = (): FunctionReturnValues => {
         }, 400);
 
         try {
-            const {data, status} = await vehicleExitTimeAPI(payload, userToken);
-            if (status === 200) {
-                setMessage(data?.message);
-                setProgress(100);
-                clearInterval(interval);
-                setErrMessage(false);
-                setTimeout(() => {
-                    navigate("/app/get-sessions");
-                }, 4000);
-            } else {
-                const [key] = Object.keys(data);
-                setMessage(data[key ?? "Something went wrong!"]);
+            const res = await vehicleExitTimeAPI(payload, userToken);
+            if (!res.data.success) {
+                setMessage(res.data.message);
                 setErrMessage(true);
                 setOpen(false);
                 setProgress(0);
+                return;
             };
-        } catch (err: any) {
-            console.log("ERROR:", err.message);
-            setMessage(err.message);
+            setProgress(100);
+            setMessage(res.data.message);
+            clearInterval(interval);
+            setErrMessage(false);
+            setTimeout(() => {
+                navigate("/app/parking-session-dashboard");
+            }, 3000);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setMessage(err.message);
+            };
             setOpen(false);
             setProgress(0);
             setErrMessage(true);

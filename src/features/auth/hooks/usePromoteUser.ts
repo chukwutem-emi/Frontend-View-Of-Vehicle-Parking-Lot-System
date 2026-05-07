@@ -1,18 +1,26 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { promoteUserAPI } from "../APIs/promoteUserAPI";
 import { useNavigate } from "react-router";
+import { useAppSelector } from "../../../utils/useAppSelector";
 
 
+type UsePromoteUserReturns = {
+    message           : string;
+    clearMessage      : () => void;
+    errMessage        : boolean;
+    handlePromoteUser : (userId: number) => Promise<void>;
+    open              : boolean;
+    progress          : number;
+};
 
-
-export const usePromoteUser = () => {
+export const usePromoteUser = (): UsePromoteUserReturns => {
     const[message, setMessage]       = useState("");
     const[progress, setProgress]     = useState(0);
     const[errMessage, setErrMessage] = useState(false);
     const[open, setOpen]             = useState(false);
 
-    const userToken = useSelector((store:any) => store.token?.getToken);
+     const userToken = useAppSelector((state) => state.auth?.token);
+
 
     const navigate = useNavigate();
 
@@ -21,7 +29,7 @@ export const usePromoteUser = () => {
         setErrMessage(false);
     };
 
-    const handlePromoteUser = async <U>(userId: U) => {
+    const handlePromoteUser = async (userId: number) => {
         setProgress(20);
         setOpen(true);
 
@@ -36,25 +44,25 @@ export const usePromoteUser = () => {
         }, 400);
 
         try {
-            const {data, status} = await promoteUserAPI(userToken, userId);
-            if (status === 200) {
-                setMessage(data?.message);
-                setProgress(100);
-                clearInterval(interval);
-                setErrMessage(false);
-                setTimeout(() => {
-                    navigate("/app/users");
-                }, 4000);
-            } else {
-                const [key] = Object.keys(data);
-                setMessage(data[key ?? "Something went wrong!"]);
+            const res = await promoteUserAPI(userToken, userId);
+            if (!res.data.success) {
+                setMessage(res.data.message);
                 setErrMessage(true);
                 setProgress(0);
                 setOpen(false);
+                return;
             };
-        } catch (err: any) {
-            console.log("ERROR:", err.message);
-            setMessage(err.message);
+            setProgress(100);
+            setMessage(res.data.message);
+            clearInterval(interval);
+            setErrMessage(false);
+            setTimeout(() => {
+                navigate("/app/users-dashboard");
+            }, 3000);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setMessage(err.message);
+            };
             setOpen(false);
             setProgress(0);
             setErrMessage(true);

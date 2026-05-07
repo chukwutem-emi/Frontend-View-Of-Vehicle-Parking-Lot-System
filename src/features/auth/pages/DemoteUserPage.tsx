@@ -1,12 +1,15 @@
-import { useEffect, useState, type JSX } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {DemoteUser} from "../components/DemoteUser";
 import {useDemoteUser} from "../hooks/useDemoteUser";
 import { useParams } from "react-router";
 
 
 
-const DemoteUserPage = (): JSX.Element => {
+const DemoteUserPage = (): ReactNode => {
     const {userId} = useParams();
+
+    const id = Number(userId);
+    const validId = userId && !isNaN(id);
 
     const[openMessage, setOpenMessage] = useState(false);
     const[isOpen, setIsOpen]           = useState(false);
@@ -21,10 +24,12 @@ const DemoteUserPage = (): JSX.Element => {
     } = useDemoteUser();
 
     useEffect(() => {
-        if (userId) {
+        if (validId) {
             setIsOpen(true);
         };
-    }, [userId]);
+    }, [validId]);
+
+    if (!validId) return null;
 
     useEffect(() => {
         if (message) {
@@ -34,7 +39,7 @@ const DemoteUserPage = (): JSX.Element => {
 
     const handleConfirm = () => {
         if (userId) {
-            handleDemoteUserWithId(userId);
+            handleDemoteUserWithId(id);
         };
         setIsOpen(false);
     };

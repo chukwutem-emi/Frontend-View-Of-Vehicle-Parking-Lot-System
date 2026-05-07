@@ -1,9 +1,9 @@
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import type { InputFieldAttributes } from "../../../types/authAttributes/inputFieldsAttributes";
 
 
 
-export const UpdateUserDetailsInputField = ({label, autoComplete, id, inputRef, name, inputType, placeholder, value, onChange}: InputFieldAttributes): JSX.Element => {
+export const UpdateUserDetailsInputField = ({label, autoComplete, id, inputRef, name, inputType, placeholder, value, onChange}: InputFieldAttributes): ReactNode => {
     return (
         <>
         <label htmlFor={id} className="text-black font-sans font-semibold xs:text-sm sm:text-lg md:text-lg lg:text-lg xl:text-lg 2xl:text-lg">{label}</label>

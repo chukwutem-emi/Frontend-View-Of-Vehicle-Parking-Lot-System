@@ -1,42 +1,34 @@
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import { SideBar } from "./SideBar";
 import { MdMenu } from "react-icons/md";
 import type React from "react";
-import type { GetParkingSessionAttributes } from "../../types/parkingSessionAttributes/getParkingSessionAttributes";
 import type { GetAllParkingSessionsAttributes } from "../../types/parkingSessionAttributes/getAllParkingSessionsAttributes";
 import { ResponseDialog } from "../../components/Modal/ResponseDialog";
 import { SearchBar } from "./SearchBar";
-import { SessionDetails } from "./SessionDetails";
 import { AllParkingSessions } from "./AllParkingSessions";
+import { Description } from "./Description";
 
 
 type ParkingSessionProps = {
-    isSideBarOpen      : boolean;
-    setIsSideBarOpen   : React.Dispatch<React.SetStateAction<boolean>>;
-    selectedSession    : GetParkingSessionAttributes | null;
-    setSelectedSession : React.Dispatch<React.SetStateAction<GetParkingSessionAttributes | null>>;
-    errMessage         : boolean;
-    message            : string;
-    isDivOpen          : boolean;
-    open               : boolean;
-    sessions           : GetAllParkingSessionsAttributes;
-    handleDivClick     : () => void;
-    handleOnclick      : () => void;
-    setIsDivOpen       : React.Dispatch<React.SetStateAction<boolean>>;
-    divRef             : React.RefObject<HTMLDivElement | null>
+    isSideBarOpen       : boolean;
+    setIsSideBarOpen    : React.Dispatch<React.SetStateAction<boolean>>;
+    errMessage          : boolean;
+    message             : string;
+    open                : boolean;
+    sessions            : GetAllParkingSessionsAttributes;
+    handleDivClick      : () => void;
+    handleOnclick       : () => void;
+    setFilteredSessions : React.Dispatch<React.SetStateAction<GetAllParkingSessionsAttributes>>;
+    filteredSessions    : GetAllParkingSessionsAttributes;
 };
 
 
-export const ParkingSession = ({errMessage, isDivOpen, isSideBarOpen, message, open, selectedSession, sessions, setIsSideBarOpen, setSelectedSession, handleDivClick, handleOnclick, setIsDivOpen, divRef}: ParkingSessionProps):JSX.Element => {
+export const ParkingSession = ({errMessage, isSideBarOpen, message, open, sessions, setIsSideBarOpen, handleDivClick, handleOnclick, setFilteredSessions, filteredSessions}: ParkingSessionProps): ReactNode => {
     
     return (
-        <div className="flex flex-col md:flex-row h-screen w-full overflow-x-hidden mt-[3rem] md:mt-[5rem]">
-            {/* Bigger screen */}
-            <div className="hidden md:block w-[16rem] max-h-screen">
-                <SideBar />
-            </div>
+        <div className="flex flex-col md:flex-row h-screen w-full overflow-x-hidden md:mt-[5rem] bg-[#3F0E3F]">
             {/* Mobile */}
-            <button type="button" className="md:hidden p-2 text-white" onClick={() => setIsSideBarOpen(true)}>
+            <button type="button" className="md:hidden w-fit p-2 text-white" onClick={() => setIsSideBarOpen(true)}>
                 <MdMenu size={40}/>
             </button>
             {
@@ -49,12 +41,10 @@ export const ParkingSession = ({errMessage, isDivOpen, isSideBarOpen, message, o
                     </div>
                 )
             }
-            <main className="flex-1 max-h-screen p-4 md:p-8 overflow-y-auto overflow-x-hidden bg-[#3F0E3F]">
-                <SearchBar onSelectSession={(session) => {setSelectedSession(session); setIsDivOpen(true)}} sessions={sessions} setSelectedSession={setSelectedSession} />
-                <div ref={divRef}>
-                    <SessionDetails isDivOpen={isDivOpen} selectedSession={selectedSession} />
-                </div>
-                <AllParkingSessions sessions={sessions} />
+            <main className="flex-1 max-h-screen p-4 md:p-8 overflow-y-auto overflow-x-hidden">
+                <SearchBar sessions={sessions} setFilteredSessions={setFilteredSessions} />
+                <Description />
+                <AllParkingSessions filteredSessions={filteredSessions} />
             </main>
             <ResponseDialog divOnClick={handleDivClick} errMessage={errMessage} isOpen={open} message={message} onClick={handleOnclick} />
         </div>

@@ -1,9 +1,9 @@
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import type { ParkingSessionInputFieldAttributes } from "../../../types/parkingSessionAttributes/inputFieldAttributes";
 
 
 
-export const CreateParkingSessionInputField = ({label, autoComplete, id, inputRef, inputType, name, placeholder, max, min, step}: ParkingSessionInputFieldAttributes): JSX.Element => {
+export const CreateParkingSessionInputField = ({label, autoComplete, id, inputRef, inputType, name, placeholder, max, min, step}: ParkingSessionInputFieldAttributes): ReactNode => {
     return (
         <>
         <label htmlFor={id} className="text-black font-sans font-semibold xs:text-sm sm:text-lg md:text-lg lg:text-lg xl:text-lg 2xl:text-lg">{label}</label>

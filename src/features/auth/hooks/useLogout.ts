@@ -33,7 +33,7 @@ export const useLogout = (): FunctionReturnValue => {
 
     const navigate = useNavigate();
 
-    const clearMessage = () => {
+    const clearMessage = (): void => {
         setMessage("");
         setErrMessage(false);
     };
@@ -79,10 +79,12 @@ export const useLogout = (): FunctionReturnValue => {
                 navigate("/");
             }, 6000);
 
-        } catch (err: any) {
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setMessage(err.message);
+            };
             setErrMessage(true);
             setOpen(false);
-            setMessage(err.message);
             setProgress(0);
         };
     };

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import {createParkingSessionAPI} from "../APIs/createParkingSessionAPI";
-import { useSelector } from "react-redux";
 import type { CreateParkingSessionAttributes } from "../../../types/parkingSessionAttributes/createParkingSessionAttributes";
+import { useNavigate } from "react-router";
+import { useAppSelector } from "../../../utils/useAppSelector";
 
-type FunctionReturnValues = {
+type UseCreateParkingSessionReturns = {
     message                    : string; 
     errMessage                 : boolean; 
     loading                    : boolean; 
@@ -13,15 +14,16 @@ type FunctionReturnValues = {
     handleCreateParkingSession : (payload: CreateParkingSessionAttributes) => Promise<void>
 };
 
-export const useCreateParkingSession = (): FunctionReturnValues => {
-    
+export const useCreateParkingSession = (): UseCreateParkingSessionReturns => {
     const[message, setMessage]       = useState("");
     const[errMessage, setErrMessage] = useState(false);
     const[loading, setLoading]       = useState(false);
     const[progress, setProgress]     = useState(0);
     const[open, setOpen]             = useState(false);
 
-    const userToken = useSelector((store: any) => store.token?.getToken);
+    const userToken = useAppSelector((state) => state.auth.token);
+
+    const navigate = useNavigate();
 
     const clearMessage = () => {
         setMessage("");
@@ -33,7 +35,7 @@ export const useCreateParkingSession = (): FunctionReturnValues => {
         setProgress(20);
         setOpen(true);
 
-        const interval = setTimeout(() => {
+        const interval = setInterval(() => {
             setProgress((prev) => {
                 if (prev >= 90) {
                     clearInterval(interval);
@@ -44,22 +46,25 @@ export const useCreateParkingSession = (): FunctionReturnValues => {
         }, 400);
 
         try {
-            const {data, status} = await createParkingSessionAPI(payload, userToken);
-            if (status === 201) {
-                setMessage(data?.Message);
-                setErrMessage(false);
-                setProgress(100);
-                clearInterval(interval);           
-            } else {
-                const [key] = Object.keys(data);
-                setMessage(data[key ?? "Something went wrong!"]);
+            const res = await createParkingSessionAPI(payload, userToken);
+            if (!res.data.success) {
+                setMessage(res.data.Message);
                 setErrMessage(true);
                 setOpen(false);
                 setProgress(0);
+                return;
             };
-        } catch (err: any) {
-            console.log("ERROR:", err.message);
-            setMessage(err.message);
+            setProgress(100);
+            setMessage(res.data.Message);
+            setErrMessage(false);
+            clearInterval(interval);
+            setTimeout(() => {
+                navigate("/app/parking-session-dashboard");
+            }, 3000);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setMessage(err.message);
+            };
             setErrMessage(true);
             setLoading(false);
             setProgress(0);

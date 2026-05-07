@@ -6,15 +6,33 @@ import { setToken } from "../authSlices/tokenSlice";
 import { useNavigate } from "react-router";
 import {apiClient} from "../../../services/apiClient";
 import { setUserDetails } from "../authSlices/userSlice";
+import type { GetUserAttributes } from "../../../types/authAttributes/getUserAttributes";
 
 
 
-export const useLogin = () => {
+type UseLoginReturns = {
+    errMessage      : boolean;
+    message         : string;
+    loading         : boolean;
+    clearMessage    : () => void;
+    handleLoginUser : (payload: LoginPayloadAttributes) => Promise<void>;
+    progress        : number;
+    isOpen          : boolean;
+};
+
+type GetUserAPIResponse = {
+    success : boolean;
+    message : string;
+    data    : GetUserAttributes;
+};
+
+export const useLogin = (): UseLoginReturns => {
     const[message, setMessage]       = useState("");
     const[errMessage, setErrMessage] = useState(false);
     const[loading, setLoading]       = useState(false);
     const[progress, setProgress]     = useState(0);
     const[isOpen, setIsOpen]         = useState(false); 
+
     
 
     const dispatch = useDispatch();
@@ -24,19 +42,27 @@ export const useLogin = () => {
         setMessage("");
         setErrMessage(false);
     };
-    const getUser = async (token: any) => {
+    const getUser = async (token: string) => {
         try {
-            const res = await apiClient("/auth/user", {
+            const res = await apiClient<GetUserAPIResponse>("/auth/current-user", {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 },
                 method: "GET"
             });
-            if (res.status === 200) {
-                dispatch(setUserDetails(res?.data?.userDetails));
+
+            if (!res.data.success) return;
+
+            dispatch(setUserDetails(res.data.data));
+            return res.data.data;
+
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                console.log({
+                    ERROR: err.message,
+                    CAUSE: err.cause
+                });
             };
-        } catch (err: any) {
-            console.log("ERROR:", err.message);
         };
     };
     const handleLoginUser = async (payload: LoginPayloadAttributes) => {
@@ -55,25 +81,30 @@ export const useLogin = () => {
         }, 400);
 
         try {
-            const {data, status} = await loginUser(payload);
-            if (status === 200) {
-                setMessage(data.message);
-                clearInterval(interval);
-                setProgress(100);
-                dispatch(setToken(data.token));
-                await getUser(data.token);
-                setErrMessage(false);
-                navigate("/app/dashboard");
-            } else {
-                const [key] = Object.keys(data);
-                setMessage(data[key ?? "An error occurred!"]);
+            const res = await loginUser(payload);
+            if (!res.data.success) {
+                setMessage(res.data.message);
                 setErrMessage(true);
                 setProgress(0);
-                setIsOpen(false)
+                setIsOpen(false);
+                return;
+            };
+            setProgress(100);
+            clearInterval(interval);
+            setLoading(false);
+            const user = await getUser(res.data.token);
+            setErrMessage(false);
+            dispatch(setToken(res.data.token));
+            if (!user?.isAdmin) {
+                navigate("/");
+                return;
             }
-        } catch (error) {
+            navigate("/app/dashboard");
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setMessage(error.message);
+            };
             setErrMessage(true);
-            setMessage((error as Error).message);
             setProgress(0);
             setIsOpen(false);
         } finally {

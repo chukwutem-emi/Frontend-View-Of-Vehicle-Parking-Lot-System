@@ -1,15 +1,16 @@
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import type { VehicleExitTimeProps } from "../../../types/parkingSessionAttributes/vehicleExitTimeAttributes";
 import { VehicleExitTimeInputField } from "../../../components/Input/ParkingSession/VehicleExitTimeInputField";
 import "../../../styles/parkingSessionCss/vehicleExitTime.css";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
 import { Loader } from "../../../components/Loader";
+import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
 
-export const VehicleExitTime = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivOnclick, handleOnclick, handleSubmitForm, loading, message, open, openMessage, progress, vehicleName, vehicleNumber, isOpen}: VehicleExitTimeProps): JSX.Element => {
+export const VehicleExitTime = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivOnclick, handleOnclick, handleSubmitForm, loading, message, open, openMessage, progress, vehicleName, vehicleNumber, isOpen}: VehicleExitTimeProps): ReactNode => {
     return (
         <>
         <form onSubmit={handleSubmitForm} className="form">
@@ -34,7 +35,10 @@ export const VehicleExitTime = ({errMessage, handleCancel, handleConfirm, handle
             <button type="submit" className="exit" disabled={loading}>
                 {
                     loading ? (
-                        <span className="loading">LOADING...</span>
+                        <div className="flex flex-row items-center justify-center gap-4">
+                            <ButtonSpinner />
+                            <span className="loading">LOADING...</span>
+                        </div>
                     ) : (
                         <div className="submit">SUBMIT</div>
                     )
@@ -44,7 +48,7 @@ export const VehicleExitTime = ({errMessage, handleCancel, handleConfirm, handle
         <Dialog
             divOnCancel={handleDivCancel} 
             isOpen={isOpen}
-            message="Are you sure you want to submit?"
+            message="Proceed to submit?"
             onCancel={handleCancel}
             onConfirm={handleConfirm}
             title="Vehicle Exit Time"

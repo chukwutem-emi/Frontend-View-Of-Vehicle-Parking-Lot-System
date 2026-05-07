@@ -7,7 +7,7 @@ const persistConfig = {
     key: "root",
     version: 1,
     storage,
-    whitelist: ["token", "userDetails", "allUsersDetails"]
+    whitelist: ["auth", "user", "users", "slot"]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -17,3 +17,5 @@ export const appStore = configureStore({
     middleware: (getDefaultMiddleware) =>  getDefaultMiddleware({serializableCheck: {ignoredActions: [FLUSH, PERSIST, PURGE, PAUSE, REGISTER, REHYDRATE]}})
 });
 export const persister = persistStore(appStore);
+
+export type RootState = ReturnType< typeof appStore.getState>;

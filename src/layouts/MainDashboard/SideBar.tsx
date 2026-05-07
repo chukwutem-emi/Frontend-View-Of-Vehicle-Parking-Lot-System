@@ -1,84 +1,84 @@
-import { LogOut } from "lucide-react";
+import { Activity, Car, LogOut, MapPin, Users2Icon } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import type { GetUserAttributes } from "../../types/authAttributes/getUserAttributes";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/useAppSelector";
 
 
 
 type SideBarPropsAttributes = {
     setActive     : Dispatch<SetStateAction<string>>;
     active        : string;
-    setIsDarkMode : Dispatch<SetStateAction<boolean>>;
     isDarkMode    : boolean;
 };
 
-export const SideBar = ({setActive, active, setIsDarkMode, isDarkMode}: SideBarPropsAttributes) => {
+export const SideBar = ({setActive, active, isDarkMode}: SideBarPropsAttributes) => {
 
-  const user: GetUserAttributes = useSelector((store: any) => store.userDetails?.getUserDetails);
+  const user: GetUserAttributes | null = useAppSelector((state) => state.user.details);
 
     const menu = [
         {
           title          : "Dashboard",
-          link           : "/app/dashboard"
+          link           : "/app/dashboard",
+          icon           : null
         },
         {
           title          : "Users",
-          link           : "/app/users-dashboard"
+          link           : "/app/users-dashboard",
+          icon           : Users2Icon,
+          adminUsersOnly : true
         },
         {
-          title          : "Parking Sessions",
+          title          : "Sessions",
           link           : "/app/parking-session-dashboard",
-          superAdminOnly : true
+          adminUsersOnly : true,
+          icon           : Activity
         },
         {
-          title          : "Parking Slot",
-          link           : ""
+          title          : "Slots",
+          link           : "/app/parking-slot-dashboard",
+          icon           : MapPin,
+          adminUsersOnly : true
         },
         {
-          title          : "Vehicle Types",
-          link           : ""
+          title          : "Vehicles",
+          link           : "/app/vehicle-type-dashboard",
+          icon           : Car,
+          adminUsersOnly : true
         },
         {
           title          : "Logout",
-          link           : "/app/logout"
+          link           : "/app/logout",
+          icon           : LogOut
         }
       ];
 
     return (
-        <aside className={`w-64 md:flex md:flex-col p-5 justify-between ${isDarkMode ? "bg-[#0E1437]" : "bg-white"}`}>
+        <aside className={`w-64 md:flex h-screen md:flex-col p-5 justify-between ${isDarkMode ? "bg-[#0E1437]" : "bg-white"}`}>
         <div>
           <h1 className="text-lg font-bold mb-6">🚗 ParkingSystem</h1>
           <ul className="space-y-6">
-            {menu.filter((item) => !item.superAdminOnly || user.userRole === "SUPER-ADMIN").map((item) => (
-              <li
-                key={item.title}
-                onClick={() => setActive(item.title)}
-                className={`p-3 rounded-lg cursor-pointer transition ${
-                  active === item.title
-                    ? "bg-blue-600"
-                    : "hover:bg-blue-500/20"
-                }`}
-              >
-                {
-                  item.title === "Logout" ?  (
-                    <div className="flex flex-row items-center gap-1">
-                      <LogOut size={20} color="yellow"/>
-                      <Link to={item.link} className="hover:underline">{item.title}</Link>
-                    </div>
-                  ) : (
-                    <Link to={item.link} className="hover:underline">{item.title}</Link>
-                  ) 
-                }
-              </li>
-            ))}
+            {menu.filter((item) => !item.adminUsersOnly || user?.isAdmin).map((item) => {
+              const Icon = item.icon;
+              return (
+                <li
+                  key={item.title}
+                  onClick={() => setActive(item.title)}
+                  className={`p-3 rounded-lg cursor-pointer transition ${
+                    active === item.title
+                      ? "bg-blue-600"
+                      : "hover:bg-blue-500/20"
+                  }`}
+                >
+                  <Link to={item.link} className="flex items-center gap-2 hover:underline">
+                    {Icon && <Icon size={20} className="text-yellow-500" />}
+                    {item.title}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
-        <button className="bg-gray-700 p-2 rounded-lg my-6 text-white" onClick={() => setIsDarkMode(!isDarkMode)}>
-          {
-            isDarkMode ?  "Dark Mode" : "Light Mode"
-          }
-        </button>
       </aside>
     );
 };

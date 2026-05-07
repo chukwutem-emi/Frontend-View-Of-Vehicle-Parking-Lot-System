@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, type JSX } from "react";
+import React, { useEffect, useRef, useState, type ReactNode } from "react";
 import { useParams } from "react-router";
 import { useUpdateUserDetails } from "../hooks/useUpdateUserDetails";
 import { UpdateUserDetailsForm } from "../components/UpdateUserDetailsForm";
@@ -13,9 +13,11 @@ type FormData = {
     userAddress     : string;
 } | null;
 
-const UpdateUserDetailsPage = (): JSX.Element => {
+const UpdateUserDetailsPage = (): ReactNode => {
 
     const {userId} = useParams();
+    const id = Number(userId);
+    const validId = userId && !isNaN(id);
 
     const usernameRef        = useRef<HTMLInputElement>(null);
     const passwordRef        = useRef<HTMLInputElement>(null);
@@ -41,12 +43,12 @@ const UpdateUserDetailsPage = (): JSX.Element => {
     const handleUpdateUserDetailsForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         const payload = {
-            confirmPassword : confirmPasswordRef.current!.value,
-            userAddress     : userAddressRef.current!.value,
-            password        : passwordRef.current!.value,
-            username        : usernameRef.current!.value,
-            email           : emailRef.current!.value,
-            phone           : phoneRef.current!.value
+            confirmPassword : confirmPasswordRef.current?.value ?? "",
+            userAddress     : userAddressRef.current?.value ?? "",
+            password        : passwordRef.current?.value ?? "",
+            username        : usernameRef.current?.value ?? "",
+            email           : emailRef.current?.value ?? "",
+            phone           : phoneRef.current?.value ?? ""
         };
         setFormData(payload);
         setIsOpen(true);
@@ -66,8 +68,8 @@ const UpdateUserDetailsPage = (): JSX.Element => {
     }, [message, errMessage]);
 
     const handleConfirm = () => {
-        if (formData) {
-            handleUpdateUserDetailsPayload(formData, userId);
+        if (formData && validId) {
+            handleUpdateUserDetailsPayload(formData, id);
         };
         setIsOpen(false);
     };
@@ -82,7 +84,7 @@ const UpdateUserDetailsPage = (): JSX.Element => {
     };
     
     return (
-        <div className="overflow-x-hidden overflow-y-auto w-full">
+        <div className="overflow-x-hidden overflow-y-auto w-full my-[6rem]">
             <UpdateUserDetailsForm 
                 errMessage={errMessage}
                 handleCancel={handleCancel}

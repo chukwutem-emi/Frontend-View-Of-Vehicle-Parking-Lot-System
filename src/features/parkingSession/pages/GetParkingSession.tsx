@@ -1,4 +1,4 @@
-import { useEffect, type JSX } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useGetParkingSession } from "../hooks/useGetParkingSession";
 import { useParams } from "react-router";
 import { GetParkingSession } from "../components/GetParkingSession";
@@ -7,9 +7,11 @@ import { BigBackgroundSpinner } from "../../../components/BigBackgroundSpinner";
 
 
 
-const GetParkingSessionPage = (): JSX.Element => {
+const GetParkingSessionPage = (): ReactNode => {
 
     const {sessionId} = useParams();
+    const id = Number(sessionId);
+    const validId = sessionId && !isNaN(id);
 
     const {
         clearMessage,
@@ -24,10 +26,10 @@ const GetParkingSessionPage = (): JSX.Element => {
     } = useGetParkingSession();
 
     useEffect(() => {
-        if (sessionId) {
-            handleGetParkingSessionWithId(sessionId)
+        if (validId) {
+            handleGetParkingSessionWithId(id);
         };
-    }, [sessionId]);
+    }, [validId]);
 
     useEffect(() => {
         if (message) {

@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import type { PaginationAttributes } from "../../../types/paginationAttributes";
 import type React from "react";
 
@@ -8,9 +8,9 @@ type ParkingSessionProps = {
 };
 
 
-export const ParkingSessionPagination = ({pagination, setPagination}: ParkingSessionProps): JSX.Element => {
+export const ParkingSessionPagination = ({pagination, setPagination}: ParkingSessionProps): ReactNode => {
     return (
-        <div className="flex gap-6 mt-20 text-center justify-center text-white">
+        <div className="flex gap-6 text-center justify-center text-white mt-[1rem]">
             <button
                 className={`bg-blue-600 px-2 py-1 rounded-lg hover:bg-blue-300 font-sans font-semibold ${pagination.currentPage === 1 ? "cursor-not-allowed" : "cursor-pointer"}`}
                 disabled={pagination.currentPage === 1}

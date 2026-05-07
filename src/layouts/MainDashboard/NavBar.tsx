@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import type { GetUserAttributes } from "../../types/authAttributes/getUserAttributes";
+import { useAppSelector } from "../../utils/useAppSelector";
 
 type Role = {
   role            : any;
@@ -10,6 +12,8 @@ export const NavBar = ({role, isDarkMode, firstTwoLetters}: Role) => {
     const[query, setQuery] = useState("");
     const[show, setShow]   = useState(false);
 
+    const userDetails: GetUserAttributes | null = useAppSelector((state) => state.user.details);
+
     useEffect(() => {
       const handleClick = () => setShow(false);
       window.addEventListener("click", handleClick);
@@ -18,7 +22,7 @@ export const NavBar = ({role, isDarkMode, firstTwoLetters}: Role) => {
     const data = [
       {
         title : "Parking Session",
-        link  : "/"
+        link  : "/app/get-sessions"
       },
       {
         title: "Parking Slot",
@@ -26,19 +30,19 @@ export const NavBar = ({role, isDarkMode, firstTwoLetters}: Role) => {
       },
       {
         title: "GetAllUsers",
-         link  : "/users"
+         link  : "/app/users"
       },
       {
         title: "Vehicle types",
-         link  : "/"
+         link  : "/app/vehicle-type-dashboard"
       },
       {
         title: "GetUser",
-         link  : "/user"
+         link  : "/app/user"
       },
       {
         title: "Login",
-         link  : "/"
+         link  : "/auth/login"
       },
     ];
     const filtered = data.filter((item) => item.title.toLowerCase().includes(query.toLowerCase().trim()));
@@ -62,7 +66,9 @@ export const NavBar = ({role, isDarkMode, firstTwoLetters}: Role) => {
                 setQuery(e.target.value);
                 setShow(true);
               }}
-              className={`px-4 py-2 rounded-lg outline-none w-64 text-xs md:text-sm ${isDarkMode ? "bg-[#111744]": "bg-gray-200"}`}
+              className={`px-4 py-2 rounded-lg outline-none w-64 text-xs md:text-sm ${isDarkMode ? "bg-[#111744]": "bg-gray-300"} ${!userDetails?.isAdmin ? "cursor-not-allowed" : "cursor-default"}`}
+              disabled={!userDetails?.isAdmin}
+              title="Only admin users can search for navigation links."
             />
             {
               show && query && (

@@ -8,7 +8,7 @@ export const Loader = ({progress, isOpen}: LoaderAttributes) => {
     if (!isOpen) return null;
     return (
         <div className="w-full fixed inset-0 bg-black/50 flex items-center justify-center z-20">
-            <div className="w-[70%] md:w-[30%] bg-white z-20 p-4 flex flex-col item-center space-y-4">
+            <div className="md:w-[50%] w-[80%] bg-white z-20 p-4 flex flex-col item-center space-y-4">
                 <div className="w-full h-2 bg-gray-400 rounded">
                     <div className="bg-green-600 h-2 rounded transition-all duration-300" style={{width: `${progress}%`}}></div>
                 </div>

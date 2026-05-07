@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import type {PromoteUserAttributes} from "../../../types/authAttributes/promoteUserAttributes";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
@@ -6,7 +6,7 @@ import { Loader } from "../../../components/Loader";
 
 
 
-export const PromoteUser = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, isOpen, message, open, openMessage, progress}: PromoteUserAttributes): JSX.Element => {
+export const PromoteUser = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, isOpen, message, open, openMessage, progress}: PromoteUserAttributes): ReactNode => {
     return (
         <div className="mx-auto">
             <Dialog 
@@ -15,7 +15,7 @@ export const PromoteUser = ({errMessage, handleCancel, handleConfirm, handleDivC
                 message="Are you sure you want to promote this user?"
                 onCancel={handleCancel}
                 onConfirm={handleConfirm}
-                title="Promote"
+                title="Promote user"
             />
             <ResponseDialog 
                 divOnClick={handleDivClick}

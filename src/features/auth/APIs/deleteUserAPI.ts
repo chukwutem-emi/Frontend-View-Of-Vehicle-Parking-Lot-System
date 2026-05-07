@@ -1,11 +1,16 @@
 import {apiClient} from "../../../services/apiClient";
 
+type APIResponse = {
+    success : boolean;
+    message : string;
+};
 
-export const deleteUserAPI = <T, U>(token: T, userId: U): Promise<{status: number, data: any}> => {
-    return apiClient(`/auth/delete/${userId}`, {
+export const deleteUserAPI = async (token: string | null, userId: number) => {
+    const res = await apiClient<APIResponse>(`/auth/delete/${userId}`, {
         method: "DELETE",
         headers: {
             "Authorization": `Bearer ${token}`
         }
     });
+    return res;
 };

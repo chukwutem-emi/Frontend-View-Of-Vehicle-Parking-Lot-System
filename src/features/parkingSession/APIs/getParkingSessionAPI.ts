@@ -1,11 +1,18 @@
 import { apiClient } from "../../../services/apiClient";
+import type { GetParkingSessionAttributes } from "../../../types/parkingSessionAttributes/getParkingSessionAttributes";
 
+type APIResponse = {
+    success : boolean;
+    message : string;
+    data    : GetParkingSessionAttributes;
+};
 
-export const getParkingSessionAPI = <S, T>(sessionId: S, token: T): Promise<{status: number, data: any}> => {
-    return apiClient(`/session/get-session/${sessionId}`, {
+export const getParkingSessionAPI = async (sessionId: number, token: string | null) => {
+    const res = await apiClient<APIResponse>(`/session/get-session/${sessionId}`, {
         headers: {
             "Authorization": `Bearer ${token}`
         },
         method: "GET"
     });
+    return res;
 };

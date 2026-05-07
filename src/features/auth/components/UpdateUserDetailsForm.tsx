@@ -1,4 +1,4 @@
-import React, { useEffect, useState, type JSX } from "react";
+import React, { useEffect, useState, type ReactNode } from "react";
 import type {UpdateUserDetailsFormAttributes} from "../../../types/authAttributes/updateUserDetailsAttributes";
 import { UpdateUserDetailsInputField } from "../../../components/Input/Auth/UpdateUserDetailsInputFields";
 import { Dialog } from "../../../components/Modal/Dialog";
@@ -6,12 +6,13 @@ import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
 import { Loader } from "../../../components/Loader";
 import {MdToggleOn, MdToggleOff} from "react-icons/md";
 import "../../../styles/authCss/updateUserDetails.css"
-import { useSelector } from "react-redux";
 import type { GetUserAttributes } from "../../../types/authAttributes/getUserAttributes";
+import { useAppSelector } from "../../../utils/useAppSelector";
+import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
-export const UpdateUserDetailsForm = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, handleSubmitForm, isOpen, loading, message, open, openMessage, progress, confirmPassword, email, password, phone, userAddress, username}: UpdateUserDetailsFormAttributes):JSX.Element => {
+export const UpdateUserDetailsForm = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, handleSubmitForm, isOpen, loading, message, open, openMessage, progress, confirmPassword, email, password, phone, userAddress, username}: UpdateUserDetailsFormAttributes): ReactNode => {
 
     const[showPassword, setShowPassword] = useState(false);
     const[formData, setFormData]         = useState({
@@ -20,7 +21,7 @@ export const UpdateUserDetailsForm = ({errMessage, handleCancel, handleConfirm, 
         email       : "",
         phone       : ""
     });
-    const userDetails: GetUserAttributes = useSelector((store: any) => store.userDetails?.getUserDetails);
+    const userDetails: GetUserAttributes | null = useAppSelector((state) => state.user.details);
 
     useEffect(() => {
         if (userDetails) {
@@ -117,7 +118,10 @@ export const UpdateUserDetailsForm = ({errMessage, handleCancel, handleConfirm, 
             <button type="submit" className="update" disabled={loading}>
                 {
                     loading ? (
-                        <span className="loading">LOADING...</span>
+                        <div className="flex flex-row items-center justify-center gap-4">
+                            <ButtonSpinner />
+                            <span className="loading">LOADING...</span>
+                        </div>
                     ) : (
                         <div className="submit">SUBMIT</div>
                     )
@@ -127,10 +131,10 @@ export const UpdateUserDetailsForm = ({errMessage, handleCancel, handleConfirm, 
         <Dialog
             divOnCancel={handleDivCancel} 
             isOpen={open}
-            message="Are you sure your details are correct?"
+            message="Proceed to submit?"
             onCancel={handleCancel}
             onConfirm={handleConfirm}
-            title="Update"
+            title="Update details"
         />
         <ResponseDialog
             divOnClick={handleDivClick} 

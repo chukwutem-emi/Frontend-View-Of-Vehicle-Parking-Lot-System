@@ -3,13 +3,13 @@ import type { HTMLInputAutoCompleteAttribute, HTMLInputTypeAttribute, Ref} from 
 
 
 export interface InputFieldAttributes {
-    id?                 : string;
-    name?               : string;
-    inputType?          : HTMLInputTypeAttribute;
+    id                  : string;
+    name                : string;
+    inputType           : HTMLInputTypeAttribute;
     inputRef?           : Ref<HTMLInputElement>;
     placeholder?        : string;
     autoComplete?       : HTMLInputAutoCompleteAttribute;
     label               : string;
-    value?              : string | number | readonly string[];
+    value?              : string | number;
     onChange?           : (e:React.ChangeEvent<HTMLInputElement>) => void
 };

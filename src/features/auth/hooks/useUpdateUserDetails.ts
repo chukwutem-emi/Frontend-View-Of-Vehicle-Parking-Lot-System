@@ -1,11 +1,21 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import type { UpdateUserDetailsPayloadAttributes } from "../../../types/authAttributes/updateUserDetailsAttributes";
 import {updateUserDetailsAPI} from "../APIs/updateUserDetailsAPI";
+import { useAppSelector } from "../../../utils/useAppSelector";
+import { useNavigate } from "react-router-dom";
 
 
+type UseUpdateUserDetailsReturns = {
+    message                 : string;
+    loading                 : boolean;
+    progress                : number;
+    errMessage              : boolean;
+    open                    : boolean;
+    handleUpdateUserDetails : (payload: UpdateUserDetailsPayloadAttributes, userId: number) => Promise<void>;
+    clearMessage            : () => void;
+};
 
-export const useUpdateUserDetails = () => {
+export const useUpdateUserDetails = (): UseUpdateUserDetailsReturns => {
     const[message, setMessage]       = useState("");
     const[loading, setLoading]       = useState(false);
     const[progress, setProgress]     = useState(0);
@@ -13,14 +23,15 @@ export const useUpdateUserDetails = () => {
     const[open, setOpen]             = useState(false);
 
 
-    const userToken = useSelector((store: any) => store.token?.getToken);
+     const userToken = useAppSelector((state) => state.auth?.token);
+     const navigate = useNavigate();
 
     const clearMessage = () => {
         setMessage("");
         setErrMessage(false);
     };
 
-    const handleUpdateUserDetails = async <U>(payload: UpdateUserDetailsPayloadAttributes, userId: U) => {
+    const handleUpdateUserDetails = async (payload: UpdateUserDetailsPayloadAttributes, userId: number) => {
         setLoading(true);
         setOpen(true);
         setProgress(20);
@@ -36,22 +47,25 @@ export const useUpdateUserDetails = () => {
         }, 400);
 
         try {
-            const {data, status} = await updateUserDetailsAPI(payload, userToken, userId);
-            if (status === 200) {
-                setMessage(data?.message);
-                clearInterval(interval);
-                setProgress(100);
-                setErrMessage(false);
-            } else {
-                const [key] = Object.keys(data);
-                setMessage(data[key ?? "An error occurred!"]);
+            const res = await updateUserDetailsAPI(payload, userToken, userId);
+            if (!res.data.success) {
+                setMessage(res.data.message);
                 setErrMessage(true);
                 setProgress(0);
                 setOpen(false);
+                return;
             };
-        } catch (err: any) {
-            console.log("ERROR:", err.message);
-            setMessage(err.message);
+            setProgress(100);
+            setMessage(res.data.message);
+            clearInterval(interval);
+            setErrMessage(false);
+            setTimeout(() => {
+                navigate("/auth/current-user");
+            }, 3000);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setMessage(err.message);
+            };
             setErrMessage(true);
             setOpen(false);
             setProgress(0);

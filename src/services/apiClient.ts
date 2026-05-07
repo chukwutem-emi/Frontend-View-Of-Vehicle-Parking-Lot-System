@@ -1,7 +1,7 @@
 
 const BASE_URL = process.env.PARCEL_BASE_URL || "";
 
-export const apiClient = async (url: string, options: RequestInit = {}) => {
+export const apiClient = async <T = unknown>(url: string, options: RequestInit = {}): Promise<{status: number, data: T}> => {
     if (!BASE_URL) {
         throw new Error("BASE_URL is not defined in environment variables.");
     };
@@ -13,9 +13,9 @@ export const apiClient = async (url: string, options: RequestInit = {}) => {
         ...options
     });
     const contentType = response.headers.get("Content-Type");
-    const data = contentType?.includes("application/json") ? await response.json() : await response.text();
+    const data: unknown = contentType?.includes("application/json") ? await response.json() : await response.text();
     return {
         status: response.status,
-        data: data
+        data: data as T
     };
 };

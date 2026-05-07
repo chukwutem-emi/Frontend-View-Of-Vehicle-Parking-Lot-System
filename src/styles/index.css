@@ -18,3 +18,24 @@
 .animate-scroll:hover {
     animation-play-state: paused;
 }
+.animate-scroll-right {
+    display: flex;
+    width: max-content;
+    animation: scroll 20s linear infinite reverse ;
+}
+.animate-scroll-right:hover {
+    animation-play-state: paused;
+}
+.watermark {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,\
+    <svg xmlns='http://www.w3.org/2000/svg' width='300' height='200'>\
+        <text x='0' y='100' fill='rgba(156,163,175,0.12)' font-size='24' transform='rotate(-45 150 100)'>\
+            ParkOps ParkOps ParkOps\
+        </text>\
+    </svg>");
+    background-repeat: repeat;
+}

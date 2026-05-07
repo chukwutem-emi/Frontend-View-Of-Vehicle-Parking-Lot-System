@@ -1,13 +1,28 @@
 import { useState } from "react";
 import {createUser} from "../APIs/signupAPI";
 import type {SignupPayloadAttributes} from "../../../types/authAttributes/signupAttributes";
+import { useNavigate } from "react-router";
 
-export const useSignup = () => {
+
+
+type UseSignUpReturns = {
+    errMessage       : boolean;
+    handleCreateUser : (payload: SignupPayloadAttributes) => Promise<void>;
+    message          : string;
+    loading          : boolean;
+    clearMessage     : () => void;
+    progress         : number;
+    isOpen           : boolean;
+};
+
+export const useSignup = (): UseSignUpReturns => {
     const[message, setMessage]       = useState("");
     const[errMessage, setErrMessage] = useState(false);
     const[loading, setLoading]       = useState(false);
     const[progress, setProgress]     = useState(0);
     const[isOpen, setIsOpen]         = useState(false);
+
+    const navigate = useNavigate();
 
     const clearMessage = () => {
         setMessage("");
@@ -29,22 +44,24 @@ export const useSignup = () => {
         }, 400);
 
         try {
-            const {data, status} = await createUser(payload);
-    
-            if (status === 201) {
-                setMessage(data.message);
-                clearInterval(interval);
-                setProgress(100);
-                clearInterval(interval);
-                setErrMessage(false);
-            } else  {
-                const [key] = Object.keys(data);
-                setMessage(data[key ?? "An error occurred!"]);
+            const res = await createUser(payload);
+            if (!res.data.success) {
+                setMessage(res.data.message);
                 setErrMessage(true);
-            }
-        } catch (err) {
-            console.log("ERROR:", err);
-            setMessage((err as Error).message);
+                return;
+            };
+            setProgress(100);
+            setMessage(res.data.message);
+            clearInterval(interval);
+            clearInterval(interval);
+            setErrMessage(false);
+            setTimeout(() => {
+                navigate("/auth/login")
+            }, 4000);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setMessage(err.message);
+            };
             setErrMessage(true);
             setIsOpen(false);
             setProgress(0);

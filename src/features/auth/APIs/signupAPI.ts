@@ -1,9 +1,15 @@
 import {apiClient}  from "../../../services/apiClient";
 import type {SignupPayloadAttributes} from "../../../types/authAttributes/signupAttributes";
 
-export const createUser = (payload: SignupPayloadAttributes): Promise<{status: number, data: any}> => {
-    return apiClient("/auth/signup", {
+type APIResponse = {
+    success : boolean;
+    message : string;
+};
+
+export const createUser = async (payload: SignupPayloadAttributes) => {
+    const res = await apiClient<APIResponse>("/auth/signup", {
         method: "POST",
         body: JSON.stringify(payload)
     });
+    return res;
 };

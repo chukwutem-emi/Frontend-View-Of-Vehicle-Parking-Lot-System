@@ -1,11 +1,15 @@
 import {useDeleteUser} from "../hooks/useDeleteUser";
 import {DeleteUser} from "../components/DeleteUser";
-import { useEffect, useState, type JSX } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useParams } from "react-router";
 
 
-const DeleteUserPage = (): JSX.Element => {
+const DeleteUserPage = (): ReactNode => {
     const {userId} = useParams();
+
+
+    const id = Number(userId);
+    const validId = userId && !isNaN(id);
 
     const[openMessage, setOpenMessage] = useState(false);
     const[isOpen, setIsOpen]           = useState(false);
@@ -20,10 +24,12 @@ const DeleteUserPage = (): JSX.Element => {
     } = useDeleteUser();
 
     useEffect(() => {
-        if (userId) {
+        if (validId) {
             setIsOpen(true);
         };
-    }, [userId]);
+    }, [validId]);
+
+    if (!validId) return null
 
     useEffect(() => {
         if (message) {
@@ -33,7 +39,7 @@ const DeleteUserPage = (): JSX.Element => {
 
     const handleConfirm = () => {
         if (userId) {
-            handleDeleteUserWithId(userId);
+            handleDeleteUserWithId(id);
         };
         setIsOpen(false);
     };

@@ -1,33 +1,57 @@
-import { LogOut } from "lucide-react";
-import { useState, type JSX } from "react";
-import { useSelector } from "react-redux";
+import { Activity, Car, HomeIcon, LogOut, Users2Icon} from "lucide-react";
+import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../utils/useAppSelector";
 
 
 
-export const SideBar = (): JSX.Element => {
+export const SideBar = (): ReactNode => {
     const[active, setActive] = useState("ParkingSessionDashboard");
 
-    const userDetails = useSelector((store: any) => store.userDetails?.getUserDetails);
+    const userDetails = useAppSelector((state) => state.user.details);
     const superAmin =  userDetails?.userRole ?? "";
 
     const menu = [
         {
             title          : "ParkingSessionDashboard",
-            link           : "/app/parking-session-dashboard"
+            link           : "/app/parking-session-dashboard",
+            icon           : null
+        },
+        {
+            title          : "Home",
+            link           : "/app/dashboard",
+            icon           : HomeIcon
         },
         {
             title          : "VehicleExitTime",
-            link           : "/app/vehicle-exit"
+            link           : "/app/vehicle-exit",
+            icon           : Car
         },
         {
-            title          : "GetAllParkingSessions",
-            link           : "/app/get-sessions",
-            superAdminOnly : true
+            title          : "Users",
+            link           : "/app/users-dashboard",
+            icon           : Users2Icon
+        },
+        {
+            title          : "Vehicle",
+            link           : "/app/vehicle-type-dashboard",
+            icon           : Car
+        },
+        {
+            title          : "CreateParkingSession",
+            link           : "/app/create-session",
+            icon           : Activity
+        },
+        {
+            title          : "Pagination",
+            link           : "/parking/get-sessions",
+            superAdminOnly : true,
+            icon           : Activity
         },
         {
             title          : "Logout",
-            link           : "/app/logout"
+            link           : "/app/logout",
+            icon           : LogOut
         },
     ];
 
@@ -36,24 +60,21 @@ export const SideBar = (): JSX.Element => {
             <h1 className="text-lg font-bold mb-6">🚗🚛🚔ParkingSessions</h1>
             <ul className="space-y-6">
                 {
-                    menu.filter((item) => !item.superAdminOnly || superAmin === "SUPER-ADMIN").map((item) => (
-                        <li key={item.title} className={`p-3 rounded-lg cursor-pointer transition ${active === item.title ? "bg-blue-600" : "hover:bg-blue-600/20"}`} onClick={() => setActive(item.title)}>
-                            {
-                                item.title === "Logout" ? (
-                                    <div className="flex flex-row items-center gap-1">
-                                        <LogOut size={20} color="yellow" />
-                                        <Link to={item.link} className="hover:underline">
-                                            {item.title}
-                                        </Link>
-                                    </div>
-                                ) : (
-                                    <Link to={item.link} className="hover:underline">
-                                        {item.title}
-                                    </Link>
-                                )
-                            }
-                        </li>
-                    ))
+                    menu.filter((item) => !item.superAdminOnly || superAmin === "SUPER-ADMIN").map((item) => {
+                        const Icon = item.icon;
+                        return (
+                            <li
+                                key={item.title}
+                                onClick={() => setActive(item.title)}
+                                className={`p-3 rounded-lg cursor-pointer transition ${active === item.title ? "bg-blue-600" : "hover:bg-blue-500/20"}`}
+                            >
+                                <Link to={item.link} className="flex items-center gap-2 hover:underline">
+                                    {Icon && <Icon size={20} className="text-yellow-500" />}
+                                    {item.title}
+                                </Link>
+                            </li>
+                        )   
+                    })
                 }
             </ul>
         </aside>

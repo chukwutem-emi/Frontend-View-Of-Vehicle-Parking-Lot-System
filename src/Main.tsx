@@ -6,7 +6,8 @@ import {NetworkStatus} from "./components/UserNetworkStatus";
 const root = createRoot(document.getElementById("root")!);
 
 root.render(
-    <div className="bg-blue-950 min-h-screen overflow-y-hidden">
+    <div className="bg-blue-950 min-h-screen overflow-x-hidden relative">
+        <div className="watermark"></div>
         <App />
         <NetworkStatus />
     </div>

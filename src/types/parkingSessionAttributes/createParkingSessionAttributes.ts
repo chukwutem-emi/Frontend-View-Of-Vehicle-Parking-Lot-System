@@ -9,7 +9,7 @@ export interface CreateParkingSessionAttributes {
     vehicleOwnerPhone            : string;
     vehicleNumber                : string;
     slotId                       : number;
-    vehicleTypeId                : number;          
+    vehicleId                    : number;          
 };
 
 export interface CreateParkingSessionFormAttributes {
@@ -20,7 +20,7 @@ export interface CreateParkingSessionFormAttributes {
     vehicleOwnerPhone?            : Ref<HTMLInputElement>;
     vehicleNumber?                : Ref<HTMLInputElement>;
     slotId?                       : Ref<HTMLInputElement>;
-    vehicleTypeId?                : Ref<HTMLInputElement>; 
+    vehicleId?                    : Ref<HTMLInputElement>; 
     handleParkingSessionForm      : (e: React.SyntheticEvent<HTMLFormElement>) => void;
     handleConfirm                 : MouseEventHandler<HTMLButtonElement>;
     handleCancel                  : MouseEventHandler<HTMLButtonElement>;

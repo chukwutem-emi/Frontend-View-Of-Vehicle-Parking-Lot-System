@@ -1,13 +1,13 @@
 import type React from "react";
 import type { PaginationAttributes } from "../../../types/paginationAttributes";
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 
 type PaginationProps = {
     pagination    : PaginationAttributes;
     setPagination : React.Dispatch<React.SetStateAction<PaginationAttributes>>;
 };
 
-export const Pagination = ({pagination, setPagination}: PaginationProps): JSX.Element => {
+export const Pagination = ({pagination, setPagination}: PaginationProps): ReactNode => {
     return (
         <div className="flex gap-6 mt-20  text-center justify-center text-white">
             <button

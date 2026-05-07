@@ -2,20 +2,20 @@ import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 import type {UserStateAttributes} from "../../../types/authAttributes/getUserAttributes";
 
 interface GetUserState {
-    getUserDetails: UserStateAttributes;
+    details: UserStateAttributes;
 };
 const initialState: GetUserState = {
-    getUserDetails: null
+    details: null
 }
 const userSlice = createSlice({
     name: "getUser",
     initialState,
     reducers: {
         setUserDetails: (state, action: PayloadAction<UserStateAttributes>) => {
-            state.getUserDetails = action.payload;
+            state.details = action.payload;
         },
         removeUserDetails: (state) => {
-            state.getUserDetails = null;
+            state.details = null;
         }
     }
 });

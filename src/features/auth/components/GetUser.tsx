@@ -2,7 +2,7 @@ import type React from "react";
 import {BigBackgroundSpinner} from "../../../components/BigBackgroundSpinner";
 import {ResponseDialog} from "../../../components/Modal/ResponseDialog";
 import type { GetUserAttributes } from "../../../types/authAttributes/getUserAttributes";
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 import { convertUTCToLocalDateTime } from "../../../utils/formatDate";
 import { Link } from "react-router-dom";
 
@@ -16,47 +16,41 @@ type GetUserProps = {
     divOnclick    : React.MouseEventHandler<HTMLDivElement>;
 };
 
-export const GetUser = ({divOnclick, errorMessage, isOpen, loading, message, onClick, user}: GetUserProps): JSX.Element => {
+export const GetUser = ({divOnclick, errorMessage, isOpen, loading, message, onClick, user}: GetUserProps): ReactNode => {
+    const details = [
+        { label: "ID", value: user.id },
+        { label: "Name", value: user.username },
+        { label: "Email", value: user.email },
+        { label: "Phone", value: user.phone },
+        { label: "Role", value: user.userRole },
+        { label: "Admin", value: user.isAdmin ? "Yes" : "No" },
+        { label: "Address", value: user.userAddress },
+        { label: "Updated by", value: user.updatedBy ?? "----" },
+        { label: "Created on", value: convertUTCToLocalDateTime(user.createdAt) },
+        { label: "Last Updated", value: convertUTCToLocalDateTime(user.updatedAt) },
+        { label: "Actions", value: <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <Link to={`/app/promote/${user.id}`} className="font-sans font-bold text-green-600 hover:underline">PROMOTE</Link>
+            <Link to={`/app/demote/${user.id}`} className="font-sans font-bold text-yellow-600 hover:underline">DEMOTE</Link>
+            <Link to={`/app/delete/${user.id}`} className="font-sans font-bold text-red-600 hover:underline">DELETE</Link>
+        </div> }
+    ];
     return (
-        <div className="w-full bg-white mx-auto p-10">
+        <div className="w-full">
             {
                 loading ? (
                     <BigBackgroundSpinner />
-                ): (
-                    <div className="overflow-x-auto">
-                        <table className="min-w-max text-left border">
-                            <thead className="text-green-600 font-sans">
-                                <tr className="border-b border-gray-700">
-                                    <th className="py-2 px-4 text-xs md:text-sm break-words">Id</th>
-                                    <th className="py-2 px-4 text-xs md:text-sm break-words">Username</th>
-                                    <th className="py-2 px-4 text-xs md:text-sm break-words">User Address</th>
-                                    <th className="py-2 px-4 text-xs md:text-sm break-words">Phone</th>
-                                    <th className="py-2 px-4 text-xs md:text-sm break-words">Email</th>
-                                    <th className="py-2 px-4 text-xs md:text-sm break-words">Role</th>
-                                    <th className="py-2 px-4 text-xs md:text-sm break-words">Admin</th>
-                                    <th className="py-2 px-4 text-xs md:text-sm break-words">Updated By</th>
-                                    <th className="py-2 px-4 text-xs md:text-sm break-words">Created On</th>
-                                    <th className="py-2 px-4 text-xs md:text-sm break-words">Last Updated</th>
-                                    <th className="py-2 px-4 text-xs md:text-sm break-words">Update</th>
-                                </tr>
-                            </thead>
-                            <tbody className="font-sans text-gray-600">
-                                <tr className="border-b border-gray-700">
-                                    <td className="py-6 px-4 text-xs md:text-sm break-words">{user.id}</td>
-                                    <td className="py-6 px-4 text-xs md:text-sm break-words">{user.username}</td>
-                                    <td className="py-2 px-4 text-xs md:text-sm break-words">{user.userAddress}</td>
-                                    <td className="py-6 px-4 text-xs md:text-sm break-words">{user.phone}</td>
-                                    <td className="py-6 px-4 text-xs md:text-sm break-words">{user.email}</td>
-                                    <td className="py-6 px-4 text-xs md:text-sm break-words">{user.userRole}</td>
-                                    <td className="py-6 px-4 text-xs md:text-sm break-words font-bold">{user.isAdmin ? "Yes" : "No"}</td>
-                                    <td className="py-6 px-4 text-xs md:text-sm break-words">{user.updatedBy}</td>
-                                    <td className="py-6 px-4 text-xs md:text-sm break-words">{convertUTCToLocalDateTime(user.createdAt)}</td>
-                                    <td className="py-6 px-4 text-xs md:text-sm break-words">{convertUTCToLocalDateTime(user.updatedAt)}</td>
-                                    <td className="py-6 px-4 text-sm md:text-lg break-words font-bold text-green-600 wit-fit hover:underline"><Link to={`/update/${user.id}`}>Update</Link></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p className="font-sans font-semibold text-center text-gray-500">Scroll horizontally to view all information</p>
+                ) : (
+                    <div className="p-6 bg-white shadow-lg rounded w-[90%] md:w-[70%] mx-auto overflow-y-auto h-[30rem]">
+                        {details.map((item, index) => (
+                            <div key={index} className="grid grid-cols-2 border-b pb-2 text-sm gap-10">
+                                <span className="font-sans font-semibold text-green-600">
+                                    {item.label}:
+                                </span>
+                                <span className={`text-gray-900 font-sans break-words ${item.label === "Role" ? (item.value === "SUPER-ADMIN" || item.value === "ADMIN" ? "text-green-600 font-bold" : "") : ""}${item.label === "Admin" ? (item.value === "Yes" ? "text-green-600 font-bold" : "text-red-600 font-bold") : ""}`}>
+                                    {item.value}
+                                </span>
+                            </div>
+                        ))}
                     </div>
                 )
             }

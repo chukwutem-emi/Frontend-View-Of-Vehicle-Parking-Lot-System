@@ -1,16 +1,18 @@
 import "../../../styles/authCss/signup.css"
 import type {SignUpFormAttributes} from "../../../types/authAttributes/signupAttributes";
 import {SignUpInputField} from "../../../components/Input/Auth/SignUpInputField";
-import { useState, type JSX } from "react";
+import { useState, type ReactNode } from "react";
 import {MdToggleOn, MdToggleOff} from "react-icons/md";
 import {Dialog} from "../../../components/Modal/Dialog";
 import {ResponseDialog} from "../../../components/Modal/ResponseDialog";
 import {Loader} from "../../../components/Loader";
+import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
 
-export const SignUpForm = ({username, password, userAddress, phone, email, confirmPassword, handleSignUpForm, loading, open, handleCancel, handleConfirm, handleDivCancel, divOnClick, errMessage, message, onClick, openMessage, isOpen, progress}: SignUpFormAttributes): JSX.Element => {
+export const SignUpForm = ({username, password, userAddress, phone, email, confirmPassword, handleSignUpForm, loading, open, handleCancel, handleConfirm, handleDivCancel, divOnClick, errMessage, message, onClick, openMessage, isOpen, progress}: SignUpFormAttributes): ReactNode => {
+
     const[showPassword, setShowPassword] = useState(false);
     return (
         <>
@@ -80,7 +82,10 @@ export const SignUpForm = ({username, password, userAddress, phone, email, confi
             <button type="submit" className="signup" disabled={loading}>
                 {
                     loading ? (
-                        <span className="loading">LOADING...</span>
+                        <div className="flex flex-row items-center justify-center gap-4">
+                            <ButtonSpinner />
+                            <span className="loading">LOADING...</span>
+                        </div>
                     ) : (
                         <div className="submit">SUBMIT</div>
                     )
@@ -89,7 +94,7 @@ export const SignUpForm = ({username, password, userAddress, phone, email, confi
         </form>
         <Dialog 
             isOpen={open}
-            message="Are you sure your details are correct?"
+            message="Proceed to submit?"
             title="Signup"
             onCancel={handleCancel}
             onConfirm={handleConfirm}

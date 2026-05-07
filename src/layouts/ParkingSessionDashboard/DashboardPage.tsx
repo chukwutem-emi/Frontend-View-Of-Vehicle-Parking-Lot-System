@@ -1,53 +1,48 @@
-import { useEffect, useRef, useState, type JSX } from "react";
-import type { GetParkingSessionAttributes } from "../../types/parkingSessionAttributes/getParkingSessionAttributes";
+import { useEffect, useState, type ReactNode } from "react";
 import type { GetAllParkingSessionsAttributes } from "../../types/parkingSessionAttributes/getAllParkingSessionsAttributes";
 import { apiClient } from "../../services/apiClient";
-import { useSelector } from "react-redux";
 import { BigBackgroundSpinner } from "../../components/BigBackgroundSpinner";
 import { ParkingSession } from "./ParkingSession";
+import { useAppSelector } from "../../utils/useAppSelector";
+import type { APIResponse } from "../../features/parkingSession/APIs/getAllParkingSessionAPI";
 
 
 
-const ParkingSessionDashboard = (): JSX.Element => {
-    const[backgroundLoading, setBackgroundLoading] = useState(true);
-    const[isSideBarOpen, setIsSideBarOpen]         = useState(false);
-    const[selectedSession, setSelectedSession]     = useState<GetParkingSessionAttributes | null>(null);
-    const[message, setMessage]                     = useState("");
-    const[errMessage, setErrMessage]               = useState(false);
-    const[isDivOpen, setIsDivOpen]                 = useState(false);
-    const[open, setOpen]                           = useState(false);
-    const[sessions, setSessions]                   = useState<GetAllParkingSessionsAttributes>([]);
+const ParkingSessionDashboard = (): ReactNode => {
+    const[backgroundLoading, setBackgroundLoading]   = useState(true);
+    const[isSideBarOpen, setIsSideBarOpen]           = useState(false);
+    const[message, setMessage]                       = useState("");
+    const[errMessage, setErrMessage]                 = useState(false);
+    const[open, setOpen]                             = useState(false);
+    const[sessions, setSessions]                     = useState<GetAllParkingSessionsAttributes>([]);
+    const[filteredSessions, setFilteredSessions]     = useState<GetAllParkingSessionsAttributes>([]);
 
 
-    const userToken = useSelector((store: any) => store.token?.getToken);
+    const userToken = useAppSelector((state) => state.auth.token);
 
-    const divRef = useRef<HTMLDivElement>(null);
 
     const getAllSessions = async (): Promise<void> => {
         try {
-            const response = await apiClient("/session/get-sessions", {
+            const response = await apiClient<APIResponse>("/session/get-sessions", {
                 method: "GET",
                 headers: {
                     "Authorization" : `Bearer ${userToken}`
                 }
             });
-            if (response?.status === 200) {
-                setMessage(response?.data?.message ?? "");
-                setErrMessage(false);
-                setSessions(response?.data?.data ?? []);
-            } else {
-                const [key] = Object.keys(response?.data);
-                setMessage(response?.data[key ?? "Something went wrong!"]);
+            if (!response.data.success) {
+                setMessage(response.data.message);
                 setErrMessage(true);
+                return;
             };
-        } catch (err: any) {
-            setMessage(err.message);
+            setMessage(response.data.message ?? "");
+            setErrMessage(false);
+            setSessions(response.data.data ?? []);
+            setFilteredSessions(response.data.data ?? []);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setMessage(err.message);
+            };
             setErrMessage(true);
-        };
-    };
-    const handleClickOutside = (e: MouseEvent) => {
-        if (divRef.current && !divRef.current.contains(e.target as Node)) {
-            setIsDivOpen(false);
         };
     };
 
@@ -55,16 +50,14 @@ const ParkingSessionDashboard = (): JSX.Element => {
         if (userToken) {
             getAllSessions();
         }
-        window.addEventListener("mousedown", handleClickOutside);
         const interval = setInterval(() => {
             getAllSessions();
         }, 1800000);
         const timer = setTimeout(() => {
             setBackgroundLoading(false);
-        }, 3000);
+        }, 1000);
 
         return () => {
-            window.removeEventListener("mousedown", handleClickOutside);
             clearInterval(interval);
             clearTimeout(timer);
         };
@@ -95,7 +88,7 @@ const ParkingSessionDashboard = (): JSX.Element => {
             backgroundLoading ? (
                 <BigBackgroundSpinner /> 
             ): (
-                <ParkingSession divRef={divRef} errMessage={errMessage} handleDivClick={handleDivClick} handleOnclick={handleOnClick} isDivOpen={isDivOpen} isSideBarOpen={isSideBarOpen} message={message} open={open} selectedSession={selectedSession} sessions={sessions} setIsDivOpen={setIsDivOpen} setIsSideBarOpen={setIsSideBarOpen} setSelectedSession={setSelectedSession}/>
+                <ParkingSession errMessage={errMessage} handleDivClick={handleDivClick} handleOnclick={handleOnClick} isSideBarOpen={isSideBarOpen} message={message} open={open} sessions={sessions} setIsSideBarOpen={setIsSideBarOpen} setFilteredSessions={setFilteredSessions} filteredSessions={filteredSessions} />
             )
         }
         </>

@@ -1,23 +1,36 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { deleteUserAPI } from "../APIs/deleteUserAPI";
+import { useAppSelector } from "../../../utils/useAppSelector";
+import { useNavigate } from "react-router-dom";
 
 
 
-export const useDeleteUser = () => {
+
+type UseDeleteUserReturns = {
+    clearMessage     : () => void;
+    handleDeleteUser : (userId: number) => Promise<void>
+    message          : string;
+    open             : boolean;
+    progress         : number;
+    errMessage       : boolean;
+};
+
+export const useDeleteUser = (): UseDeleteUserReturns => {
     const[message, setMessage]       = useState("");
     const[progress, setProgress]     = useState(0);
     const[errMessage, setErrMessage] = useState(false);
     const[open, setOpen]             = useState(false);
 
-    const userToken = useSelector((store:any) => store.token?.getToken);
+    const userToken = useAppSelector((state) => state.auth?.token);
+
+    const navigate = useNavigate();
 
     const clearMessage = () => {
         setMessage("");
         setErrMessage(false);
     };
 
-    const handleDeleteUser = async <U>(userId: U) => {
+    const handleDeleteUser = async (userId: number) => {
         setProgress(20);
         setOpen(true);
 
@@ -32,22 +45,25 @@ export const useDeleteUser = () => {
         }, 400);
 
         try {
-            const {data, status} = await deleteUserAPI(userToken, userId);
-            if (status === 200) {
-                setMessage(data?.message);
-                setProgress(100);
-                clearInterval(interval);
-                setErrMessage(false);
-            } else {
-                const [key] = Object.keys(data);
-                setMessage(data[key ?? "Something went wrong!"]);
+            const res = await deleteUserAPI(userToken, userId);
+            if (!res.data.success) {
+                setMessage(res.data.message);
                 setErrMessage(true);
                 setOpen(false);
                 setProgress(0);
+                return;
             };
-        } catch (err: any) {
-            console.log("ERROR:", err.message);
-            setMessage(err.message);
+            setProgress(100);
+            setMessage(res.data.message);
+            clearInterval(interval);
+            setErrMessage(false);
+            setTimeout(() => {
+                navigate("/app/users-dashboard");
+            }, 3000);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setMessage(err.message);
+            };
             setErrMessage(true);
             setProgress(0);
             setOpen(false);
@@ -56,7 +72,6 @@ export const useDeleteUser = () => {
             setProgress(0)
         };
     };
-
     return {
         clearMessage,
         handleDeleteUser,

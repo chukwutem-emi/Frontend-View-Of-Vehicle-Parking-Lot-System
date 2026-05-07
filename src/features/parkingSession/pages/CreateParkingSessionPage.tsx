@@ -1,6 +1,6 @@
 import {useCreateParkingSession} from "../hooks/useCreateParkingSession";
 import {CreateParkingSession} from "../components/CreateParkingSession";
-import React, { useEffect, useRef, useState, type JSX } from "react";
+import React, { useEffect, useRef, useState, type ReactNode } from "react";
 
 
 type FormData = {
@@ -11,10 +11,10 @@ type FormData = {
     vehicleOwnerPhone            : string;
     vehicleNumber                : string;
     slotId                       : number;
-    vehicleTypeId                : number; 
+    vehicleId                    : number; 
 } | null;
 
-const CreateParkingSessionPage = (): JSX.Element => {
+const CreateParkingSessionPage = (): ReactNode => {
     const vehicleOwnerNextOfKinAddressRef  = useRef<HTMLInputElement>(null);
     const vehicleOwnerNextOfKinPhoneRef    = useRef<HTMLInputElement>(null);
     const vehicleOwnerNextOfKinRef         = useRef<HTMLInputElement>(null);
@@ -40,15 +40,21 @@ const CreateParkingSessionPage = (): JSX.Element => {
 
     const handleCreateParkingSessionForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const rawSlotId = slotIdRef.current?.value;
+        const rawVehicleId = vehicleTypeIdRef.current?.value;
+
+        const parsedSlotId = Number(rawSlotId);
+        const parsedVehicleId = Number(rawVehicleId);
+
         const payload = {
-            vehicleOwnerNextOfKinAddress : vehicleOwnerNextOfKinAddressRef.current!.value,
-            vehicleOwnerNextOfKinPhone   : vehicleOwnerNextOfKinPhoneRef.current!.value,
-            vehicleOwnerNextOfKin        : vehicleOwnerNextOfKinRef.current!.value,
-            vehicleOwnerAddress          : vehicleOwnerAddressRef.current!.value,
-            vehicleOwnerPhone            : vehicleOwnerPhoneRef.current!.value,
-            vehicleNumber                : vehicleNumberRef.current!.value,
-            slotId                       : +slotIdRef.current!.value,
-            vehicleTypeId                : +vehicleTypeIdRef.current!.value
+            vehicleOwnerNextOfKinAddress : vehicleOwnerNextOfKinAddressRef.current?.value ?? "",
+            vehicleOwnerNextOfKinPhone   : vehicleOwnerNextOfKinPhoneRef.current?.value ?? "",
+            vehicleOwnerNextOfKin        : vehicleOwnerNextOfKinRef.current?.value ?? "",
+            vehicleOwnerAddress          : vehicleOwnerAddressRef.current?.value ?? "",
+            vehicleOwnerPhone            : vehicleOwnerPhoneRef.current?.value ?? "",
+            vehicleNumber                : vehicleNumberRef.current?.value ?? "",
+            slotId                       : parsedSlotId,
+            vehicleId                    : parsedVehicleId
         };
         setFormData(payload);
         setIsOpen(true);
@@ -85,7 +91,7 @@ const CreateParkingSessionPage = (): JSX.Element => {
     };
 
     return (
-        <div className="overflow-x-hidden overflow-y-auto">
+        <div className="overflow-x-hidden overflow-y-auto my-[6rem]">
             <CreateParkingSession 
                 errMessage={errMessage}
                 handleCancel={handleCancel}
@@ -100,6 +106,14 @@ const CreateParkingSessionPage = (): JSX.Element => {
                 open={open}
                 progress={progress}
                 openMessage={openMessage}
+                slotId={slotIdRef}
+                vehicleId={vehicleTypeIdRef}
+                vehicleNumber={vehicleNumberRef}
+                vehicleOwnerAddress={vehicleOwnerAddressRef}
+                vehicleOwnerNextOfKin={vehicleOwnerNextOfKinRef}
+                vehicleOwnerNextOfKinAddress={vehicleOwnerNextOfKinAddressRef}
+                vehicleOwnerNextOfKinPhone={vehicleOwnerNextOfKinPhoneRef}
+                vehicleOwnerPhone={vehicleOwnerPhoneRef}
             />
         </div>
     );

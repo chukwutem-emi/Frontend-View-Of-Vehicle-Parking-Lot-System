@@ -1,10 +1,10 @@
-import { type JSX } from "react";
+import { type ReactNode } from "react";
 import { useGetAllParkingSessions } from "../hooks/useGetAllParkingSessions";
 import { GetAllParkingSessions } from "../components/GetAllParkingSessions";
 
 
 
-const GetAllParkingSessionsPage = (): JSX.Element => {
+const GetAllParkingSessionsPage = (): ReactNode => {
     const {
         clearMessage,
         errMessage,
@@ -23,7 +23,7 @@ const GetAllParkingSessionsPage = (): JSX.Element => {
         clearMessage();
     };
     return (
-        <div className="min-h-screen w-full flex flex-col items-stretch justify-center px-4 overflow-x-hidden">
+        <div className="min-h-screen w-full overflow-x-hidden my-[6rem]">
             <GetAllParkingSessions 
             errMessage={errMessage}
             handleDivOnclick={handleOnclick}

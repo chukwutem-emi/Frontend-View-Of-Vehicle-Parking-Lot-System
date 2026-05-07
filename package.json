@@ -4,8 +4,10 @@
   "description": "Vehicle-Parking_lot-System-Frontend",
   "scripts": {
     "test": "jest",
-    "dev": "parcel ./public/index.html",
-    "watch": "tsx watch src/Main.tsx"
+    "dev": "parcel index.html",
+    "watch": "tsx watch src/Main.tsx",
+    "build": "rm -rf dist .parcel-cache && parcel build index.html --dist-dir dist --public-url / --no-source-maps",
+    "deploy": "aws s3 sync dist/ s3://parking-ops --delete"
   },
   "repository": {
     "type": "git",
@@ -20,12 +22,14 @@
   "devDependencies": {
     "@babel/preset-env": "^7.29.2",
     "@babel/preset-react": "^7.28.5",
+    "@babel/preset-typescript": "^7.28.5",
     "@parcel/babel-preset-env": "^2.16.4",
     "@parcel/packager-raw-url": "^2.16.4",
     "@parcel/transformer-react-refresh-wrap": "^2.16.4",
     "@parcel/transformer-webmanifest": "^2.16.4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
+    "@types/jest": "^30.0.0",
     "@types/node": "^25.5.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -36,7 +40,6 @@
     "buffer": "^6.0.3",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
-    "msw": "^2.12.14",
     "parcel": "^2.16.4",
     "postcss": "^8.5.8",
     "process": "^0.11.10",
@@ -48,8 +51,10 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
+    "cross-fetch": "^4.1.0",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.8.0",
+    "msw": "^1.3.5",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-icons": "^5.6.0",

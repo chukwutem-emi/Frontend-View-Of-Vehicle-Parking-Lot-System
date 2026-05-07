@@ -8,7 +8,7 @@
         "skipLibCheck": true,
         "moduleResolution": "bundler",
         "moduleDetection": "force",
-        "types": ["node"],
+        "types": ["node", "jest"],
         "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,

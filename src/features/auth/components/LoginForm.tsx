@@ -3,13 +3,14 @@ import {LoginInputField} from "../../../components/Input/Auth/LoginInputField";
 import {ResponseDialog} from "../../../components/Modal/ResponseDialog";
 import "../../../styles/authCss/login.css";
 import {MdToggleOff, MdToggleOn} from "react-icons/md";
-import { useState, type JSX } from "react";
+import { useState, type ReactNode } from "react";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 import {Loader} from "../../../components/Loader";
+import { Link } from "react-router-dom";
 
 
 
-export const LoginForm = ({email, password, divOnClick, errMessage, openMessage, message, onClick, loading, handleLoginForm, isOpen, progress}: LoginFormAttributes): JSX.Element => {
+export const LoginForm = ({email, password, divOnClick, errMessage, openMessage, message, onClick, loading, handleLoginForm, isOpen, progress}: LoginFormAttributes): ReactNode => {
     const [showPassword, setShowPassword] = useState(false);
     return (
         <>
@@ -52,6 +53,10 @@ export const LoginForm = ({email, password, divOnClick, errMessage, openMessage,
                     )
                 }
             </button>
+            <div className="flex flex-row justify-between text-green-600 font-semibold font-serif">
+                <Link to={"/auth/reset-password"} className="hover:underline md:text-lg text-xs">Forgot password?</Link>
+                <Link to={"/auth/reset-password"} className="hover:underline md:text-lg text-xs">Reset Password</Link>
+            </div>
         </form>
         <ResponseDialog
             divOnClick={divOnClick}

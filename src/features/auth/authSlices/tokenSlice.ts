@@ -2,11 +2,11 @@ import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 
 
 interface Token {
-    getToken: string | null;
+    token: string | null;
 };
 
 const initialState: Token = {
-    getToken: null
+    token: null
 };
 
 const tokenSlice = createSlice({
@@ -14,10 +14,10 @@ const tokenSlice = createSlice({
     initialState,
     reducers: {
         setToken: (state, action: PayloadAction<string | null>) => {
-            state.getToken = action.payload;
+            state.token = action.payload;
         },
         removeToken: (state) => {
-            state.getToken = null
+            state.token = null
         }
     }
 });

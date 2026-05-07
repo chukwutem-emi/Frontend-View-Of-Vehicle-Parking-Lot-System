@@ -2,36 +2,26 @@ import { useEffect, useState } from "react";
 
 
 
-export const useAuthTypewriter = (fullText: string, speed: number) => {
+export const useAuthTypewriter = (fullText: string, speed: number, pauseTime: number) => {
     
-    const[text, setText] = useState("");
-
+    const[index, setIndex] = useState(0);
     
     useEffect(() => {
-        let i = 0;
-        let deleting = false;
+        
+        let timeOut: ReturnType<typeof setTimeout>;
 
-        const interval = setInterval(() => {
-            if (!deleting) {
-                setText(fullText.slice(0, i));
-                i++;
-                if (i > fullText.length) {
-                    deleting = true;
-                    setTimeout(() => {
-                        deleting = false;
-                        i = 0;
-                    }, 1000);
-                }
-            } else {
-                setText(fullText.slice(0, i));
-                i--;
-                if (i === 0) {
-                    deleting = false;
-                }
-            }
-        }, speed);
-        return () => clearInterval(interval);
-    }, [fullText, speed]);
+        if (index < fullText.length) {
+            timeOut = setTimeout(() => {
+                setIndex((prev) => prev + 1);
+            }, speed);
+        } else {
+            timeOut = setTimeout(() => {
+                setIndex(0);
+            }, pauseTime);
+        }
+        return () => clearTimeout(timeOut);
+        
+    }, [fullText, speed, pauseTime, index]);
 
-    return text;
+    return fullText.slice(0, index);
 };
