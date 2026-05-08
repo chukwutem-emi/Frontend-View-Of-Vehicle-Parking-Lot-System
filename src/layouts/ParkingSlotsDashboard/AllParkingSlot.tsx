@@ -15,7 +15,7 @@ export const AllParkingSlots = ({filteredSlots}: AllParkingSlotsProps): ReactNod
                     <ul className="grid md:grid-cols-4 grid-col-1 gap-4 items-center justify-items-center">
                         {
                             filteredSlots.map((slot) => (
-                                <li key={slot.id} className="w-64 flex-shrink-0 font-sans text-sm bg-[#1E293B] border border-[#334155] hover:bg-[#273449] z-50 break-words p-6 shadow-lg shadow-black/30">
+                                <li key={slot.id} className="w-64 flex-shrink-0 font-sans text-sm bg-[#1E293B] border border-[#334155] hover:bg-[#273449] break-words p-6 shadow-lg shadow-black/30">
                                     <div className="text-blue-600 flex flex-row gap-4">
                                         <p className="text-gray-500 font-bold">Slot Code:</p>
                                         {slot?.slotCode}

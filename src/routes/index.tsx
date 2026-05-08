@@ -7,7 +7,7 @@ import ParkingLayout from "../layouts/ParkingLayout";
 
 
 
-const Dashboard               = lazy(() => import("../layouts/MainDashboard/Dashboard"));
+const Dashboard               = lazy(() => import("../layouts/MainDashboard/MainDashboardPage"));
 const Users                   = lazy(() => import("../features/auth/pages/GetAllUsersPage"));
 const User                    = lazy(() => import("../features/auth/pages/GetUserPage"));
 const UserDashboard           = lazy(() => import("../layouts/UsersDashboard/UsersDashboard"));

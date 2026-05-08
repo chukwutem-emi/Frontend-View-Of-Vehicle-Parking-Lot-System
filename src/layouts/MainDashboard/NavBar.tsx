@@ -21,29 +21,21 @@ export const NavBar = ({role, isDarkMode, firstTwoLetters}: Role) => {
     }, []);
     const data = [
       {
-        title : "Parking Session",
-        link  : "/app/get-sessions"
+        title : "Sessions",
+        link  : "/app/parking-session-dashboard"
       },
       {
-        title: "Parking Slot",
-         link  : "/"
+        title: "Slots",
+         link  : "/app/parking-slot-dashboard"
       },
       {
-        title: "GetAllUsers",
-         link  : "/app/users"
+        title: "Users",
+         link  : "/app/users-dashboard"
       },
       {
-        title: "Vehicle types",
+        title: "Vehicle",
          link  : "/app/vehicle-type-dashboard"
-      },
-      {
-        title: "GetUser",
-         link  : "/app/user"
-      },
-      {
-        title: "Login",
-         link  : "/auth/login"
-      },
+      }
     ];
     const filtered = data.filter((item) => item.title.toLowerCase().includes(query.toLowerCase().trim()));
 

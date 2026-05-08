@@ -9,7 +9,7 @@ export const SideBar = (): ReactNode => {
     const[active, setActive] = useState("ParkingSessionDashboard");
 
     const userDetails = useAppSelector((state) => state.user.details);
-    const superAmin =  userDetails?.userRole ?? "";
+    const isAdmin =  userDetails?.isAdmin ?? "";
 
     const menu = [
         {
@@ -25,27 +25,31 @@ export const SideBar = (): ReactNode => {
         {
             title          : "VehicleExitTime",
             link           : "/app/vehicle-exit",
+            adminUsersOnly : true,
             icon           : Car
         },
         {
             title          : "Users",
             link           : "/app/users-dashboard",
+            adminUsersOnly : true,
             icon           : Users2Icon
         },
         {
             title          : "Vehicle",
             link           : "/app/vehicle-type-dashboard",
+            adminUsersOnly : true,
             icon           : Car
         },
         {
             title          : "CreateParkingSession",
             link           : "/app/create-session",
+            adminUsersOnly : true,
             icon           : Activity
         },
         {
             title          : "Pagination",
             link           : "/parking/get-sessions",
-            superAdminOnly : true,
+            adminUsersOnly : true,
             icon           : Activity
         },
         {
@@ -60,7 +64,7 @@ export const SideBar = (): ReactNode => {
             <h1 className="text-lg font-bold mb-6">🚗🚛🚔ParkingSessions</h1>
             <ul className="space-y-6">
                 {
-                    menu.filter((item) => !item.superAdminOnly || superAmin === "SUPER-ADMIN").map((item) => {
+                    menu.filter((item) => !item.adminUsersOnly || isAdmin).map((item) => {
                         const Icon = item.icon;
                         return (
                             <li

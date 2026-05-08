@@ -32,9 +32,10 @@ export const SearchBar = ({users, setFilteredUsers}: SearchBarProps): ReactNode 
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-4 mb-6">
-            <h1 className="text-lg Md:text-2xl font-bold text-white">UsersDashboard</h1>
+        <div className="grid grid-cols-1 md:grid-cols-5 mb-6">
+            <h1 className="text-lg Md:text-2xl font-bold text-white">Dashboard</h1>
             <Link to={"/app/user-device-dashboard"} className="text-lg Md:text-2xl font-bold text-white hover:underline hidden md:block">LoggedIn Devices</Link>
+            <Link to={"/auth/current-user"} className="text-lg Md:text-2xl font-bold text-white hover:underline hidden md:block">Profile</Link>
             <div className="relative w-[30rem] flex space-y-4">
                 <label htmlFor="user-search" className="sr-only">Search user</label>
                 <input
@@ -42,9 +43,9 @@ export const SearchBar = ({users, setFilteredUsers}: SearchBarProps): ReactNode 
                 name="user-search"
                 value={query}
                 onChange={handleInputChange} 
-                className={`px-4 py-2 rounded-lg outline-none w-[16rem] md:w-[30rem] text-xs md:text-sm ${user?.userRole !== "SUPER-ADMIN" ? "cursor-not-allowed" : "cursor-default"}`}
+                className={`px-4 py-2 rounded-lg outline-none w-[16rem] md:w-[30rem] text-xs md:text-sm ${!user?.isAdmin ? "cursor-not-allowed" : "cursor-default"}`}
                 placeholder="Search for users to get their full details.."
-                disabled={user?.userRole !== "SUPER-ADMIN"}
+                disabled={!user?.isAdmin}
                 title="Only super admin user can search for other users."
                 />
                 {

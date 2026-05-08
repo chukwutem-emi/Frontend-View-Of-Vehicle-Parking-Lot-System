@@ -5,8 +5,8 @@
   "scripts": {
     "test": "jest",
     "dev": "parcel index.html",
-    "watch": "tsx watch src/Main.tsx",
-    "build": "rm -rf dist .parcel-cache && parcel build index.html --dist-dir dist --public-url / --no-source-maps",
+    "watch": "tsx watch src/main.tsx",
+    "build": "rm -rf dist .parcel-cache && parcel build index.html --dist-dir dist --public-url /",
     "deploy": "aws s3 sync dist/ s3://parking-ops --delete"
   },
   "repository": {

@@ -9,7 +9,7 @@ export const SideBar = ():ReactNode => {
     const[active, setActive] = useState("UsersDashboard");
 
     const userDetails = useAppSelector((state) => state.user.details);
-    const superAmin =  userDetails?.userRole || "";
+    const isAdmin =  userDetails?.isAdmin ?? "";
 
     const menu = [
         {
@@ -24,22 +24,25 @@ export const SideBar = ():ReactNode => {
         {
             title          : "Sessions",
             link           : "/app/parking-session-dashboard",
-            icon           : Activity
+            icon           : Activity,
+            adminUsersOnly : true,
         },
         {
             title          : "Vehicles",
             link           : "/app/vehicle-type-dashboard",
-            icon           : Car
+            icon           : Car,
+            adminUsersOnly : true,
         },
         {
             title          : "Slots",
             link           : "/app/parking-slot-dashboard",
-            icon           : MapPin
+            icon           : MapPin,
+            adminUsersOnly : true,
         },
         {
             title          : "GetAllUsers",
             link           : "/app/users",
-            superAdminOnly : true,
+            adminUsersOnly : true,
             icon           : Users2Icon
         },
         {
@@ -50,7 +53,8 @@ export const SideBar = ():ReactNode => {
         {
             title          : "UsersDevices",
             link           : "/app/user-device-dashboard",
-            icon           : LaptopIcon
+            icon           : LaptopIcon,
+            adminUsersOnly : true,
         },
         {
             title          : "Logout",
@@ -63,7 +67,7 @@ export const SideBar = ():ReactNode => {
             <h1 className="text-lg font-bold mb-6">👥 Users</h1>
             <ul className="space-y-6">
                 {
-                    menu.filter((item) => !item.superAdminOnly || superAmin === "SUPER-ADMIN").map((item) => {
+                    menu.filter((item) => !item.adminUsersOnly || isAdmin).map((item) => {
                         const Icon = item.icon;
                         return (
                             <li key={item.title} className={`p-3 rounded-lg cursor-pointer transition ${active === item.title ? "bg-blue-600" : "hover:bg-blue-500/20"}`} onClick={() => setActive(item.title)}>

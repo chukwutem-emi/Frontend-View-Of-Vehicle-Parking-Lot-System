@@ -43,9 +43,9 @@ export const SearchBar = ({sessions, setFilteredSessions}: SearchBarProps): Reac
                     name="session-search"
                     value={query} 
                     onChange={handlerSessionInput}
-                    className={`px-4 py-2 rounded-lg outline-none w-[16rem] md:w-[30rem] text-xs md:text-sm ${user?.userRole !== "SUPER-ADMIN" ? "cursor-not-allowed" : "cursor-default"}`}
+                    className={`px-4 py-2 rounded-lg outline-none w-[16rem] md:w-[30rem] text-xs md:text-sm ${!user?.isAdmin ? "cursor-not-allowed" : "cursor-default"}`}
                     placeholder="Search for sessions to get their full details.."
-                    disabled={user?.userRole !== "SUPER-ADMIN"}
+                    disabled={!user?.isAdmin}
                     title="Only super-admin user can search for all parking sessions."
                 />
                 {
