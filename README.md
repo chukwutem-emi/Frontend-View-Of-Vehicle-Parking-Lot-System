@@ -71,9 +71,6 @@
 - **Testing Library** (React v16.3.2) - Testing utilities
 - **Jest DOM** (v6.9.1) - DOM matchers for Jest
 
-### Other Utilities
-- **Cross-Fetch** (v4.1.0) - Fetch API polyfill
-- **React Refresh** (v0.18.0) - Fast refresh for development
 
 ---
 
