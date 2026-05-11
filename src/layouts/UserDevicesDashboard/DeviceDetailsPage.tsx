@@ -1,5 +1,5 @@
 import { useEffect, type ReactNode } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { DeviceDetails } from "./DevicesDetails";
 import { ResponseDialog } from "../../components/Modal/ResponseDialog";
 import { Loader } from "../../components/Loader";

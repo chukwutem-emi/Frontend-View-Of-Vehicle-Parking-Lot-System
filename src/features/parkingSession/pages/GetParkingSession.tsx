@@ -1,6 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { useGetParkingSession } from "../hooks/useGetParkingSession";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { GetParkingSession } from "../components/GetParkingSession";
 import { BigBackgroundSpinner } from "../../../components/BigBackgroundSpinner";
 

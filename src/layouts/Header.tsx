@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { type JSX } from "react";
-import {HomeIcon, Users2Icon, Activity, Car, LogOut, MapPin} from "lucide-react"
+import {HomeIcon, Users2Icon, Activity, Car, MapPin, LogOut} from "lucide-react"
 
 type CheckActive = {
     isActive : boolean;
@@ -17,7 +17,7 @@ const Header = (): JSX.Element => {
         "/app/users-dashboard"           : "bg-[#0E2A22]",
         "/app/parking-session-dashboard" : "bg-[#2F0E2F]",
         "/app/vehicle-type-dashboard"    : "bg-green-950",
-        "/app/logout"                    : "bg-[#406080]",
+        // "/app/logout"                    : "bg-[#406080]",
         "/app/parking-slot-dashboard"    : "bg-[#020617]",
         "/app/user-device-dashboard"     : "bg-violet-950"
     };

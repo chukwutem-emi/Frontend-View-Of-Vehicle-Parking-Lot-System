@@ -31,6 +31,10 @@ const ParkingDashboard = () => {
   const[isDarkMode, setIsDarkMode]             = useState(true);
 
 
+  console.log({
+    SUN: SunIcon,
+    MOON: MoonIcon
+  })
 
 
   const userToken = useAppSelector((state) => state.auth.token);
@@ -44,7 +48,30 @@ const ParkingDashboard = () => {
   const clearMessage = () => {
       setMessage("");
       setErrMessage(false);
+  };
+
+  useEffect(() => {
+    getStatistics();
+    getSlots();
+    getSessions();
+    const interval = setInterval(() => {
+        getSlots();
+        getStatistics();
+        getSessions();
+    }, 1800000);
+    if (message) {
+      setOpen(true);
     };
+
+    const timer = setTimeout(() => {
+      setShimmerUILoading(false);
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timer);
+    } 
+      
+  }, []);
   const getStatistics = async () => {
     try {
       const res = await fetchStatistics(userToken);
@@ -109,29 +136,6 @@ const ParkingDashboard = () => {
       setParkingSessions([]);
     }
   };
-  
-  useEffect(() => {
-    getStatistics();
-    getSlots();
-    getSessions();
-    const interval = setInterval(() => {
-        getSlots();
-        getStatistics();
-        getSessions();
-    }, 1800000);
-    if (message) {
-      setOpen(true);
-    };
-    const timer = setTimeout(() => {
-      setShimmerUILoading(false);
-    }, 1000);
-    return () => {
-      clearInterval(interval);
-      clearTimeout(timer);
-    } 
-      
-  }, []);
-
     const handleDivClick = () => {
         clearMessage();
         setOpen(false);

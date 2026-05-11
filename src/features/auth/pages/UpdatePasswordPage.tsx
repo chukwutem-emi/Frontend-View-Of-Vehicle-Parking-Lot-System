@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, type ReactNode } from "react";
 import { useUpdatePassword } from "../hooks/useUpdatedPassword";
 import { BigBackgroundSpinner } from "../../../components/BigBackgroundSpinner";
 import { UpdatePassword } from "../components/UpdatePassword";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 
 
 type FormData = {
@@ -31,7 +31,26 @@ const UpdatePasswordPage = (): ReactNode => {
         progress
     } = useUpdatePassword();
 
-
+    useEffect(() => {
+        const timeOut = setTimeout(() => {
+            setBackgroundLoading(false);
+        }, 1000);
+        return () => clearTimeout(timeOut);
+    }, []);
+    
+    useEffect(() => {
+        if (message && !errMessage) {
+            confirmPasswordRef.current!.value = "";
+            passwordRef.current!.value        = "";
+        };
+    }, [message, errMessage]);
+    
+    useEffect(() => {
+        if (message) {
+            setOpenMessage(true);
+        };
+    }, [message]);
+    
     const handleUpdatePasswordForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -42,26 +61,6 @@ const UpdatePasswordPage = (): ReactNode => {
         setFormData(payload);
         setIsOpen(true);
     };
-
-    useEffect(() => {
-        const timeOut = setTimeout(() => {
-            setBackgroundLoading(false);
-        }, 1000);
-        return () => clearTimeout(timeOut);
-    }, []);
-
-    useEffect(() => {
-        if (message && !errMessage) {
-            confirmPasswordRef.current!.value = "";
-            passwordRef.current!.value        = "";
-        };
-    }, [message, errMessage]);
-
-    useEffect(() => {
-        if (message) {
-            setOpenMessage(true);
-        };
-    }, [message]);
 
     const handleConfirm = () => {
         if (formData && resetToken) {

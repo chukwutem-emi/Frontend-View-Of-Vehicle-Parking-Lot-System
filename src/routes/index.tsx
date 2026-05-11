@@ -1,50 +1,79 @@
 import {createHashRouter} from "react-router-dom";
-import {lazy, Suspense} from "react";
 import AppLayout from "../layouts/ApplicationLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import Error from "../components/Error";
 import ParkingLayout from "../layouts/ParkingLayout";
+// import { lazy, Suspense } from "react";
+import LandingPage from "../layouts/LandingPage";
+import LoginPage from "../features/auth/pages/LoginPage";
+import SignUpPage from "../features/auth/pages/SignUpPage";
+import ResetPasswordPage from "../features/auth/pages/ResetPasswordPage";
+import UpdatePasswordPage from "../features/auth/pages/UpdatePasswordPage";
+import GetUserPage from "../features/auth/pages/GetUserPage";
+import GetCurrentUserPage from "../features/auth/pages/GetCurrentUserPage";
+import UpdateUserDetailsPage from "../features/auth/pages/UpdateUserDetailsPage";
+import DeviceDetailsPage from "../layouts/UserDevicesDashboard/DeviceDetailsPage";
+import SessionDetailsPage from "../layouts/ParkingSessionDashboard/SessionDetailsPage";
+import GetAllParkingSessionsPage from "../features/parkingSession/pages/GetAllParkingSessions";
+import ParkingSessionDashboard from "../layouts/ParkingSessionDashboard/DashboardPage";
+import UsersDashboard from "../layouts/UsersDashboard/UsersDashboard";
+import GetAllUserPage from "../features/auth/pages/GetAllUsersPage";
+import PromoteUserPage from "../features/auth/pages/PromoteUserPage";
+import DemoteUserPage from "../features/auth/pages/DemoteUserPage";
+import DeleteUserPage from "../features/auth/pages/DeleteUserPage";
+import CreateParkingSessionPage from "../features/parkingSession/pages/CreateParkingSessionPage";
+import GetParkingSessionPage from "../features/parkingSession/pages/GetParkingSession";
+import VehicleExitTimePage from "../features/parkingSession/pages/VehicleExitTime";
+import LogoutPage from "../features/auth/pages/LogoutPage";
+import CreateVehicleTypePage from "../features/vehicleType/pages/CreateVehicleTypePage";
+import UpdateVehicleTypePage from "../features/vehicleType/pages/UpdateVehicleTypePage";
+import VehicleTypesDashboard from "../layouts/VehicleTypesDashboard/VehicleTypesDashboard";
+import CreateParkingSlotPage from "../features/parkingSlot/pages/CreateParkingSlotPage";
+import GetAllParkingSlotPage from "../features/parkingSlot/pages/GetAllParkingSlotPage";
+import GetParkingSlotPage from "../features/parkingSlot/pages/GetParkingSlotPage";
+import UpdateParkingSlotPage from "../features/parkingSlot/pages/UpdateParkingSlotPage";
+import ParkingSlotDashboard from "../layouts/ParkingSlotsDashboard/ParkingSlotDashboard";
+import UserDevicesDashboard from "../layouts/UserDevicesDashboard/UserDevicesDashboard";
+import ParkingDashboard from "../layouts/MainDashboard/MainDashboardPage";
 
 
 
-const Dashboard               = lazy(() => import("../layouts/MainDashboard/MainDashboardPage"));
-const Users                   = lazy(() => import("../features/auth/pages/GetAllUsersPage"));
-const User                    = lazy(() => import("../features/auth/pages/GetUserPage"));
-const UserDashboard           = lazy(() => import("../layouts/UsersDashboard/UsersDashboard"));
-const UpdateUserDetails       = lazy(() => import("../features/auth/pages/UpdateUserDetailsPage"));
-const PromoteUser             = lazy(() => import("../features/auth/pages/PromoteUserPage"));
-const DemoteUser              = lazy(() => import("../features/auth/pages/DemoteUserPage"));
-const DeleteUser              = lazy(() => import("../features/auth/pages/DeleteUserPage"));
-const GetAllParkingSessions   = lazy(() => import("../features/parkingSession/pages/GetAllParkingSessions"));
-const CreateParkingSession    = lazy(() => import("../features/parkingSession/pages/CreateParkingSessionPage"));
-const GetParkingSession       = lazy(() => import("../features/parkingSession/pages/GetParkingSession"));
-const VehicleExitTime         = lazy(() => import("../features/parkingSession/pages/VehicleExitTime"));
-const Logout                  = lazy(() => import("../features/auth/pages/LogoutPage"));
-const ParkingSessionDashboard = lazy(() => import("../layouts/ParkingSessionDashboard/DashboardPage"));
-const CreateVehicleType       = lazy(() => import("../features/vehicleType/pages/CreateVehicleTypePage"));
-const UpdateVehicleType       = lazy(() => import("../features/vehicleType/pages/UpdateVehicleTypePage"));
-const VehicleTypeDashboard    = lazy(() => import("../layouts/VehicleTypesDashboard/VehicleTypesDashboard"));
-const LandingPage             = lazy(() => import("../layouts/LandingPage"));
-const LoginPage               = lazy(() => import("../features/auth/pages/LoginPage"));
-const SignupPage              = lazy(() => import("../features/auth/pages/SignUpPage"));
-const CreateParkingSlotPage   = lazy(() => import("../features/parkingSlot/pages/CreateParkingSlotPage"));
-const GetAllParkingSlotPage   = lazy(() => import("../features/parkingSlot/pages/GetAllParkingSlotPage"));
-const GetParkingSlotPage      = lazy(() => import("../features/parkingSlot/pages/GetParkingSlotPage"));
-const UpdateParkingSlotPage   = lazy(() => import("../features/parkingSlot/pages/UpdateParkingSlotPage"));
-const ParkingSlotDashboard    = lazy(() => import("../layouts/ParkingSlotsDashboard/ParkingSlotDashboard"));
-const ResetPasswordPage       = lazy(() => import("../features/auth/pages/ResetPasswordPage"));
-const UpdatePasswordPage      = lazy(() => import("../features/auth/pages/UpdatePasswordPage"));
-const SessionDetailsPage      = lazy(() => import("../layouts/ParkingSessionDashboard/SessionDetailsPage"));
-const GetCurrentUserPage      = lazy(() => import("../features/auth/pages/GetCurrentUserPage"));
-const DeviceDetailsPage       = lazy(() => import("../layouts/UserDevicesDashboard/DeviceDetailsPage"));
-const UserDeviceDashboard     = lazy(() => import("../layouts/UserDevicesDashboard/UserDevicesDashboard"));
-
-
+// const Dashboard               = lazy(() => import("../layouts/MainDashboard/MainDashboardPage"));
+// const Users                   = lazy(() => import("../features/auth/pages/GetAllUsersPage"));
+// const User                    = lazy(() => import("../features/auth/pages/GetUserPage"));
+// const UserDashboard           = lazy(() => import("../layouts/UsersDashboard/UsersDashboard"));
+// const UpdateUserDetails       = lazy(() => import("../features/auth/pages/UpdateUserDetailsPage"));
+// const PromoteUser             = lazy(() => import("../features/auth/pages/PromoteUserPage"));
+// const DemoteUser              = lazy(() => import("../features/auth/pages/DemoteUserPage"));
+// const DeleteUser              = lazy(() => import("../features/auth/pages/DeleteUserPage"));
+// const GetAllParkingSession    = lazy(() => import("../features/parkingSession/pages/GetAllParkingSessions"));
+// const CreateParkingSession    = lazy(() => import("../features/parkingSession/pages/CreateParkingSessionPage"));
+// const GetParkingSession       = lazy(() => import("../features/parkingSession/pages/GetParkingSession"));
+// const VehicleExitTime         = lazy(() => import("../features/parkingSession/pages/VehicleExitTime"));
+// const Logout                  = lazy(() => import("../features/auth/pages/LogoutPage"));
+// const ParkingSessionDashboard = lazy(() => import("../layouts/ParkingSessionDashboard/DashboardPage"));
+// const CreateVehicleType       = lazy(() => import("../features/vehicleType/pages/CreateVehicleTypePage"));
+// const UpdateVehicleType       = lazy(() => import("../features/vehicleType/pages/UpdateVehicleTypePage"));
+// const VehicleTypeDashboard    = lazy(() => import("../layouts/VehicleTypesDashboard/VehicleTypesDashboard"));
+// const LandingPage             = lazy(() => import("../layouts/LandingPage"));
+// const LoginPage               = lazy(() => import("../features/auth/pages/LoginPage"));
+// const SignupPage              = lazy(() => import("../features/auth/pages/SignUpPage"));
+// const CreateParkingSlotPage   = lazy(() => import("../features/parkingSlot/pages/CreateParkingSlotPage"));
+// const GetAllParkingSlotPage   = lazy(() => import("../features/parkingSlot/pages/GetAllParkingSlotPage"));
+// const GetParkingSlotPage      = lazy(() => import("../features/parkingSlot/pages/GetParkingSlotPage"));
+// const UpdateParkingSlotPage   = lazy(() => import("../features/parkingSlot/pages/UpdateParkingSlotPage"));
+// const ParkingSlotDashboard    = lazy(() => import("../layouts/ParkingSlotsDashboard/ParkingSlotDashboard"));
+// const ResetPasswordPage       = lazy(() => import("../features/auth/pages/ResetPasswordPage"));
+// const UpdatePasswordPage      = lazy(() => import("../features/auth/pages/UpdatePasswordPage"));
+// const SessionDetailsPage      = lazy(() => import("../layouts/ParkingSessionDashboard/SessionDetailsPage"));
+// const GetCurrentUserPage      = lazy(() => import("../features/auth/pages/GetCurrentUserPage"));
+// const DeviceDetailsPage       = lazy(() => import("../layouts/UserDevicesDashboard/DeviceDetailsPage"));
+// const UserDeviceDashboard     = lazy(() => import("../layouts/UserDevicesDashboard/UserDevicesDashboard"));
 
 export const appRouter = createHashRouter([
     {
         path: "/",
-        element: <Suspense fallback={<div>Loading...</div>}><LandingPage /></Suspense>,
+        element: <LandingPage />,
         errorElement: <Error />
     },
     {
@@ -53,42 +82,42 @@ export const appRouter = createHashRouter([
         children: [
             {
                 path: "login",
-                element: <Suspense fallback={<div>Loading...</div>}><LoginPage /></Suspense>,
+                element: <LoginPage />,
                 errorElement: <Error />
             },
             {
                 path: "signup",
-                element: <Suspense fallback={<div>Loading...</div>}><SignupPage /></Suspense>,
+                element: <SignUpPage />,
                 errorElement: <Error />
             },
             {
                 path: "reset-password",
-                element: <Suspense fallback={<div>Loading...</div>}><ResetPasswordPage /></Suspense>,
+                element: <ResetPasswordPage />,
                 errorElement: <Error />
             },
             {
                 path: "update-password/:resetToken",
-                element: <Suspense fallback={<div>Loading...</div>}><UpdatePasswordPage /></Suspense>,
+                element: <UpdatePasswordPage />,
                 errorElement: <Error />
             },
             {
                 path: "user",
-                element: <Suspense fallback={<div>Loading...</div>}><User /></Suspense>,
+                element: <GetUserPage />,
                 errorElement: <Error />
             },  
             {
                 path: "current-user",
-                element: <Suspense fallback={<div>Loading...</div>}><GetCurrentUserPage /></Suspense>,
+                element: <GetCurrentUserPage />,
                 errorElement: <Error />
             },  
             {
                 path: "update/:userId",
-                element: <Suspense fallback={<div>Loading...</div>}><UpdateUserDetails /></Suspense>,
+                element: <UpdateUserDetailsPage />,
                 errorElement: <Error />
             },
             {
                 path: "device-details/:userId",
-                element: <Suspense fallback={<div>Loading...</div>}><DeviceDetailsPage /></Suspense>,
+                element: <DeviceDetailsPage />,
                 errorElement: <Error />
             },
         ]
@@ -99,12 +128,12 @@ export const appRouter = createHashRouter([
         children: [
             {
                 path: "session-details/:sessionId",
-                element: <Suspense fallback={<div>Loading...</div>}><SessionDetailsPage /></Suspense>,
+                element: <SessionDetailsPage />,
                 errorElement: <Error />
             },
             {
                 path: "get-sessions",
-                element: <Suspense fallback={<div>Loading...</div>}><GetAllParkingSessions /></Suspense>,
+                element: <GetAllParkingSessionsPage />,
                 errorElement: <Error />
             },
         ]
@@ -115,103 +144,103 @@ export const appRouter = createHashRouter([
         children: [
             {
                 path: "dashboard",
-                element: <Suspense fallback={<div>Loading...</div>}><Dashboard /></Suspense>,
+                element: <ParkingDashboard />,
                 errorElement: <Error />
             },
             
             {
                 path: "users-dashboard",
-                element: <Suspense fallback={<div>Loading...</div>}><UserDashboard /></Suspense>,
+                element: <UsersDashboard />,
                 errorElement: <Error />
             },
             {
                 path: "users",
-                element: <Suspense fallback={<div>Loading...</div>}><Users /></Suspense>,
+                element: <GetAllUserPage />,
                 errorElement: <Error />
             },
             {
                 path: "promote/:userId",
-                element: <Suspense fallback={<div>Loading...</div>}><PromoteUser /></Suspense>,
+                element: <PromoteUserPage />,
                 errorElement: <Error />
             },
             {
                 path: "demote/:userId",
-                element: <Suspense fallback={<div>Loading...</div>}><DemoteUser /></Suspense>,
+                element: <DemoteUserPage />,
                 errorElement: <Error />
             },
             {
                 path: "delete/:userId",
-                element: <Suspense fallback={<div>Loading...</div>}><DeleteUser /></Suspense>,
+                element: <DeleteUserPage />,
                 errorElement: <Error />
             },
             {
                 path: "create-session",
-                element: <Suspense fallback={<div>Loading...</div>}><CreateParkingSession /></Suspense>,
+                element: <CreateParkingSessionPage />,
                 errorElement: <Error />
             },
             {
                 path: "get-session/:sessionId",
-                element: <Suspense fallback={<div>Loading...</div>}><GetParkingSession /></Suspense>,
+                element: <GetParkingSessionPage />,
                 errorElement: <Error />
             },
             {
                 path: "vehicle-exit",
-                element: <Suspense fallback={<div>Loading...</div>}><VehicleExitTime /></Suspense>,
+                element: <VehicleExitTimePage />,
                 errorElement: <Error />
             },
             {
                 path: "logout",
-                element: <Suspense fallback={<div>Loading...</div>}><Logout /></Suspense>,
+                element: <LogoutPage />,
                 errorElement: <Error />
             },
             {
                 path: "parking-session-dashboard",
-                element: <Suspense fallback={<div>Loading...</div>}><ParkingSessionDashboard /></Suspense>,
+                element: <ParkingSessionDashboard />,
                 errorElement: <Error />
             },
             {
                 path: "create-vehicle-type",
-                element: <Suspense fallback={<div>Loading...</div>}><CreateVehicleType /></Suspense>,
+                element: <CreateVehicleTypePage />,
                 errorElement: <Error />
             },
             {
                 path: "update-vehicle-type/:vehicleId",
-                element: <Suspense fallback={<div>Loading...</div>}><UpdateVehicleType /></Suspense>,
+                element: <UpdateVehicleTypePage />,
                 errorElement: <Error />
             },
             {
                 path: "vehicle-type-dashboard",
-                element: <Suspense fallback={<div>Loading...</div>}><VehicleTypeDashboard /></Suspense>,
+                element: <VehicleTypesDashboard />,
                 errorElement: <Error />
             },
             {
                 path: "create-slot",
-                element: <Suspense fallback={<div>Loading...</div>}><CreateParkingSlotPage /></Suspense>,
+                element: <CreateParkingSlotPage />,
                 errorElement: <Error />
             },
             {
                 path: "get-slots",
-                element: <Suspense fallback={<div>Loading...</div>}><GetAllParkingSlotPage /></Suspense>,
+                element: <GetAllParkingSlotPage />,
                 errorElement: <Error />
             },
             {
                 path: "get-slot/:vehicleTypeId",
-                element: <Suspense fallback={<div>Loading...</div>}><GetParkingSlotPage /></Suspense>,
+                element: <GetParkingSlotPage />,
                 errorElement: <Error />
             },
             {
                 path: "update-slot/:vehicleTypeId",
-                element: <Suspense fallback={<div>Loading...</div>}><UpdateParkingSlotPage /></Suspense>,
+                element: <UpdateParkingSlotPage />,
                 errorElement: <Error />
             },
             {
                 path: "parking-slot-dashboard",
-                element: <Suspense fallback={<div>Loading...</div>}><ParkingSlotDashboard /></Suspense>,
+                element: <ParkingSlotDashboard />,
                 errorElement: <Error />
             },
             {
                 path: "user-device-dashboard",
-                element: <Suspense fallback={<div>Loading...</div>}><UserDeviceDashboard /></Suspense>,
+                element: <UserDevicesDashboard />,
                 errorElement: <Error />
             },
         ]

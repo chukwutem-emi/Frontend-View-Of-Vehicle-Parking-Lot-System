@@ -32,6 +32,13 @@ const LoginPage = (): ReactNode => {
         };
     }, [message, errMessage]);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setBackgroundLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, []);
+    
     const handleLoginForm = (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -49,12 +56,6 @@ const LoginPage = (): ReactNode => {
         clearMessage();
         setOpenMessage(false);
     };
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setBackgroundLoading(false);
-        }, 1000);
-        return () => clearTimeout(timer);
-    }, []);
 
     return (
         <>

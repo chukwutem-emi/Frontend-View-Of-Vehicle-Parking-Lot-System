@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, type ReactNode } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useUpdateUserDetails } from "../hooks/useUpdateUserDetails";
 import { UpdateUserDetailsForm } from "../components/UpdateUserDetailsForm";
 
@@ -39,6 +39,20 @@ const UpdateUserDetailsPage = (): ReactNode => {
         progress,
         clearMessage
     } = useUpdateUserDetails();
+    
+    useEffect(() => {
+        if (message && !errMessage) {
+            confirmPasswordRef.current!.value = "";
+            userAddressRef.current!.value     = "";
+            passwordRef.current!.value        = "";
+            usernameRef.current!.value        = "";
+            emailRef.current!.value           = "";
+            phoneRef.current!.value           = "";  
+        };
+        if (message) {
+            setOpenMessage(true);
+        };
+    }, [message, errMessage]);
 
     const handleUpdateUserDetailsForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -53,19 +67,6 @@ const UpdateUserDetailsPage = (): ReactNode => {
         setFormData(payload);
         setIsOpen(true);
     };
-    useEffect(() => {
-        if (message && !errMessage) {
-            confirmPasswordRef.current!.value = "";
-            userAddressRef.current!.value     = "";
-            passwordRef.current!.value        = "";
-            usernameRef.current!.value        = "";
-            emailRef.current!.value           = "";
-            phoneRef.current!.value           = "";  
-        };
-        if (message) {
-            setOpenMessage(true);
-        };
-    }, [message, errMessage]);
 
     const handleConfirm = () => {
         if (formData && validId) {

@@ -1,7 +1,7 @@
 import {usePromoteUser} from "../hooks/usePromoteUser";
 import {PromoteUser} from "../components/PromoteUser";
 import { useEffect, useState, type ReactNode } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 
 
 

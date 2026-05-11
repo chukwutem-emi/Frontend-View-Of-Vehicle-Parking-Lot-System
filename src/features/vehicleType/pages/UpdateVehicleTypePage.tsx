@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, type ReactNode } from "react";
 import { useUpdateVehicleType } from "../hooks/useUpdateVehicleType";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import  { UpdateVehicleTypeForm } from "../components/UpdateVehicleTypeForm";
 
 
@@ -32,16 +32,6 @@ const UpdateVehicleTypePage = (): ReactNode => {
         progress
     } = useUpdateVehicleType();
 
-    const handleSubmitForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const payload = {
-            newVehicleName : newVehicleNameRef.current?.value ?? "",
-            newHourlyRate  : newHourlyRateRef.current?.value ?? "",
-        };
-        setFormData(payload);
-        setIsOpen(true);
-    };
-
     useEffect(() => {
         if (message && !errMessage) {
             newVehicleNameRef.current!.value = "";
@@ -54,6 +44,17 @@ const UpdateVehicleTypePage = (): ReactNode => {
             setOpenMessage(true);
         }
     }, [message]);
+    
+    const handleSubmitForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const payload = {
+            newVehicleName : newVehicleNameRef.current?.value ?? "",
+            newHourlyRate  : newHourlyRateRef.current?.value ?? "",
+        };
+        setFormData(payload);
+        setIsOpen(true);
+    };
+
 
     const handleConfirm = () => {
         if (formData && validId) {

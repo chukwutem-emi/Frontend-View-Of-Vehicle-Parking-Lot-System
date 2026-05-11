@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, type ReactNode } from "react";
 import { UpdateParkingSlot } from "../components/UpdateParkingSlot";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useUpdateParkingSlot } from "../hooks/useUpdateParkingSlot";
 
 type FormData = {
@@ -33,6 +33,20 @@ const UpdateParkingSlotPage = (): ReactNode => {
         progress
     } = useUpdateParkingSlot();
 
+    useEffect(() => {
+        if (message && !errMessage) {
+            availableCapacityRef.current!.value = "";
+            maximumCapacityRef.current!.value   = "";
+            slotCodeRef.current!.value          = "";
+        };
+    }, [message, errMessage]);
+
+    useEffect(() => {
+        if (message) {
+            setOpenMessage(true);
+        };
+    }, [message]);
+    
     const handleSubmitForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         const parsedAvailableCapacity = availableCapacityRef.current?.value;
@@ -50,19 +64,6 @@ const UpdateParkingSlotPage = (): ReactNode => {
         setIsOpen(true);
     };
 
-    useEffect(() => {
-        if (message && !errMessage) {
-            availableCapacityRef.current!.value = "";
-            maximumCapacityRef.current!.value   = "";
-            slotCodeRef.current!.value          = "";
-        };
-    }, [message, errMessage]);
-
-    useEffect(() => {
-        if (message) {
-            setOpenMessage(true);
-        };
-    }, [message]);
 
     const handleConfirm = () => {
         if (formData && validId) {

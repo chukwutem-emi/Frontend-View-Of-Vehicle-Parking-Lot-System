@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {createParkingSessionAPI} from "../APIs/createParkingSessionAPI";
 import type { CreateParkingSessionAttributes } from "../../../types/parkingSessionAttributes/createParkingSessionAttributes";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../utils/useAppSelector";
 
 type UseCreateParkingSessionReturns = {

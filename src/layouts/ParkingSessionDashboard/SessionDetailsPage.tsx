@@ -1,5 +1,5 @@
 import { useEffect, type ReactNode } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useGetParkingSession } from "../../features/parkingSession/hooks/useGetParkingSession";
 import { SessionDetails } from "./SessionDetails";
 import { ResponseDialog } from "../../components/Modal/ResponseDialog";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { VehicleExitTimeAttributes } from "../../../types/parkingSessionAttributes/vehicleExitTimeAttributes";
 import { vehicleExitTimeAPI } from "../APIs/vehicleExitTimeAPI";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../utils/useAppSelector";
 
 

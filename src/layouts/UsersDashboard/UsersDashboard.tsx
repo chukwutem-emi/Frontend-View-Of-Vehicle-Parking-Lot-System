@@ -25,6 +25,32 @@ const UsersDashboard = (): ReactNode => {
 
     const userToken = useAppSelector((state) => state.auth.token);
 
+    const clearMessage = () => {
+        setMessage("");
+        setErrMessage(false);
+    };
+    
+    useEffect(() => {
+        if (userToken) {
+            getAllUsers();
+        };
+        const interval = setInterval(() => {
+            getAllUsers();
+        }, 1800000);
+        const timer = setTimeout(() => {
+            setBackgroundLoading(false);
+        }, 1000);
+        return () => {
+            clearInterval(interval);
+            clearTimeout(timer);
+        };
+    }, [userToken]);
+
+    useEffect(() => {
+        if (message) {
+            setOpen(true);
+        };
+    }, [message]);
 
     const getAllUsers = async () => {
         try {
@@ -50,32 +76,7 @@ const UsersDashboard = (): ReactNode => {
             setErrMessage(true);
         }
     };
-    useEffect(() => {
-        if (userToken) {
-            getAllUsers();
-        };
-        const interval = setInterval(() => {
-            getAllUsers();
-        }, 1800000);
-        const timer = setTimeout(() => {
-            setBackgroundLoading(false);
-        }, 1000);
-        return () => {
-            clearInterval(interval);
-            clearTimeout(timer);
-        };
-    }, [userToken]);
 
-    useEffect(() => {
-        if (message) {
-            setOpen(true);
-        };
-    }, [message]);
-
-    const clearMessage = () => {
-        setMessage("");
-        setErrMessage(false);
-    };
     const handleDivClick = () => {
         setOpen(false);
         clearMessage();

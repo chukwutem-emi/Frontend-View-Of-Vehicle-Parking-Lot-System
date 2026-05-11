@@ -23,6 +23,31 @@ const ParkingSlotDashboard = (): ReactNode => {
     
     const divRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+        if (userToken) {
+            getAllSlots();
+        }
+        window.addEventListener("mousedown", handleClickOutside);
+        const interval = setInterval(() => {
+            getAllSlots();
+        }, 1800000);
+        const timer = setTimeout(() => {
+            setBackgroundLoading(false);
+        }, 1000);
+
+        return () => {
+            window.removeEventListener("mousedown", handleClickOutside);
+            clearInterval(interval);
+            clearTimeout(timer);
+        };
+    }, [userToken]);
+
+    useEffect(() => {
+        if (message) {
+            setOpen(true);
+        };
+    }, [message]);
+
     const getAllSlots = async (): Promise<void> => {
         try {
             const response = await getDashboardParkingSlotAPI(userToken);
@@ -48,36 +73,12 @@ const ParkingSlotDashboard = (): ReactNode => {
         };
     };
 
-    useEffect(() => {
-        if (userToken) {
-            getAllSlots();
-        }
-        window.addEventListener("mousedown", handleClickOutside);
-        const interval = setInterval(() => {
-            getAllSlots();
-        }, 1800000);
-        const timer = setTimeout(() => {
-            setBackgroundLoading(false);
-        }, 1000);
-
-        return () => {
-            window.removeEventListener("mousedown", handleClickOutside);
-            clearInterval(interval);
-            clearTimeout(timer);
-        };
-    }, [userToken]);
 
     const clearMessage = () => {
         setMessage("");
         setErrMessage(false);
     };
 
-    useEffect(() => {
-        if (message) {
-            setOpen(true);
-        };
-    }, [message]);
-    
     const handleDivClick = () => {
         setOpen(false);
         clearMessage();

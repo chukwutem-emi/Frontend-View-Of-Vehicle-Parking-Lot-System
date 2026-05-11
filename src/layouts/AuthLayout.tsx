@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import { AuthHeader } from "./AuthHeader";
-import { Outlet } from "react-router";
+import { Outlet } from "react-router-dom";
 
 
 const AuthLayout = (): JSX.Element => {

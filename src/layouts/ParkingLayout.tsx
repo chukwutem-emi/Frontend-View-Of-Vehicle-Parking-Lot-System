@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import { ParkingHeader } from "./ParkingHeader";
-import { Outlet } from "react-router";
+import { Outlet } from "react-router-dom";
 
 
 const ParkingLayout = (): JSX.Element => {

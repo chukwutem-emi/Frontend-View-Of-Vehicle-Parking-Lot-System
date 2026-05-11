@@ -21,6 +21,35 @@ const ParkingSessionDashboard = (): ReactNode => {
     const userToken = useAppSelector((state) => state.auth.token);
 
 
+    useEffect(() => {
+        if (userToken) {
+            getAllSessions();
+        }
+        const interval = setInterval(() => {
+            getAllSessions();
+        }, 1800000);
+        const timer = setTimeout(() => {
+            setBackgroundLoading(false);
+        }, 1000);
+
+        return () => {
+            clearInterval(interval);
+            clearTimeout(timer);
+        };
+    }, [userToken]);
+
+    
+    useEffect(() => {
+        if (message) {
+            setOpen(true);
+        };
+    }, [message]);
+    
+    const clearMessage = () => {
+        setMessage("");
+        setErrMessage(false);
+    };
+
     const getAllSessions = async (): Promise<void> => {
         try {
             const response = await apiClient<APIResponse>("/session/get-sessions", {
@@ -46,33 +75,6 @@ const ParkingSessionDashboard = (): ReactNode => {
         };
     };
 
-    useEffect(() => {
-        if (userToken) {
-            getAllSessions();
-        }
-        const interval = setInterval(() => {
-            getAllSessions();
-        }, 1800000);
-        const timer = setTimeout(() => {
-            setBackgroundLoading(false);
-        }, 1000);
-
-        return () => {
-            clearInterval(interval);
-            clearTimeout(timer);
-        };
-    }, [userToken]);
-
-    const clearMessage = () => {
-        setMessage("");
-        setErrMessage(false);
-    };
-
-    useEffect(() => {
-        if (message) {
-            setOpen(true);
-        };
-    }, [message]);
     
     const handleDivClick = () => {
         setOpen(false);

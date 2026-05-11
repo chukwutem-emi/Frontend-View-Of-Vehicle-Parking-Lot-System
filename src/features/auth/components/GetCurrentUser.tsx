@@ -7,7 +7,7 @@ import { convertUTCToLocalDateTime } from "../../../utils/formatDate";
 import { Link } from "react-router-dom";
 
 type GetCurrentUserProps = {
-    user          : GetUserAttributes;
+    user          : GetUserAttributes | undefined;
     loading       : boolean;
     message       : string;
     errorMessage  : boolean;
@@ -18,18 +18,18 @@ type GetCurrentUserProps = {
 
 export const GetCurrentUser = ({divOnclick, errorMessage, isOpen, loading, message, onClick, user}: GetCurrentUserProps): ReactNode => {
     const details = [
-        { label: "ID", value: user.id },
-        { label: "Name", value: user.username },
-        { label: "Email", value: user.email },
-        { label: "Phone", value: user.phone },
-        { label: "Role", value: user.userRole },
-        { label: "Admin", value: user.isAdmin ? "Yes" : "No" },
-        { label: "Address", value: user.userAddress },
-        { label: "Updated by", value: user.updatedBy ?? "----" },
-        { label: "Created on", value: convertUTCToLocalDateTime(user.createdAt) },
-        { label: "Last Updated", value: convertUTCToLocalDateTime(user.updatedAt) },
+        { label: "ID", value: user?.id },
+        { label: "Name", value: user?.username },
+        { label: "Email", value: user?.email },
+        { label: "Phone", value: user?.phone },
+        { label: "Role", value: user?.userRole },
+        { label: "Admin", value: user?.isAdmin ? "Yes" : "No" },
+        { label: "Address", value: user?.userAddress },
+        { label: "Updated by", value: user?.updatedBy ?? "----" },
+        { label: "Created on", value: convertUTCToLocalDateTime(user?.createdAt) },
+        { label: "Last Updated", value: convertUTCToLocalDateTime(user?.updatedAt) },
         { label: "Actions", value: <div className="flex flex-row gap-10">
-            <Link to={`/auth/update/${user.id}`} className="font-sans font-bold text-green-600 hover:underline">UPDATE</Link>
+            <Link to={`/auth/update/${user?.id}`} className="font-sans font-bold text-green-600 hover:underline">UPDATE</Link>
         </div> }
     ];
     return (

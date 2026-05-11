@@ -32,7 +32,7 @@
 - **Author**: Chukwutem Stephen Emi
 - **License**: ISC
 - **Primary Language**: TypeScript (96.8%)
-- **Last Updated**: May 8, 2026
+- **Last Updated**: May 11, 2026
 
 ---
 
@@ -93,7 +93,7 @@ Frontend-View-Of-Vehicle-Parking-Lot-System
 ├── src
 │   ├── App.tsx
 │   ├── __test__
-│   │   └── deleteUserComponenet.test.tsx
+│   │   └── deleteUserComponent.test.tsx
 │   ├── app
 │   │   ├── rootReducer.ts
 │   │   └── store.ts
@@ -157,7 +157,6 @@ Frontend-View-Of-Vehicle-Parking-Lot-System
 │   │   │   │   ├── UpdatePassword.tsx
 │   │   │   │   └── UpdateUserDetailsForm.tsx
 │   │   │   ├── hooks
-│   │   │   │   ├── useAuthTypewriter.ts
 │   │   │   │   ├── useDeleteUser.ts
 │   │   │   │   ├── useDemoteUser.ts
 │   │   │   │   ├── useGetAllUsers.ts
@@ -733,5 +732,5 @@ aws s3 sync dist/ s3://parking-ops --delete
 ## Support & Issues
 For issues, bugs, or feature requests, please open an [issue](https://github.com/chukwutem-emi/Frontend-View-Of-Vehicle-Parking-Lot-System/issues) on the GitHub repository.
 
-## Last Updated: May 8, 2026
+## Last Updated: May 11, 2026
 Maintained By: [Chukwutem Stephen Emi](https://github.com/chukwutem-emi)

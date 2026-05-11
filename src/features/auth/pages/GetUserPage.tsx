@@ -1,5 +1,4 @@
 import { useEffect, type ReactNode } from "react";
-import { BigBackgroundSpinner } from "../../../components/BigBackgroundSpinner";
 import { GetUser } from "../components/GetUser";
 import { useGetUser } from "../hooks/useGetUser";
 import { useSearchParams } from "react-router-dom";
@@ -35,9 +34,6 @@ const GetUserPage = (): ReactNode => {
     const handleOnClick = () => {
         setOpenMessage(false);
         clearMessage();
-    };
-    if (!user) {
-        return <BigBackgroundSpinner />
     };
     return (
         <div className="min-h-screen w-full flex flex-col items-stretch justify-center px-4 overflow-x-hidden">

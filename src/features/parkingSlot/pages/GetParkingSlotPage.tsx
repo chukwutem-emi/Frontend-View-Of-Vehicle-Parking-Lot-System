@@ -1,5 +1,5 @@
 import { useEffect, type ReactNode } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useGetParkingSlot } from "../hooks/useGetParkingSlot";
 import { GetParkingSlot } from "../components/GetParkingSlot";
 

@@ -1,7 +1,7 @@
 import {useDeleteUser} from "../hooks/useDeleteUser";
 import {DeleteUser} from "../components/DeleteUser";
 import { useEffect, useState, type ReactNode } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 
 
 const DeleteUserPage = (): ReactNode => {
@@ -29,13 +29,13 @@ const DeleteUserPage = (): ReactNode => {
         };
     }, [validId]);
 
-    if (!validId) return null
-
     useEffect(() => {
         if (message) {
             setOpenMessage(true)
         };
     }, [message]);
+
+    if (!validId) return null
 
     const handleConfirm = () => {
         if (userId) {

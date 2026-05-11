@@ -36,19 +36,6 @@ const SignUpPage = (): ReactNode => {
         progress
     } = useSignup();
     
-    const handleSignUpForm = (e: SyntheticEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const payload = {
-            username        : usernameRef.current?.value ?? "",
-            password        : passwordRef.current?.value ?? "",
-            confirmPassword : confirmPasswordRef.current?.value ?? "",
-            email           : emailRef.current?.value ?? "",
-            userAddress     : userAddressRef.current?.value ?? "",
-            phone           : phoneRef.current?.value ?? ""
-        };
-        setFormData(payload);
-        setOpen(true)
-    };
     useEffect(() => {
         if (message && !errMessage) {
             usernameRef.current!.value        = "";
@@ -62,6 +49,20 @@ const SignUpPage = (): ReactNode => {
             setOpenMessage(true)
         };
     }, [message, errMessage]);
+    
+    const handleSignUpForm = (e: SyntheticEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const payload = {
+            username        : usernameRef.current?.value ?? "",
+            password        : passwordRef.current?.value ?? "",
+            confirmPassword : confirmPasswordRef.current?.value ?? "",
+            email           : emailRef.current?.value ?? "",
+            userAddress     : userAddressRef.current?.value ?? "",
+            phone           : phoneRef.current?.value ?? ""
+        };
+        setFormData(payload);
+        setOpen(true)
+    };
 
     const handleConfirm = () => {
         if (formData) {

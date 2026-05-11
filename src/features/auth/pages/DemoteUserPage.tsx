@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import {DemoteUser} from "../components/DemoteUser";
 import {useDemoteUser} from "../hooks/useDemoteUser";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 
 
 
@@ -28,14 +28,15 @@ const DemoteUserPage = (): ReactNode => {
             setIsOpen(true);
         };
     }, [validId]);
-
-    if (!validId) return null;
-
+    
     useEffect(() => {
         if (message) {
             setOpenMessage(true)
         };
     }, [message]);
+
+    if (!validId) return null;
+
 
     const handleConfirm = () => {
         if (userId) {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {createUser} from "../APIs/signupAPI";
 import type {SignupPayloadAttributes} from "../../../types/authAttributes/signupAttributes";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 
 

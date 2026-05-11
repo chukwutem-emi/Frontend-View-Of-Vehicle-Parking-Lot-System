@@ -26,6 +26,19 @@ const CreateParkingSlotPage = (): ReactNode => {
         open,
         progress
     } = useCreateParkingSlot();
+    
+    useEffect(() => {
+        if (message && !errMessage) {
+            vehicleTypeIdRef.current!.value = "";
+            slotCodeRef.current!.value      = "";
+        }
+    }, [message, errMessage]);
+
+    useEffect(() => {
+        if (message) {
+            setOpenMessage(true);
+        };
+    }, [message]);
 
     const handleParkingSlotForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -42,18 +55,6 @@ const CreateParkingSlotPage = (): ReactNode => {
         setIsOpen(true);
     };
 
-    useEffect(() => {
-        if (message && !errMessage) {
-            vehicleTypeIdRef.current!.value = "";
-            slotCodeRef.current!.value      = "";
-        }
-    }, [message, errMessage]);
-
-    useEffect(() => {
-        if (message) {
-            setOpenMessage(true);
-        };
-    }, [message]);
 
     const handleConfirm = () => {
         if (formData) {

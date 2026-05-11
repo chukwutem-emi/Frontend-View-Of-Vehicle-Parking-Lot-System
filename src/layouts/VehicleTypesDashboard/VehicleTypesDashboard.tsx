@@ -31,8 +31,8 @@ const VehicleTypesDashboard = (): ReactNode => {
         setIsDivOpen,
         vehicleType
     } = useFetchVehicleType();
-
-
+    
+    
     useEffect(() => {
         window.addEventListener("mousedown", handleClickOutSide);
 

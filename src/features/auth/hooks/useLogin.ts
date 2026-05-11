@@ -3,7 +3,7 @@ import type { LoginPayloadAttributes } from "../../../types/authAttributes/login
 import {loginUser} from "../APIs/loginAPI";
 import { useDispatch } from "react-redux";
 import { setToken } from "../authSlices/tokenSlice";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import {apiClient} from "../../../services/apiClient";
 import { setUserDetails } from "../authSlices/userSlice";
 import type { GetUserAttributes } from "../../../types/authAttributes/getUserAttributes";

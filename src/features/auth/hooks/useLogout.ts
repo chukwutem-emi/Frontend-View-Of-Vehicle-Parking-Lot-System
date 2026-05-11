@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeToken } from "../authSlices/tokenSlice";
 import { removeUserDetails } from "../authSlices/userSlice";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 
 type FunctionReturnValue = {
@@ -33,7 +33,7 @@ export const useLogout = (): FunctionReturnValue => {
 
     const navigate = useNavigate();
 
-    const clearMessage = (): void => {
+    const clearMessage = () => {
         setMessage("");
         setErrMessage(false);
     };

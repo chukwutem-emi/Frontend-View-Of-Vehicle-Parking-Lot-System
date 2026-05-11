@@ -19,6 +19,7 @@ export const NavBar = ({role, isDarkMode, firstTwoLetters}: Role) => {
       window.addEventListener("click", handleClick);
       return () => window.removeEventListener("click", handleClick);
     }, []);
+    
     const data = [
       {
         title : "Sessions",

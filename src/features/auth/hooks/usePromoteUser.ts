@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { promoteUserAPI } from "../APIs/promoteUserAPI";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../utils/useAppSelector";
 
 

@@ -24,15 +24,6 @@ const  CreateVehicleTypePage = (): ReactNode => {
         progress
     } = useCreateVehicleType();
 
-    const handleVehicleTypeForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const payload = {
-            vehicleName : vehicleNameRef.current?.value ?? "",
-            hourlyRate  : hourlyRateRef.current?.value ?? ""
-        };
-        setFormData(payload);
-        setIsOpen(true);
-    };
     useEffect(() => {
         if(message && !errMessage){
             vehicleNameRef.current!.value = "";
@@ -45,6 +36,16 @@ const  CreateVehicleTypePage = (): ReactNode => {
             setOpenMessage(true);
         };
     }, [message]);
+    
+    const handleVehicleTypeForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const payload = {
+            vehicleName : vehicleNameRef.current?.value ?? "",
+            hourlyRate  : hourlyRateRef.current?.value ?? ""
+        };
+        setFormData(payload);
+        setIsOpen(true);
+    };
 
     const handleConfirm = () => {
         if(formData) {

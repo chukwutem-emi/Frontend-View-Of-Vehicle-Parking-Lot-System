@@ -37,7 +37,23 @@ const CreateParkingSessionPage = (): ReactNode => {
         open,
         progress
     } = useCreateParkingSession();
-
+    
+    useEffect(() => {
+        if (message && !errMessage) {
+            vehicleOwnerNextOfKinAddressRef.current!.value = "";
+            vehicleOwnerNextOfKinPhoneRef.current!.value   = "";
+            vehicleOwnerNextOfKinRef.current!.value        = ""
+            vehicleOwnerAddressRef.current!.value          = "";
+            vehicleOwnerPhoneRef.current!.value            = "";
+            vehicleNumberRef.current!.value                = "";
+            slotIdRef.current!.value                       = "";
+            vehicleTypeIdRef.current!.value                = "";
+        };
+        if (message) {
+            setOpenMessage(true);
+        };
+    }, [message, errMessage]);
+    
     const handleCreateParkingSessionForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         const rawSlotId = slotIdRef.current?.value;
@@ -60,21 +76,6 @@ const CreateParkingSessionPage = (): ReactNode => {
         setIsOpen(true);
     };
 
-    useEffect(() => {
-        if (message && !errMessage) {
-            vehicleOwnerNextOfKinAddressRef.current!.value = "";
-            vehicleOwnerNextOfKinPhoneRef.current!.value   = "";
-            vehicleOwnerNextOfKinRef.current!.value        = ""
-            vehicleOwnerAddressRef.current!.value          = "";
-            vehicleOwnerPhoneRef.current!.value            = "";
-            vehicleNumberRef.current!.value                = "";
-            slotIdRef.current!.value                       = "";
-            vehicleTypeIdRef.current!.value                = "";
-        };
-        if (message) {
-            setOpenMessage(true);
-        };
-    }, [message, errMessage]);
 
     const handleConfirm = () => {
         if (formData) {

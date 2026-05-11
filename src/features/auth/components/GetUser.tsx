@@ -7,7 +7,7 @@ import { convertUTCToLocalDateTime } from "../../../utils/formatDate";
 import { Link } from "react-router-dom";
 
 type GetUserProps = {
-    user          : GetUserAttributes;
+    user          : GetUserAttributes | undefined;
     loading       : boolean;
     message       : string;
     errorMessage  : boolean;
@@ -18,20 +18,20 @@ type GetUserProps = {
 
 export const GetUser = ({divOnclick, errorMessage, isOpen, loading, message, onClick, user}: GetUserProps): ReactNode => {
     const details = [
-        { label: "ID", value: user.id },
-        { label: "Name", value: user.username },
-        { label: "Email", value: user.email },
-        { label: "Phone", value: user.phone },
-        { label: "Role", value: user.userRole },
-        { label: "Admin", value: user.isAdmin ? "Yes" : "No" },
-        { label: "Address", value: user.userAddress },
-        { label: "Updated by", value: user.updatedBy ?? "----" },
-        { label: "Created on", value: convertUTCToLocalDateTime(user.createdAt) },
-        { label: "Last Updated", value: convertUTCToLocalDateTime(user.updatedAt) },
+        { label: "ID", value: user?.id },
+        { label: "Name", value: user?.username },
+        { label: "Email", value: user?.email },
+        { label: "Phone", value: user?.phone },
+        { label: "Role", value: user?.userRole },
+        { label: "Admin", value: user?.isAdmin ? "Yes" : "No" },
+        { label: "Address", value: user?.userAddress },
+        { label: "Updated by", value: user?.updatedBy ?? "----" },
+        { label: "Created on", value: convertUTCToLocalDateTime(user?.createdAt) },
+        { label: "Last Updated", value: convertUTCToLocalDateTime(user?.updatedAt) },
         { label: "Actions", value: <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <Link to={`/app/promote/${user.id}`} className="font-sans font-bold text-green-600 hover:underline">PROMOTE</Link>
-            <Link to={`/app/demote/${user.id}`} className="font-sans font-bold text-yellow-600 hover:underline">DEMOTE</Link>
-            <Link to={`/app/delete/${user.id}`} className="font-sans font-bold text-red-600 hover:underline">DELETE</Link>
+            <Link to={`/app/promote/${user?.id}`} className="font-sans font-bold text-green-600 hover:underline">PROMOTE</Link>
+            <Link to={`/app/demote/${user?.id}`} className="font-sans font-bold text-yellow-600 hover:underline">DEMOTE</Link>
+            <Link to={`/app/delete/${user?.id}`} className="font-sans font-bold text-red-600 hover:underline">DELETE</Link>
         </div> }
     ];
     return (

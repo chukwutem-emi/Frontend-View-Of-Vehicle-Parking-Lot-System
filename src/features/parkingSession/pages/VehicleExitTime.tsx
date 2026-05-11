@@ -26,6 +26,17 @@ const VehicleExitTimePage = (): ReactNode => {
         open,
         progress
     } = useVehicleExitTime();
+    
+    useEffect(() => {
+        if (message && !errMessage) {
+            vehicleNumberRef.current!.value = "";
+            vehicleNameRef.current!.value   = "";
+        };
+
+        if (message) {
+            setOpenMessage(true);
+        };
+    }, [message, errMessage]);
 
     const handleVehicleExitTimeForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -37,16 +48,6 @@ const VehicleExitTimePage = (): ReactNode => {
         setIsOpen(true);
     };
 
-    useEffect(() => {
-        if (message && !errMessage) {
-            vehicleNumberRef.current!.value = "";
-            vehicleNameRef.current!.value   = "";
-        };
-
-        if (message) {
-            setOpenMessage(true);
-        };
-    }, [message, errMessage]);
 
     const handleConfirm = () => {
         if (formData) {
