@@ -20,9 +20,7 @@ const ResetPasswordPage = (): ReactNode => {
         errMessage,
         handleResetPassword : handleResetPasswordPayload,
         loading,
-        message,
-        open,
-        progress
+        message
     } = useResetPassword();
 
     const handleResetPasswordForm = (e: React.SyntheticEvent<HTMLFormElement>) => {
@@ -86,9 +84,7 @@ const ResetPasswordPage = (): ReactNode => {
                         isOpen={isOpen}
                         loading={loading}
                         message={message}
-                        open={open}
                         openMessage={openMessage}
-                        progress={progress}
                     />
                 )
             }

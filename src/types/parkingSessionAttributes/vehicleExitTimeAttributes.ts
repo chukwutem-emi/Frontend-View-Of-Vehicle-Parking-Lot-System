@@ -19,7 +19,5 @@ export type VehicleExitTimeProps = {
     openMessage      : boolean;
     errMessage       : boolean;
     message          : string;
-    progress         : number;
-    open             : boolean;
     isOpen           : boolean;
 };

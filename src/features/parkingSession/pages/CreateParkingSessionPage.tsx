@@ -34,8 +34,6 @@ const CreateParkingSessionPage = (): ReactNode => {
         handleCreateParkingSession : handleCreateParkingSessionPayload,
         loading,
         message,
-        open,
-        progress
     } = useCreateParkingSession();
     
     useEffect(() => {
@@ -104,8 +102,6 @@ const CreateParkingSessionPage = (): ReactNode => {
                 isOpen={isOpen}
                 loading={loading}
                 message={message}
-                open={open}
-                progress={progress}
                 openMessage={openMessage}
                 slotId={slotIdRef}
                 vehicleId={vehicleTypeIdRef}

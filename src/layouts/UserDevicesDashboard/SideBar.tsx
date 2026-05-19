@@ -29,7 +29,7 @@ export const SideBar = (): ReactNode => {
             adminUsersOnly : true
         },
         {
-            title          : "Users",
+            title          : "Admin",
             link           : "/app/users-dashboard",
             icon           : Users2Icon,
             adminUsersOnly : true

@@ -4,18 +4,17 @@ import { VehicleExitTimeInputField } from "../../../components/Input/ParkingSess
 import "../../../styles/parkingSessionCss/vehicleExitTime.css";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
-import { Loader } from "../../../components/Loader";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
 
-export const VehicleExitTime = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivOnclick, handleOnclick, handleSubmitForm, loading, message, open, openMessage, progress, vehicleName, vehicleNumber, isOpen}: VehicleExitTimeProps): ReactNode => {
+export const VehicleExitTime = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivOnclick, handleOnclick, handleSubmitForm, loading, message, openMessage, vehicleName, vehicleNumber, isOpen}: VehicleExitTimeProps): ReactNode => {
     return (
         <>
         <form onSubmit={handleSubmitForm} className="form">
             <VehicleExitTimeInputField
-                label="Vehicle name" 
+                label="Vehicle type" 
                 autoComplete="on"
                 id="vehicleName"
                 inputRef={vehicleName}
@@ -59,10 +58,6 @@ export const VehicleExitTime = ({errMessage, handleCancel, handleConfirm, handle
             isOpen={openMessage}
             message={message}
             onClick={handleOnclick}
-        />
-        <Loader 
-            isOpen={open}
-            progress={progress}
         />
         </>
     );

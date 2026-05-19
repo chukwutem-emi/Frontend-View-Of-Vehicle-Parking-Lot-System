@@ -1,5 +1,5 @@
 .form {
-    @apply w-[80%] md:w-[50%] max-w-md bg-white shadow-2xl mx-auto flex flex-col p-4 sm:p-6 mt-[2rem] space-y-6 z-50;
+    @apply w-[80%] md:w-[50%] max-w-md bg-white mx-auto flex flex-col p-4 sm:p-6 mt-[2rem] space-y-6;
 }
 .session {
     @apply p-3 text-white font-sans xl:font-extrabold font-bold bg-yellow-600 hover:bg-yellow-400 text-center

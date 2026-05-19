@@ -16,8 +16,6 @@ type UseLoginReturns = {
     loading         : boolean;
     clearMessage    : () => void;
     handleLoginUser : (payload: LoginPayloadAttributes) => Promise<void>;
-    progress        : number;
-    isOpen          : boolean;
 };
 
 type GetUserAPIResponse = {
@@ -30,8 +28,6 @@ export const useLogin = (): UseLoginReturns => {
     const[message, setMessage]       = useState("");
     const[errMessage, setErrMessage] = useState(false);
     const[loading, setLoading]       = useState(false);
-    const[progress, setProgress]     = useState(0);
-    const[isOpen, setIsOpen]         = useState(false); 
 
     
 
@@ -67,30 +63,14 @@ export const useLogin = (): UseLoginReturns => {
     };
     const handleLoginUser = async (payload: LoginPayloadAttributes) => {
         setLoading(true);
-        setIsOpen(true);
-        setProgress(20);
-
-        const interval = setInterval(() => {
-            setProgress((prev) => {
-                if (prev >= 90) {
-                    clearInterval(interval);
-                    return prev
-                };
-                return prev + 10
-            });
-        }, 400);
 
         try {
             const res = await loginUser(payload);
             if (!res.data.success) {
                 setMessage(res.data.message);
                 setErrMessage(true);
-                setProgress(0);
-                setIsOpen(false);
                 return;
             };
-            setProgress(100);
-            clearInterval(interval);
             setLoading(false);
             const user = await getUser(res.data.token);
             setErrMessage(false);
@@ -105,12 +85,8 @@ export const useLogin = (): UseLoginReturns => {
                 setMessage(error.message);
             };
             setErrMessage(true);
-            setProgress(0);
-            setIsOpen(false);
         } finally {
             setLoading(false);
-            setIsOpen(false);
-            setProgress(0);
         }
     };
     return {
@@ -118,8 +94,6 @@ export const useLogin = (): UseLoginReturns => {
         message,
         loading,
         clearMessage,
-        handleLoginUser,
-        progress,
-        isOpen
+        handleLoginUser
     };
 };

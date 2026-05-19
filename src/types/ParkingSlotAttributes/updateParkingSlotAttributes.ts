@@ -18,9 +18,7 @@ export type UpdateParkingSlotFormAttributes = {
     handleCancel      : MouseEventHandler<HTMLButtonElement>;
     handleDivClick    : MouseEventHandler<HTMLDivElement>;
     handleOnclick     : MouseEventHandler<HTMLButtonElement>;
-    open              : boolean;
     errMessage        : boolean;
-    progress          : number;
     isOpen            : boolean;
     message           : string;
     openMessage       : boolean;

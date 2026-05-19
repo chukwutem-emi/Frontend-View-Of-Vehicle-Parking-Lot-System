@@ -5,12 +5,11 @@ import "../../../styles/authCss/login.css";
 import {MdToggleOff, MdToggleOn} from "react-icons/md";
 import { useState, type ReactNode } from "react";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
-import {Loader} from "../../../components/Loader";
 import { Link } from "react-router-dom";
 
 
 
-export const LoginForm = ({email, password, divOnClick, errMessage, openMessage, message, onClick, loading, handleLoginForm, isOpen, progress}: LoginFormAttributes): ReactNode => {
+export const LoginForm = ({email, password, divOnClick, errMessage, openMessage, message, onClick, loading, handleLoginForm}: LoginFormAttributes): ReactNode => {
     const [showPassword, setShowPassword] = useState(false);
     return (
         <>
@@ -64,10 +63,6 @@ export const LoginForm = ({email, password, divOnClick, errMessage, openMessage,
             isOpen={openMessage} 
             message={message}
             onClick={onClick} 
-        />
-        <Loader
-            isOpen={isOpen}
-            progress={progress} 
         />
         </>
     );

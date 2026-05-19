@@ -36,7 +36,7 @@ const Header = (): JSX.Element => {
                 <NavLink className={linkClass} to={"/app/users-dashboard"}>
                     <div className="flex flex-row items-center gap-1 md:gap-1">
                         <Users2Icon size={20} className="inline mr-1 text-yellow-500" />
-                        Users
+                        Admin
                     </div>
                 </NavLink>
                 <NavLink className={linkClass} to={"/app/parking-session-dashboard"}>

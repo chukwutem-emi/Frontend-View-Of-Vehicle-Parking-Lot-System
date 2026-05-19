@@ -11,16 +11,12 @@ type UseSignUpReturns = {
     message          : string;
     loading          : boolean;
     clearMessage     : () => void;
-    progress         : number;
-    isOpen           : boolean;
 };
 
 export const useSignup = (): UseSignUpReturns => {
     const[message, setMessage]       = useState("");
     const[errMessage, setErrMessage] = useState(false);
     const[loading, setLoading]       = useState(false);
-    const[progress, setProgress]     = useState(0);
-    const[isOpen, setIsOpen]         = useState(false);
 
     const navigate = useNavigate();
 
@@ -30,19 +26,6 @@ export const useSignup = (): UseSignUpReturns => {
     };
     const handleCreateUser = async (payload: SignupPayloadAttributes) => {
         setLoading(true);
-        setProgress(20);
-        setIsOpen(true);
-
-        const interval = setInterval(() => {
-            setProgress((prev) => {
-                if (prev >= 90) {
-                    clearInterval(interval);
-                    return prev;
-                };
-                return prev + 10;
-            });
-        }, 400);
-
         try {
             const res = await createUser(payload);
             if (!res.data.success) {
@@ -50,10 +33,7 @@ export const useSignup = (): UseSignUpReturns => {
                 setErrMessage(true);
                 return;
             };
-            setProgress(100);
             setMessage(res.data.message);
-            clearInterval(interval);
-            clearInterval(interval);
             setErrMessage(false);
             setTimeout(() => {
                 navigate("/auth/login")
@@ -63,11 +43,8 @@ export const useSignup = (): UseSignUpReturns => {
                 setMessage(err.message);
             };
             setErrMessage(true);
-            setIsOpen(false);
-            setProgress(0);
         } finally {
             setLoading(false);
-            setIsOpen(false);
         };
     };
     return {
@@ -75,8 +52,6 @@ export const useSignup = (): UseSignUpReturns => {
         handleCreateUser,
         message,
         loading,
-        clearMessage,
-        progress,
-        isOpen
+        clearMessage
     };
 };

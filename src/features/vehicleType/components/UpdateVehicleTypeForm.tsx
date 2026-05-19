@@ -3,13 +3,12 @@ import type { UpdateVehicleTypePropsAttributes } from "../../../types/vehicleTyp
 import { UpdateVehicleTypeInputFields } from "../../../components/Input/VehicleType/UpdateVehicleTypeInputFields";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
-import { Loader } from "../../../components/Loader";
 import "../../../styles/vehicleTypeCss/updateVehicleType.css";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
-export const UpdateVehicleTypeForm = ({errMessage, newVehicleName, newHourlyRate, handleCancel, handleConfirm, handleDivCancel, handleDivOnclick, handleOnclick, open, progress, handleSubmitForm, isOpen, loading, message, openMessage}: UpdateVehicleTypePropsAttributes): ReactNode => {
+export const UpdateVehicleTypeForm = ({errMessage, newVehicleName, newHourlyRate, handleCancel, handleConfirm, handleDivCancel, handleDivOnclick, handleOnclick, handleSubmitForm, isOpen, loading, message, openMessage}: UpdateVehicleTypePropsAttributes): ReactNode => {
 
     return (
         <>
@@ -59,10 +58,6 @@ export const UpdateVehicleTypeForm = ({errMessage, newVehicleName, newHourlyRate
             isOpen={openMessage}
             message={message}
             onClick={handleOnclick}
-        />
-        <Loader 
-            isOpen={open}
-            progress={progress}
         />
         </>
     );

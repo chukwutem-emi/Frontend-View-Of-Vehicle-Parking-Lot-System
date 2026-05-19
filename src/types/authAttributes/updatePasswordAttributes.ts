@@ -14,9 +14,7 @@ export type UpdatePasswordPropsAttributes = {
     handleDivClick              : MouseEventHandler<HTMLDivElement>;
     handleOnclick               : MouseEventHandler<HTMLButtonElement>;
     handleUpdatePasswordForm    : (e: React.SyntheticEvent<HTMLFormElement>) => void;
-    open                        : boolean;
     errMessage                  : boolean;
-    progress                    : number;
     isOpen                      : boolean;
     message                     : string;
     openMessage                 : boolean;

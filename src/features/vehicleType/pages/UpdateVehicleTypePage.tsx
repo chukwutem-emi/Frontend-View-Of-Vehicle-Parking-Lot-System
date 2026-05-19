@@ -27,9 +27,7 @@ const UpdateVehicleTypePage = (): ReactNode => {
         errMessage,
         handleUpdateVehicleType : handleUpdateVehicleTypePayload,
         loading,
-        message,
-        open,
-        progress
+        message
     } = useUpdateVehicleType();
 
     useEffect(() => {
@@ -82,11 +80,9 @@ const UpdateVehicleTypePage = (): ReactNode => {
                 isOpen={isOpen}
                 loading={loading}
                 message={message}
-                open={open}
                 openMessage={openMessage}
                 newHourlyRate={newHourlyRateRef}
                 newVehicleName={newVehicleNameRef}
-                progress={progress}
             />
         </div>
     );

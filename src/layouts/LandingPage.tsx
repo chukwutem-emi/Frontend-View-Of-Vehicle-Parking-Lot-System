@@ -14,7 +14,7 @@ const LandingPage = () => {
             </section>
             <section className="flex flex-col items-center justify-center md:mt-[4rem] mt-24 space-y-8">
                 <h1 className="text-center mb-12 font-bold md:text-5xl text-2xl">Take Full Control of Your Parking System</h1>
-                <p className="px-10 md:text-lg text-xs md:font-bold font-serif text-green-600">Manage Parking. Track sessions. Stay in Control<span className="animate-pulse font-extrabold text-lg">|</span></p>
+                <p className="px-10 md:text-lg text-xs md:font-bold font-serif text-green-600">Manage Parking. Track sessions. Stay in Control</p>
                 <p className="px-5 md:text-lg text-sm font-semibold text-gray-300">
                     Monitor parking activity in real time, manage users effortlessly,
                     and gain full control of your system — all from one powerful dashboard.

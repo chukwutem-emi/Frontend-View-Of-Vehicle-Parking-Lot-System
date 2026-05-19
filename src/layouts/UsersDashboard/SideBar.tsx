@@ -6,14 +6,14 @@ import { useAppSelector } from "../../utils/useAppSelector";
 
 
 export const SideBar = ():ReactNode => {
-    const[active, setActive] = useState("UsersDashboard");
+    const[active, setActive] = useState("AdminDashboard");
 
     const userDetails = useAppSelector((state) => state.user.details);
     const isAdmin =  userDetails?.isAdmin ?? "";
 
     const menu = [
         {
-            title          : "UsersDashboard",
+            title          : "AdminDashboard",
             link           : "/app/users-dashboard"
         },
         {

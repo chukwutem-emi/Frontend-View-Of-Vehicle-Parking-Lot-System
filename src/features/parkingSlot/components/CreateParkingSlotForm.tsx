@@ -3,13 +3,12 @@ import type { CreateParkingSlotFormAttributes } from "../../../types/ParkingSlot
 import { CreateParkingSlotInputField } from "../../../components/Input/ParkingSlot/CreateParkingSlotInputField";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
-import { Loader } from "../../../components/Loader";
 import "../../../styles/slotCss/createParkingSlot.css";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
-export const CreateParkingSlotForm = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivOnClick, handleOnClick, handleParkingSlotForm, isOpen, loading, message, open, openMessage, progress, slotCode, vehicleTypeId}: CreateParkingSlotFormAttributes): ReactNode => {
+export const CreateParkingSlotForm = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivOnClick, handleOnClick, handleParkingSlotForm, isOpen, loading, message, openMessage, slotCode, vehicleTypeId}: CreateParkingSlotFormAttributes): ReactNode => {
     return (
         <>
         <form onSubmit={handleParkingSlotForm} className="form">
@@ -59,10 +58,6 @@ export const CreateParkingSlotForm = ({errMessage, handleCancel, handleConfirm, 
             isOpen={openMessage}
             message={message}
             onClick={handleOnClick}
-        />
-        <Loader 
-            isOpen={open}
-            progress={progress}
         />
         </>
     );

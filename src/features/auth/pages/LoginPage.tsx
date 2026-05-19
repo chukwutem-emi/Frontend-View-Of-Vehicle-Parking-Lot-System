@@ -18,8 +18,6 @@ const LoginPage = (): ReactNode => {
         message, 
         loading, 
         clearMessage,
-        isOpen,
-        progress
     } = useLogin();
 
     useEffect(() => {
@@ -74,8 +72,6 @@ const LoginPage = (): ReactNode => {
                         onClick={handleOnClick}
                         loading={loading}
                         handleLoginForm={handleLoginForm}
-                        isOpen={isOpen}
-                        progress={progress} 
                     />
                 </div> 
             )

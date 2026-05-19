@@ -1,4 +1,4 @@
-import { Activity, Car, HomeIcon, LogOut, Users2Icon} from "lucide-react";
+import { Activity, Car, HomeIcon, LogOut, MapPin, Users2Icon} from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../utils/useAppSelector";
@@ -29,7 +29,13 @@ export const SideBar = (): ReactNode => {
             icon           : Car
         },
         {
-            title          : "Users",
+          title          : "Slots",
+          link           : "/app/parking-slot-dashboard",
+          icon           : MapPin,
+          adminUsersOnly : true
+        },
+        {
+            title          : "Admin",
             link           : "/app/users-dashboard",
             adminUsersOnly : true,
             icon           : Users2Icon
@@ -42,7 +48,7 @@ export const SideBar = (): ReactNode => {
         },
         {
             title          : "CreateParkingSession",
-            link           : "/app/create-session",
+            link           : "/parking/create-session",
             adminUsersOnly : true,
             icon           : Activity
         },

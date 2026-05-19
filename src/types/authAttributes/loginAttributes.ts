@@ -12,8 +12,6 @@ export interface LoginFormAttributes {
    onClick              : MouseEventHandler<HTMLButtonElement>;
    divOnClick           : MouseEventHandler<HTMLDivElement>;
    errMessage           : boolean;
-   isOpen               : boolean;
-   progress             : number;
 };
 
 export interface LoginPayloadAttributes {

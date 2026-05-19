@@ -25,8 +25,6 @@ export interface UpdateUserDetailsFormAttributes {
     handleOnclick    : MouseEventHandler<HTMLButtonElement>;
     open             : boolean;
     errMessage       : boolean;
-    progress         : number;
-    isOpen           : boolean;
     message          : string;
     openMessage      : boolean;
 };

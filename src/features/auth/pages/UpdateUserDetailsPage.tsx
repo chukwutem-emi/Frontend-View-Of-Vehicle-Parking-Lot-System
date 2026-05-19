@@ -35,8 +35,6 @@ const UpdateUserDetailsPage = (): ReactNode => {
         handleUpdateUserDetails : handleUpdateUserDetailsPayload,
         loading,
         message,
-        open,
-        progress,
         clearMessage
     } = useUpdateUserDetails();
     
@@ -94,12 +92,10 @@ const UpdateUserDetailsPage = (): ReactNode => {
                 handleDivClick={handleOnclick}
                 handleOnclick={handleOnclick}
                 handleSubmitForm={handleUpdateUserDetailsForm}
-                isOpen={open}
                 loading={loading}
                 message={message}
                 open={isOpen}
                 openMessage={openMessage}
-                progress={progress}
                 confirmPassword={confirmPasswordRef}
                 email={emailRef}
                 password={passwordRef}

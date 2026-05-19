@@ -21,8 +21,6 @@ export interface SignUpFormAttributes {
     onClick             : MouseEventHandler<HTMLButtonElement>;
     divOnClick          : MouseEventHandler<HTMLDivElement>;
     errMessage          : boolean;
-    isOpen              : boolean;
-    progress            : number;
 };
 
 export interface SignupPayloadAttributes {

@@ -16,10 +16,8 @@ export type CreateParkingSlotFormAttributes = {
     handleOnClick                 : MouseEventHandler<HTMLButtonElement>;
     handleDivOnClick              : MouseEventHandler<HTMLDivElement>;
     loading                       : boolean;
-    open                          : boolean;
     openMessage                   : boolean;
     message                       : string;
     errMessage                    : boolean;
-    isOpen                        : boolean;                     
-    progress                      : number;       
+    isOpen                        : boolean;  
 };

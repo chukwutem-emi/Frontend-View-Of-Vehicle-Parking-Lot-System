@@ -5,13 +5,12 @@ import { useState, type ReactNode } from "react";
 import {MdToggleOn, MdToggleOff} from "react-icons/md";
 import {Dialog} from "../../../components/Modal/Dialog";
 import {ResponseDialog} from "../../../components/Modal/ResponseDialog";
-import {Loader} from "../../../components/Loader";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
 
-export const SignUpForm = ({username, password, userAddress, phone, email, confirmPassword, handleSignUpForm, loading, open, handleCancel, handleConfirm, handleDivCancel, divOnClick, errMessage, message, onClick, openMessage, isOpen, progress}: SignUpFormAttributes): ReactNode => {
+export const SignUpForm = ({username, password, userAddress, phone, email, confirmPassword, handleSignUpForm, loading, open, handleCancel, handleConfirm, handleDivCancel, divOnClick, errMessage, message, onClick, openMessage}: SignUpFormAttributes): ReactNode => {
 
     const[showPassword, setShowPassword] = useState(false);
     return (
@@ -106,10 +105,6 @@ export const SignUpForm = ({username, password, userAddress, phone, email, confi
             isOpen={openMessage} 
             message={message}
             onClick={onClick}
-        />
-        <Loader
-            isOpen={isOpen}
-            progress={progress} 
         />
         </>
     );

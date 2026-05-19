@@ -23,8 +23,6 @@ export type UpdateVehicleTypePropsAttributes = {
     errMessage       : boolean;
     message          : string;
     loading          : boolean;
-    open             : boolean;
-    progress         : number;
     newVehicleName   : Ref<HTMLInputElement>;
     newHourlyRate    : Ref<HTMLInputElement>;
 };

@@ -5,13 +5,12 @@ import { MdToggleOn, MdToggleOff } from "react-icons/md";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
-import { Loader } from "../../../components/Loader";
 import "../../../styles/authCss/updatePassword.css";
 
 
 
 
-export const UpdatePassword = ({confirmPassword, errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, handleUpdatePasswordForm, isOpen, message, open, openMessage, password, progress, loading}: UpdatePasswordPropsAttributes): ReactNode => {
+export const UpdatePassword = ({confirmPassword, errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, handleUpdatePasswordForm, isOpen, message, openMessage, password, loading}: UpdatePasswordPropsAttributes): ReactNode => {
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -71,10 +70,6 @@ export const UpdatePassword = ({confirmPassword, errMessage, handleCancel, handl
             isOpen={openMessage}
             message={message}
             onClick={handleOnclick}
-        />
-        <Loader 
-            isOpen={open}
-            progress={progress}
         />
         </>
     );

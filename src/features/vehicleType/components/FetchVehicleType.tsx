@@ -7,6 +7,7 @@ import "../../../styles/vehicleTypeCss/fetchVehicleType.css";
 import { VehicleDetails } from "./VehicleDetails";
 import { useAppSelector } from "../../../utils/useAppSelector";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
+import { Link } from "react-router-dom";
 
 
 
@@ -19,6 +20,7 @@ export const FetchVehicleType = ({errMessage, handleDivOnClick, handleOnClick, h
         <>
         <form onSubmit={handleVehicleTypeSearchForm} className="form">
             <div className="flex flex-row gap-3 w-full justify-center items-center">
+                <Link to={"/app/create-vehicle-type"} className="text-lg Md:text-2xl font-bold hover:underline hidden md:block">Create vehicle-type</Link>
                 <label htmlFor="vehicleType" className="sr-only">Vehicle Type:</label>
                 <input 
                     type="text"

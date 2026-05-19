@@ -11,7 +11,7 @@ type AllUsersProps = {
 export const AllUsers = ({filteredUsers}: AllUsersProps): ReactNode => {
     return (
         <div className="my-[4rem] text-white">
-            <h1 className="font-sans text-center mb-10 font-bold text-lg md:text-xl">Users</h1>
+            <h1 className="font-sans text-center mb-10 font-bold text-lg md:text-xl">Admin</h1>
             {
                 filteredUsers?.length > 0 ? (
                     <ul className="grid md:grid-cols-3 grid-col-1 gap-4 justify-items-center md:justify-items-start">

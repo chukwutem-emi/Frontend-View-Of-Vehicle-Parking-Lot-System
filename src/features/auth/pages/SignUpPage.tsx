@@ -31,9 +31,7 @@ const SignUpPage = (): ReactNode => {
         handleCreateUser: handleCreateUserPayload,
         loading,
         message,
-        clearMessage,
-        isOpen,
-        progress
+        clearMessage
     } = useSignup();
     
     useEffect(() => {
@@ -111,8 +109,6 @@ const SignUpPage = (): ReactNode => {
                     message={message}
                     onClick={handleOnclick}
                     openMessage={openMessage}
-                    isOpen={isOpen}
-                    progress={progress}
                     />
                 </div>
             )

@@ -22,9 +22,7 @@ const CreateParkingSlotPage = (): ReactNode => {
         errMessage,
         handleCreateParkingSlot : handleCreateParkingSlotPayload,
         loading,
-        message,
-        open,
-        progress
+        message
     } = useCreateParkingSlot();
     
     useEffect(() => {
@@ -82,9 +80,7 @@ const CreateParkingSlotPage = (): ReactNode => {
         isOpen={isOpen}
         loading={loading}
         message={message}
-        open={open}
         openMessage={openMessage}
-        progress={progress}
         slotCode={slotCodeRef}
         vehicleTypeId={vehicleTypeIdRef}
       />

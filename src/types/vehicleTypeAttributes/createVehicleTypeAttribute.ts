@@ -24,7 +24,5 @@ export type CreateVehicleTypeFormProps = {
     errMessage            : boolean;
     loading               : boolean;
     isOpen                : boolean;
-    open                  : boolean;
     message               : string;
-    progress              : number;
 };

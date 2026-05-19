@@ -23,8 +23,6 @@ const VehicleExitTimePage = (): ReactNode => {
         handleVehicleExitTime : handleVehicleExitTimePayload,
         loading,
         message,
-        open,
-        progress
     } = useVehicleExitTime();
     
     useEffect(() => {
@@ -76,9 +74,7 @@ const VehicleExitTimePage = (): ReactNode => {
                 isOpen={isOpen}
                 loading={loading}
                 message={message}
-                open={open}
                 openMessage={openMessage}
-                progress={progress}
                 vehicleName={vehicleNameRef}
                 vehicleNumber={vehicleNumberRef}
             />

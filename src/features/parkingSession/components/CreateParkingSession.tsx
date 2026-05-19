@@ -3,13 +3,12 @@ import type {CreateParkingSessionFormAttributes} from "../../../types/parkingSes
 import { CreateParkingSessionInputField } from "../../../components/Input/ParkingSession/CreateParkingSessionInputField";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
-import { Loader } from "../../../components/Loader";
 import "../../../styles/parkingSessionCss/createParkingSession.css";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
-export const CreateParkingSession = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivOnClick, handleOnClick, handleParkingSessionForm, isOpen, loading, message, open, openMessage, progress, slotId, vehicleNumber, vehicleOwnerAddress, vehicleOwnerNextOfKin, vehicleOwnerNextOfKinAddress, vehicleOwnerNextOfKinPhone, vehicleOwnerPhone, vehicleId}: CreateParkingSessionFormAttributes): ReactNode => {
+export const CreateParkingSession = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivOnClick, handleOnClick, handleParkingSessionForm, isOpen, loading, message, openMessage, slotId, vehicleNumber, vehicleOwnerAddress, vehicleOwnerNextOfKin, vehicleOwnerNextOfKinAddress, vehicleOwnerNextOfKinPhone, vehicleOwnerPhone, vehicleId}: CreateParkingSessionFormAttributes): ReactNode => {
     return (
         <>
         <form onSubmit={handleParkingSessionForm} className="form">
@@ -118,10 +117,6 @@ export const CreateParkingSession = ({errMessage, handleCancel, handleConfirm, h
             isOpen={openMessage}
             message={message}
             onClick={handleOnClick}
-        />
-        <Loader 
-            isOpen={open}
-            progress={progress}
         />
         </>
     );

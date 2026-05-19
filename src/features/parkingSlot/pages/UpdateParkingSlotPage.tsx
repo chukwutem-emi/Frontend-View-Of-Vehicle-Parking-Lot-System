@@ -28,9 +28,7 @@ const UpdateParkingSlotPage = (): ReactNode => {
         errMessage,
         handleUpdateParkingSlot : handleUpdateParkingSlotPayload,
         loading,
-        message,
-        open,
-        progress
+        message
     } = useUpdateParkingSlot();
 
     useEffect(() => {
@@ -94,9 +92,7 @@ const UpdateParkingSlotPage = (): ReactNode => {
         loading={loading}
         maximumCapacity={maximumCapacityRef}
         message={message}
-        open={open}
         openMessage={openMessage}
-        progress={progress}
         slotCode={slotCodeRef}
       />
     </div>

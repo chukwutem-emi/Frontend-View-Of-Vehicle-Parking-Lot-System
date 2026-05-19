@@ -34,7 +34,7 @@ export const SearchBar = ({sessions, setFilteredSessions}: SearchBarProps): Reac
     return (
         <div className="grid grid-cols-1 md:grid-cols-5 mb-6">
             <h2 className="text-lg Md:text-2xl font-bold text-white">Dashboard</h2>
-            <Link to={"/app/create-session"} className="text-lg Md:text-2xl font-bold text-white hover:underline hidden md:block">Create session</Link>
+            <Link to={"/parking/create-session"} className="text-lg Md:text-2xl font-bold text-white hover:underline hidden md:block">Create session</Link>
             <Link to={"/app/vehicle-exit"} className="text-lg Md:text-2xl font-bold text-white hover:underline hidden md:block">Vehicle Exit</Link>
             <div className="relative w-[30rem] flex space-y-4">
                 <label htmlFor="session-search" className="sr-only">Search session</label>

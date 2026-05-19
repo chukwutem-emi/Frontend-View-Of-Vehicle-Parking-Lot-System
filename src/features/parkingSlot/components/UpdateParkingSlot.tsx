@@ -5,13 +5,12 @@ import { UpdateParkingSlotInputField } from "../../../components/Input/ParkingSl
 import "../../../styles/slotCss/updateParkingSlot.css";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
-import { Loader } from "../../../components/Loader";
 import { useAppSelector } from "../../../utils/useAppSelector";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
-export const UpdateParkingSlot = ({availableCapacity, errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, handleSubmitForm, isOpen, loading, maximumCapacity, message, open, openMessage, progress, slotCode}: UpdateParkingSlotFormAttributes): ReactNode => {
+export const UpdateParkingSlot = ({availableCapacity, errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, handleSubmitForm, isOpen, loading, maximumCapacity, message, openMessage, slotCode}: UpdateParkingSlotFormAttributes): ReactNode => {
 
     const[formData, setFormdata] = useState({
         maximumCapacity   : 0,
@@ -109,10 +108,6 @@ export const UpdateParkingSlot = ({availableCapacity, errMessage, handleCancel, 
             isOpen={openMessage}
             message={message}
             onClick={handleOnclick}
-        />
-        <Loader 
-            isOpen={open}
-            progress={progress}
         />
         </>
     );

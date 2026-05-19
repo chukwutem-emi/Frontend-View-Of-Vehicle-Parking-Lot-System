@@ -3,13 +3,12 @@ import type { CreateVehicleTypeFormProps } from "../../../types/vehicleTypeAttri
 import { CreateVehicleTypeInputFields } from "../../../components/Input/VehicleType/CreateVehicleTypeInputFields";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
-import { Loader } from "../../../components/Loader";
 import "../../../styles/vehicleTypeCss/createVehicleType.css";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
-export const CreateVehicleTypeForm = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivOnClick, handleOnClick, handleVehicleTypeForm, hourlyRate, isOpen, loading, message, open, openMessage, progress, vehicleName}: CreateVehicleTypeFormProps): ReactNode => {
+export const CreateVehicleTypeForm = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivOnClick, handleOnClick, handleVehicleTypeForm, hourlyRate, isOpen, loading, message, openMessage, vehicleName}: CreateVehicleTypeFormProps): ReactNode => {
     return (
         <>
         <form onSubmit={handleVehicleTypeForm} className="form">
@@ -58,10 +57,6 @@ export const CreateVehicleTypeForm = ({errMessage, handleCancel, handleConfirm, 
             isOpen={openMessage}
             message={message}
             onClick={handleOnClick}
-        />
-        <Loader
-            isOpen={open}
-            progress={progress} 
         />
         </>
     );

@@ -3,14 +3,13 @@ import type { ResetPasswordPropsAttributes } from "../../../types/authAttributes
 import { ResetPasswordInputField } from "../../../components/Input/Auth/ResetPasswordInputField";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
-import { Loader } from "../../../components/Loader";
 import "../../../styles/authCss/resetPassword.css";
 import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
 
-export const ResetPassword = ({email, errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, handleResetPasswordForm, isOpen, message, open, openMessage, progress, loading}: ResetPasswordPropsAttributes): ReactNode => {
+export const ResetPassword = ({email, errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, handleResetPasswordForm, isOpen, message, openMessage, loading}: ResetPasswordPropsAttributes): ReactNode => {
 
     return (
         <>
@@ -51,10 +50,6 @@ export const ResetPassword = ({email, errMessage, handleCancel, handleConfirm, h
             isOpen={openMessage}
             message={message}
             onClick={handleOnclick}
-        />
-        <Loader 
-            isOpen={open}
-            progress={progress}
         />
         </>
     );

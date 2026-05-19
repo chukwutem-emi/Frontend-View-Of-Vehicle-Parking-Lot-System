@@ -26,9 +26,7 @@ const UpdatePasswordPage = (): ReactNode => {
         errMessage,
         handleUpdatePassword : handleUpdatePasswordPayload,
         loading,
-        message,
-        open,
-        progress
+        message
     } = useUpdatePassword();
 
     useEffect(() => {
@@ -94,10 +92,8 @@ const UpdatePasswordPage = (): ReactNode => {
                         isOpen={isOpen}
                         loading={loading}
                         message={message}
-                        open={open}
                         openMessage={openMessage}
                         password={passwordRef}
-                        progress={progress}
                     />
                 )
             }

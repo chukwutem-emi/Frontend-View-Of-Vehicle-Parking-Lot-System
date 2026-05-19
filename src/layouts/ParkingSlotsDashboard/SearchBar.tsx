@@ -4,6 +4,7 @@ import type { GetUserAttributes } from "../../types/authAttributes/getUserAttrib
 import { useAppSelector } from "../../utils/useAppSelector";
 import type { GetAllParkingSlotAttributes } from "../../types/ParkingSlotAttributes/getAllParkingSlotAttributes";
 import type { GetParkingSlotAttributes } from "../../types/ParkingSlotAttributes/getParkingSlotAttributes";
+import { Link } from "react-router-dom";
 
 
 
@@ -37,8 +38,9 @@ export const SearchBar = ({onSelectSlot, slots, setSelectedSlot, setFilteredSlot
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 mb-6">
             <h2 className="text-lg Md:text-2xl font-bold text-white">Parking Slot Dashboard</h2>
+            <Link to={"/app/create-slot"} className="text-lg Md:text-2xl font-bold text-white hover:underline hidden md:block">Create slot</Link>
             <div className="relative w-[30rem] flex space-y-4">
                 <label htmlFor="slot-search" className="sr-only">Search slot</label>
                 <input

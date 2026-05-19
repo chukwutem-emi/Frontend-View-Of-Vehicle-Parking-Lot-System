@@ -41,7 +41,7 @@ export const ChartAndOverview = ({chartData, slots, isDarkMode, parkingSessions}
                 <h2 className="mb-4">Parking Slots</h2>
 
                 {slots?.length > 0 ? (
-                    <div className="grid grid-cols-4 gap-3 w-[40rem]">
+                    <div className="grid md:grid-cols-4 grid-cols-1 gap-3 font-sans">
                     {slots?.map((slot: ParkingSlotAttributes) => (
                         <div
                         key={slot.id}

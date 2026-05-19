@@ -3,7 +3,6 @@ import type {UpdateUserDetailsFormAttributes} from "../../../types/authAttribute
 import { UpdateUserDetailsInputField } from "../../../components/Input/Auth/UpdateUserDetailsInputFields";
 import { Dialog } from "../../../components/Modal/Dialog";
 import { ResponseDialog } from "../../../components/Modal/ResponseDialog";
-import { Loader } from "../../../components/Loader";
 import {MdToggleOn, MdToggleOff} from "react-icons/md";
 import "../../../styles/authCss/updateUserDetails.css"
 import type { GetUserAttributes } from "../../../types/authAttributes/getUserAttributes";
@@ -12,7 +11,7 @@ import { ButtonSpinner } from "../../../components/Button/ButtonSpinner";
 
 
 
-export const UpdateUserDetailsForm = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, handleSubmitForm, isOpen, loading, message, open, openMessage, progress, confirmPassword, email, password, phone, userAddress, username}: UpdateUserDetailsFormAttributes): ReactNode => {
+export const UpdateUserDetailsForm = ({errMessage, handleCancel, handleConfirm, handleDivCancel, handleDivClick, handleOnclick, handleSubmitForm, loading, message, open, openMessage, confirmPassword, email, password, phone, userAddress, username}: UpdateUserDetailsFormAttributes): ReactNode => {
 
     const[showPassword, setShowPassword] = useState(false);
     const[formData, setFormData]         = useState({
@@ -142,10 +141,6 @@ export const UpdateUserDetailsForm = ({errMessage, handleCancel, handleConfirm, 
             isOpen={openMessage}
             message={message}
             onClick={handleOnclick}
-        />
-        <Loader 
-            isOpen={isOpen}
-            progress={progress}
         />
         </>
     );

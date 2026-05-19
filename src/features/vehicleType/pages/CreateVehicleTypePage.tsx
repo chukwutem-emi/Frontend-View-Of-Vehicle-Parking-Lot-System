@@ -18,10 +18,8 @@ const  CreateVehicleTypePage = (): ReactNode => {
         errMessage,
         loading,
         message,
-        open,
         clearMessage,
         handleCreateVehicleType : handleCreateVehicleTypePayload,
-        progress
     } = useCreateVehicleType();
 
     useEffect(() => {
@@ -76,9 +74,7 @@ const  CreateVehicleTypePage = (): ReactNode => {
             isOpen={isOpen}
             loading={loading}
             message={message}
-            open={open}
             openMessage={openMessage}
-            progress={progress}
             vehicleName={vehicleNameRef}
         />
     </div>

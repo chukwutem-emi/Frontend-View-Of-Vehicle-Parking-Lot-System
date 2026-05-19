@@ -136,6 +136,11 @@ export const appRouter = createHashRouter([
                 element: <GetAllParkingSessionsPage />,
                 errorElement: <Error />
             },
+            {
+                path: "create-session",
+                element: <CreateParkingSessionPage />,
+                errorElement: <Error />
+            },
         ]
     },
     {
@@ -171,11 +176,6 @@ export const appRouter = createHashRouter([
             {
                 path: "delete/:userId",
                 element: <DeleteUserPage />,
-                errorElement: <Error />
-            },
-            {
-                path: "create-session",
-                element: <CreateParkingSessionPage />,
                 errorElement: <Error />
             },
             {
